@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -20,25 +18,21 @@ public class Order {
 	private String priority; // TODO: Cambiar a char
 	
 	private String salesChannel;
-	
 	private Date date;
 	private Date shipDate;
 	
-	private int unitCost;
-	private int unitPrice;
 	private int soldUnits;
-	
-	private long totalCost;
-	private long totalRevenue;
-	private long totalProfit;
+	private double totalCost;
+	private double totalRevenue;
+	private double totalProfit;
 	
 	@OneToOne(cascade={CascadeType.PERSIST})
-	@JoinColumn(nullable=false, unique=true)
+	@JoinColumn(nullable=false)
 	private Country country;
 	
-	@OneToOne(cascade={CascadeType.PERSIST})
-	@JoinColumn(nullable=true, unique=true)
-	private ItemType itemType;
+//	@OneToOne(cascade={CascadeType.PERSIST})
+//	@JoinColumn(nullable=false)
+//	private Item item;
 		
 	public int getId() {
 		return id;
@@ -70,40 +64,28 @@ public class Order {
 	public void setShipDate(Date shipDate) {
 		this.shipDate = shipDate;
 	}
-	public int getUnitCost() {
-		return unitCost;
-	}
-	public void setUnitCost(int unitCost) {
-		this.unitCost = unitCost;
-	}
-	public int getUnitPrice() {
-		return unitPrice;
-	}
-	public void setUnitPrice(int unitPrice) {
-		this.unitPrice = unitPrice;
-	}
 	public int getSoldUnits() {
 		return soldUnits;
 	}
 	public void setSoldUnits(int soldUnits) {
 		this.soldUnits = soldUnits;
 	}
-	public long getTotalCost() {
+	public double getTotalCost() {
 		return totalCost;
 	}
-	public void setTotalCost(long totalCost) {
+	public void setTotalCost(double totalCost) {
 		this.totalCost = totalCost;
 	}
-	public long getTotalRevenue() {
+	public double getTotalRevenue() {
 		return totalRevenue;
 	}
-	public void setTotalRevenue(long totalRevenue) {
+	public void setTotalRevenue(double totalRevenue) {
 		this.totalRevenue = totalRevenue;
 	}
-	public long getTotalProfit() {
+	public double getTotalProfit() {
 		return totalProfit;
 	}
-	public void setTotalProfit(long totalProfit) {
+	public void setTotalProfit(double totalProfit) {
 		this.totalProfit = totalProfit;
 	}
 	public Country getCountry() {
@@ -112,10 +94,10 @@ public class Order {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
-	public ItemType getItemType() {
-		return itemType;
-	}
-	public void setItemType(ItemType itemType) {
-		this.itemType = itemType;
-	}
+//	public Item getItem() {
+//		return item;
+//	}
+//	public void setItem(Item item) {
+//		this.item = item;
+//	}
 }

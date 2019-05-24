@@ -9,6 +9,7 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+<context:annotation-config />
 <!-- 	<context:component-scan base-package="org.caalpeva.report.services" /> -->
 	<jpa:repositories base-package="org.caalpeva.report.repository" />
 	

@@ -8,8 +8,8 @@ public interface CsvReportLine {
 	public String getSalesChannel();
 	public Date getDate();
 	public Date getShipDate();
-	public float getUnitCost();
-	public float getUnitPrice();
+	public double getUnitCost();
+	public double getUnitPrice();
 	public int getSoldUnits();
 	public double getTotalCost();
 	public double getTotalRevenue();

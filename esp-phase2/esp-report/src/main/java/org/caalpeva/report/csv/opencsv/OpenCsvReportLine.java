@@ -26,9 +26,9 @@ public class OpenCsvReportLine implements CsvReportLine {
 	private Date shipDate;
 	
 	@CsvBindByName(column = "Unit Cost")
-	private float unitCost;
+	private double unitCost;
 	@CsvBindByName(column = "Unit Price")
-	private float unitPrice;
+	private double unitPrice;
 	@CsvBindByName(column = "Units Sold")
 	private int soldUnits;
 	
@@ -76,16 +76,16 @@ public class OpenCsvReportLine implements CsvReportLine {
 	public void setShipDate(Date shipDate) {
 		this.shipDate = shipDate;
 	}
-	public float getUnitCost() {
+	public double getUnitCost() {
 		return unitCost;
 	}
-	public void setUnitCost(float unitCost) {
+	public void setUnitCost(double unitCost) {
 		this.unitCost = unitCost;
 	}
-	public float getUnitPrice() {
+	public double getUnitPrice() {
 		return unitPrice;
 	}
-	public void setUnitPrice(float unitPrice) {
+	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 	public int getSoldUnits() {

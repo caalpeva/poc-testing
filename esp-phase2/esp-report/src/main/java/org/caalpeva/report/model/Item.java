@@ -1,7 +1,6 @@
 package org.caalpeva.report.model;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,17 +10,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="COUNTRIES")
-public class Country {
+@Table(name="ITEMS")
+public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(nullable = false, unique = true)
-	private String name;
+	private double unitCost;
+	private double unitPrice;
 	
 	@OneToOne(cascade={CascadeType.PERSIST})
-	@JoinColumn(nullable=false)	
-	private Region region;
+	@JoinColumn(nullable=false)
+	private ItemType itemType;
 	
 	public int getId() {
 		return id;
@@ -29,16 +28,22 @@ public class Country {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public double getUnitCost() {
+		return unitCost;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUnitCost(double unitCost) {
+		this.unitCost = unitCost;
 	}
-	public Region getRegion() {
-		return region;
+	public double getUnitPrice() {
+		return unitPrice;
 	}
-	public void setRegion(Region region) {
-		this.region = region;
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	public ItemType getItemType() {
+		return itemType;
+	}
+	public void setItemType(ItemType itemType) {
+		this.itemType = itemType;
 	}
 }
