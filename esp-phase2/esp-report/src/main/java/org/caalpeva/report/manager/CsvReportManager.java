@@ -8,6 +8,7 @@ import org.caalpeva.report.csv.CsvReportLine;
 import org.caalpeva.report.csv.CsvReportReader;
 import org.caalpeva.report.csv.opencsv.OpenCsvReportReader;
 import org.caalpeva.report.model.Country;
+import org.caalpeva.report.model.Item;
 import org.caalpeva.report.model.ItemType;
 import org.caalpeva.report.model.Order;
 import org.caalpeva.report.model.Region;
@@ -17,6 +18,7 @@ import org.caalpeva.report.repository.ItemTypeRepository;
 import org.caalpeva.report.repository.OrderRepository;
 import org.caalpeva.report.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 public class CsvReportManager implements CsvFileManager {
 
@@ -35,6 +37,7 @@ public class CsvReportManager implements CsvFileManager {
 	@Autowired
 	private ItemTypeRepository itemTypeRepository;
 
+	//@Transactional
 	public void handle(FileReader reader) {
 		CsvReportReader csvReader = new OpenCsvReportReader(reader);
 		Iterator<CsvReportLine> csvUserIterator = csvReader.iterator();
@@ -67,31 +70,14 @@ public class CsvReportManager implements CsvFileManager {
 					region = new Region();
 					region.setName(csvReport.getRegion());
 					regionRepository.save(region);
-					country.setRegion(region);
 				}
-				
+				country.setRegion(region);
 				countryRepository.save(country);
 			}
+			
 			order.setCountry(country);
 
-//			ItemType itemType;
-//			Optional<ItemType> optional = itemTypeRepository.findByName(csvReport.getItemType());
-//			if (optional.isPresent()) {
-//				itemType = optional.get();
-//			} else {
-//				itemType = new ItemType();
-//				itemType.setName(csvReport.getItemType());
-//				itemRepository.save(itemType);
-//			}
-//			order.setItemType(itemType);
-
-			orderRepository.save(order);
-
-		}
-		
-		/*
-		 
-		 ItemType itemType;
+			ItemType itemType;
 			Optional<ItemType> itemTypeOptional = itemTypeRepository.findByName(csvReport.getItemType());
 			if (itemTypeOptional.isPresent()) {
 				itemType = itemTypeOptional.get();
@@ -113,8 +99,10 @@ public class CsvReportManager implements CsvFileManager {
 				itemRepository.save(item);
 			}
 			order.setItem(item);
-		 
-		 */
+
+			orderRepository.save(order);
+
+		}
 
 	}
 

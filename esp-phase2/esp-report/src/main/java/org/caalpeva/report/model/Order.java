@@ -26,13 +26,13 @@ public class Order {
 	private double totalRevenue;
 	private double totalProfit;
 	
-	@OneToOne(cascade={CascadeType.PERSIST})
+	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(nullable=false)
 	private Country country;
 	
-//	@OneToOne(cascade={CascadeType.PERSIST})
-//	@JoinColumn(nullable=false)
-//	private Item item;
+	@OneToOne(cascade={CascadeType.PERSIST})
+	@JoinColumn(nullable=false)
+	private Item item;
 		
 	public int getId() {
 		return id;
@@ -94,10 +94,10 @@ public class Order {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
-//	public Item getItem() {
-//		return item;
-//	}
-//	public void setItem(Item item) {
-//		this.item = item;
-//	}
+	public Item getItem() {
+		return item;
+	}
+	public void setItem(Item item) {
+		this.item = item;
+	}
 }

@@ -19,7 +19,7 @@ public class Country {
 	@Column(nullable = false, unique = true)
 	private String name;
 	
-	@OneToOne(cascade={CascadeType.PERSIST})
+	@OneToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(nullable=false)	
 	private Region region;
 	
