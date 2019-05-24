@@ -9,8 +9,8 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<!-- <context:component-scan base-package="team.boolbee.poc.spring.service" /> -->
-	<jpa:repositories base-package="org.caalpeva.samples.csv.repository" />
+<!-- 	<context:component-scan base-package="org.caalpeva.report.services" /> -->
+	<jpa:repositories base-package="org.caalpeva.report.repository" />
 	
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -31,7 +31,7 @@
 	</bean>
 	
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="org.caalpeva.samples.csv.model" />
+		<property name="packagesToScan" value="org.caalpeva.report.model" />
 		<property name="dataSource" ref="datasource" />
 		<property name="jpaVendorAdapter" ref="jpaVenderAdapter" />
 		<property name="jpaProperties">
@@ -46,5 +46,7 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	
+	<bean id="csvReportManager" class="org.caalpeva.report.manager.CsvReportManager" />
 	
 </beans>
