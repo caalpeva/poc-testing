@@ -2,48 +2,49 @@ package org.caalpeva.report.csv.opencsv;
 
 import java.util.Date;
 
-import org.caalpeva.report.csv.CsvReportLine;
+import org.caalpeva.report.csv.CsvBaseLine;
+import org.caalpeva.report.csv.CsvHeader;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
-public class OpenCsvReportLine implements CsvReportLine {
+public class OpenCsvReportLine extends CsvBaseLine {
 
-	@CsvBindByName(column = "Order ID")
+	@CsvBindByName(column = CsvHeader.ORDER_ID)
 	private int id;
-	@CsvBindByName(column = "Order Priority")
-	private String priority; // TODO: Cambiar a char
+	@CsvBindByName(column = CsvHeader.ORDER_PRIORITY)
+	private String priority; // TODO: Decidir si cambiar a char
 	
-	@CsvBindByName(column = "Sales Channel")
+	@CsvBindByName(column = CsvHeader.SALES_CHANNEL)
 	private String salesChannel;
 	
 	@CsvDate(value="dd/MM/yyyy")
-	@CsvBindByName(column = "Order Date")
+	@CsvBindByName(column = CsvHeader.ORDER_DATE)
 	private Date date;
 	
 	@CsvDate(value="dd/MM/yyyy")
-	@CsvBindByName(column = "Ship Date")
+	@CsvBindByName(column = CsvHeader.SHIP_DATE)
 	private Date shipDate;
 	
-	@CsvBindByName(column = "Unit Cost")
+	@CsvBindByName(column = CsvHeader.UNIT_COST)
 	private double unitCost;
-	@CsvBindByName(column = "Unit Price")
+	@CsvBindByName(column = CsvHeader.UNIT_PRICE)
 	private double unitPrice;
-	@CsvBindByName(column = "Units Sold")
+	@CsvBindByName(column = CsvHeader.UNITS_SOLD)
 	private int soldUnits;
 	
-	@CsvBindByName(column = "Total Cost")
+	@CsvBindByName(column = CsvHeader.TOTAL_COST)
 	private double totalCost;
-	@CsvBindByName(column = "Total Revenue")
+	@CsvBindByName(column = CsvHeader.TOTAL_REVENUE)
 	private double totalRevenue;
-	@CsvBindByName(column = "Total Profit")
+	@CsvBindByName(column = CsvHeader.TOTAL_PROFIT)
 	private double totalProfit;
 	
 	@CsvBindByName
 	private String country;
 	@CsvBindByName
 	private String region;
-	@CsvBindByName(column = "Item Type")
+	@CsvBindByName(column = CsvHeader.ITEM_TYPE)
 	private String itemType;
 	
 	public int getId() {

@@ -17,4 +17,5 @@ public interface CsvReportLine {
 	public String getCountry();
 	public String getRegion();
 	public String getItemType();
+	public String[] getCsvLine();
 }

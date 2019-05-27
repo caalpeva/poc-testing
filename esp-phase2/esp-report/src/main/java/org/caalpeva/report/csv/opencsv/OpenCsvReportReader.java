@@ -18,6 +18,7 @@ public class OpenCsvReportReader implements CsvReportReader {
 		csvToBean = new CsvToBeanBuilder<CsvReportLine>(fileReader)
                 .withType(OpenCsvReportLine.class)
                 .withIgnoreLeadingWhiteSpace(true)
+                //.withKeepCarriageReturn(false)
                 .build();
 	}
 	
