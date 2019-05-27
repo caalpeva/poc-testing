@@ -72,13 +72,10 @@ public class DataReportService implements DataService {
 	}
 
 	@Override
-	public void sortOrdersAndExport() {
-		 // name of generated csv 
-        final String CSV_LOCATION = "Employees.csv "; 
-		 // Creating writer class to generate csv file 
+	public void sortOrdersAndExport(String fileName) {
         FileWriter writer;
 		try {
-			writer = new FileWriter(CSV_LOCATION);
+			writer = new FileWriter(fileName);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			return;

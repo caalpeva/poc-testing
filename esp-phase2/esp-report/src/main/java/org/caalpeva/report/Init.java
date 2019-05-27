@@ -1,5 +1,6 @@
 package org.caalpeva.report;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -23,10 +24,13 @@ public class Init {
 	public void start(String[] args) {
 		startTimeInMillis = System.currentTimeMillis();
 		String fileName = "F:/ALBERTO/[EMPRESAS]/Otras/EsPublico/RegistroVentas1.csv";
+		File file = new File(fileName);
+		System.out.println(file.getParentFile());
 		try {
 			CsvReportReader csvReader = new OpenCsvReportReader(new FileReader(fileName));
 			//dataService.importOrders(csvReader);
-			dataService.sortOrdersAndExport();
+			File file2 = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
+			dataService.sortOrdersAndExport(file2.getPath());
 			System.out.println("Time elapsed: " + DateUtils.formatElapsedTime(System.currentTimeMillis() - startTimeInMillis, true, true));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
