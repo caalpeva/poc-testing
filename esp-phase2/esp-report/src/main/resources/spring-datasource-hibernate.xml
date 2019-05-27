@@ -9,8 +9,8 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-<context:annotation-config />
-<!-- 	<context:component-scan base-package="org.caalpeva.report.services" /> -->
+	<context:annotation-config />
+	<context:component-scan base-package="org.caalpeva.report,org.caalpeva.report.services.impl" />
 	<jpa:repositories base-package="org.caalpeva.report.repository" />
 	
 	<bean
@@ -47,7 +47,5 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	
-	<bean id="csvReportManager" class="org.caalpeva.report.manager.CsvReportManager" />
 	
 </beans>

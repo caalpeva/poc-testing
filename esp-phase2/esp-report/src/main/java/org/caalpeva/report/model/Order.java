@@ -16,8 +16,11 @@ public class Order {
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String priority; // TODO: Cambiar a char
+
+	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinColumn(nullable=false)
+	private SalesChannel salesChannel;
 	
-	private String salesChannel;
 	private Date date;
 	private Date shipDate;
 	
@@ -46,10 +49,10 @@ public class Order {
 	public void setPriority(String priority) {
 		this.priority = priority;
 	}
-	public String getSalesChannel() {
+	public SalesChannel getSalesChannel() {
 		return salesChannel;
 	}
-	public void setSalesChannel(String salesChannel) {
+	public void setSalesChannel(SalesChannel salesChannel) {
 		this.salesChannel = salesChannel;
 	}
 	public Date getDate() {

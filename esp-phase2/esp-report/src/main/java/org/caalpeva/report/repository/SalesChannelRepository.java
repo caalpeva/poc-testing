@@ -2,11 +2,11 @@ package org.caalpeva.report.repository;
 
 import java.util.Optional;
 
-import org.caalpeva.report.model.Region;
+import org.caalpeva.report.model.SalesChannel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RegionRepository extends JpaRepository<Region, Integer> {
-	public Optional<Region> findByName(String name);
+public interface SalesChannelRepository extends JpaRepository<SalesChannel, Integer> {
+	public Optional<SalesChannel> findByName(String name);
 }
