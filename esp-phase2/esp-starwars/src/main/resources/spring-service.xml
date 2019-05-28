@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<context:component-scan base-package="org.caalpeva.starwars.service" />
+	<context:component-scan base-package="org.caalpeva.starwars.api,org.caalpeva.starwars.service" />
 	<jpa:repositories base-package="org.caalpeva.starwars.repository" />
 	
 	<bean

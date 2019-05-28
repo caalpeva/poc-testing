@@ -1,20 +1,30 @@
 package org.caalpeva.starwars.controller;
 
+import org.caalpeva.starwars.api.StarWarsApi;
+import org.caalpeva.starwars.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/movies")
+@RequestMapping("/films")
 public class FilmController {
 
-//	@Autowired
-//	private MovieService movieService;
-//
-//	@GetMapping("/index")
-//	public String goIndex(Model model) {
-//		model.addAttribute("movies", movieService.findAll());
-//		return "movies/movieList";
-//	}
+	@Autowired
+	private StarWarsApi starWarsApi;
+	
+	@Autowired
+	private PersonService filmService;
+
+	@GetMapping("/import")
+	public String goIndex(Model model) {
+		starWarsApi.getPeoples();
+		//filmService.importDataFromWsapi();
+		//model.addAttribute("movies", movieService.findAll());
+		return "films/filmList";
+	}
 //
 //	@GetMapping("/paginateIndex")
 //	public String goIndexPaginate(Model model, Pageable pageable) {
