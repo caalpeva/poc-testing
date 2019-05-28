@@ -13,43 +13,69 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clase encargada de la validación de los argumentos de la línea de comandos
+ * y de iniciar el contexto de aplicación mediante el framework spring
+ * @author Alberto
+ */
 @Component
 public class Init {
 
+	//F:/ALBERTO/[EMPRESAS]/Otras/EsPublico/RegistroVentas2.csv"
+	
+	@Autowired
+	private CsvReportReader csvReader;
+	
 	@Autowired
 	private DataService dataService;
 	
-	private long startTimeInMillis;
-	
-	public void start(String[] args) {
-		startTimeInMillis = System.currentTimeMillis();
-		String fileName = "F:/ALBERTO/[EMPRESAS]/Otras/EsPublico/RegistroVentas1.csv";
-		File file = new File(fileName);
-		System.out.println(file.getParentFile());
-		try {
-			CsvReportReader csvReader = new OpenCsvReportReader(new FileReader(fileName));
-			//dataService.importOrders(csvReader);
-			File file2 = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
-			dataService.sortOrdersAndExport(file2.getPath());
-			System.out.println("Time elapsed: " + DateUtils.formatElapsedTime(System.currentTimeMillis() - startTimeInMillis, true, true));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static void main(String[] args) {
+		if (args.length != 1) {
+			System.err.println("Syntax error. Format: filepath");
+			System.exit(1);
+		}
+
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {
 				"spring-context.xml", "spring-persistence.xml"});
 		Init init = context.getBean(Init.class);
-		init.start(args);
+		
+		File file = new File(args[0]);
+		if (!init.validate(file)) {
+			init.start(file);
+		}
 	}
 	
-	public static String printLine(String[] line) {
-		StringBuffer buffer = new StringBuffer();
-		for (String field : line) {
-			buffer.append(field + "\t");
-		} // for
-
-		return buffer.toString();
+	public boolean validate(File file) {
+		if (!file.exists()) {
+			System.err.println("File does not exist");
+			return false;
+		}
+		
+		if (file.isDirectory()) {
+			System.err.println("The path belongs to a directory");
+			return false;
+		}
+		
+		if (!file.canRead()) {
+			System.err.println("Unable to read the file");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public void start(File file) {
+		long startTimeInMillis = System.currentTimeMillis();
+		try {
+			// Importar csv a bbdd
+			dataService.importOrders(csvReader);
+			// Exportar bbdd a csv ordenado por id
+			File file2 = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
+			dataService.sortOrdersAndExport(file2.getPath());
+			// Realizar un resumen de queries
+			System.out.println("Time elapsed: " + DateUtils.formatElapsedTime(System.currentTimeMillis() - startTimeInMillis, true, true));
+		} catch(Exception e) {
+			
+		}
 	}
 }
