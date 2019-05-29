@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface StarWarsRetrofitClientApi {
+public interface StarWarsRetrofitApi {
 
     @GET("people/")
     Call<Page<People>> getAllPeople(@Query("page") int page);

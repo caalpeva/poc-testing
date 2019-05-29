@@ -14,10 +14,10 @@ import retrofit2.Response;
 
 public class StarWarsRetrofitClient implements StarWarsApi {
 
-	private StarWarsRetrofitClientApi wsClient;
+	private StarWarsRetrofitApi wsClient;
 	
 	public StarWarsRetrofitClient() {
-        wsClient = RetrofitClient.getClient(StarWarsRetrofitClientApi.class);
+        wsClient = RetrofitServiceGenerator.createService(StarWarsApi.BASE_URL, StarWarsRetrofitApi.class);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class StarWarsRetrofitClient implements StarWarsApi {
         return response.body();
 	}
 	
-	private void checkResponse(Response response, Call call) throws HttpCommunicationException {
+	private void checkResponse(Response<?> response, Call<?> call) throws HttpCommunicationException {
 		if (!response.isSuccessful()) {
 			throw new HttpCommunicationException(response.code(),
 					call.request().url().url());
