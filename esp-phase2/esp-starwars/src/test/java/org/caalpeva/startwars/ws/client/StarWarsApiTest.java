@@ -1,6 +1,5 @@
 package org.caalpeva.startwars.ws.client;
 
-
 import org.caalpeva.starwars.ws.client.retrofit.StarWarsRetrofitClient;
 import org.caalpeva.starwars.ws.model.Film;
 import org.caalpeva.starwars.ws.model.Page;
@@ -14,42 +13,54 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class StarWarsApiTest {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private StarWarsRetrofitClient wsClient;
+	private StarWarsRetrofitClient wsClient;
 
-    @Before
-    public void setUp() {
-        wsClient = new StarWarsRetrofitClient();
-    }
+	@Before
+	public void setUp() {
+		wsClient = new StarWarsRetrofitClient();
+	}
 
-    @Test
-    public void getAllFilms() throws Exception {
-        Page<Film> films = wsClient.getAllFilms(1);
-        int count = films.count;
-        assertThat(count).isNotZero().isGreaterThan(0);
-        for (Film film: films.results) {
-            logger.debug(String.format("Episode %d - %-25s (%s)", film.episodeId, film.title, film.releaseDate));
-        }
-    }
-    
-    @Test
-    public void getAllPersons() throws Exception {
-        Page<People> persons = wsClient.getAllPeoples(1);
-        int count = persons.count;
-        assertThat(count).isNotZero().isGreaterThan(0);
-        for (People people: persons.results) {
-            logger.debug(String.format("%-20s %-20s (%s)", people.name, people.gender, people.birthYear));
-        }
-    }
-    
-    @Test
-    public void getAllStarships() throws Exception {
-        Page<Starship> starships = wsClient.getAllStarships(1);
-        int count = starships.count;
-        assertThat(count).isNotZero().isGreaterThan(0);
-        for (Starship starship: starships.results) {
-            logger.debug(String.format("%-30s (%s)", starship.name, starship.manufacturer));
-        }
-    }
+	@Test
+	public void getAllFilms() throws Exception {
+		int pageNum = 1;
+		Page<Film> filmsPage;
+		do {
+			filmsPage = wsClient.getAllFilms(pageNum++);
+			int count = filmsPage.count;
+			assertThat(count).isNotZero().isGreaterThan(0);
+			for (Film film : filmsPage.results) {
+				logger.debug(String.format("Episode %d - %-25s (%s)", film.episodeId, film.title, film.releaseDate));
+			} // for
+		} while (filmsPage.hasMore());
+	}
+
+	@Test
+	public void getAllPersons() throws Exception {
+		int pageNum = 1;
+		Page<People> personsPage;
+		do {
+			personsPage = wsClient.getAllPeoples(pageNum++);
+			int count = personsPage.count;
+			assertThat(count).isNotZero().isGreaterThan(0);
+			for (People people : personsPage.results) {
+				logger.debug(String.format("%-20s %-20s (%s)", people.name, people.gender, people.birthYear));
+			} // for
+		} while (personsPage.hasMore());
+	}
+
+	@Test
+	public void getAllStarships() throws Exception {
+		int pageNum = 1;
+		Page<Starship> starshipsPage;
+		do {
+			starshipsPage = wsClient.getAllStarships(pageNum++);
+			int count = starshipsPage.count;
+			assertThat(count).isNotZero().isGreaterThan(0);
+			for (Starship starship : starshipsPage.results) {
+				logger.debug(String.format("%-30s (%s)", starship.name, starship.manufacturer));
+			} // for
+		} while (starshipsPage.hasMore());
+	}
 }
