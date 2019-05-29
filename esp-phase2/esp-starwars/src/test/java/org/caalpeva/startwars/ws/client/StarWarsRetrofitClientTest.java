@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StarWarsApiTest {
+public class StarWarsRetrofitClientTest {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
