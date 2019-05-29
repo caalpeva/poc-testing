@@ -15,6 +15,11 @@
 		<hsqldb.version>2.3.1</hsqldb.version>
 		<spring.modules.version>0.8a</spring.modules.version>
 		<project.encoding>cp1252</project.encoding>
+
+		<retrofit.version>2.5.0</retrofit.version>
+		<jackson.version>2.9.9</jackson.version>
+		<joda-time.version>2.10.1</joda-time.version>
+
 		<tomcat.manager.url>http://localhost</tomcat.manager.url>
 		<tomcat.manager.user>admin</tomcat.manager.user>
 		<tomcat.manager.password>admin</tomcat.manager.password>
@@ -103,11 +108,53 @@
 			<version>1.1.0</version>
 			<scope>test</scope>
 		</dependency>
-		 <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.9</version>
+		<dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.11.1</version>
+            <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>retrofit</artifactId>
+			<version>${retrofit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>converter-jackson</artifactId>
+			<version>${retrofit.version}</version>
+		</dependency>
+
+		<!-- JSON -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.fasterxml.jackson.datatype</groupId> -->
+<!-- 			<artifactId>jackson-datatype-jsr310</artifactId> -->
+<!-- 			<version>${jackson.version}</version> -->
+<!-- 		</dependency> -->
+
+		<!-- DATE / TIME API -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joda-time.version}</version>
+		</dependency>
+
+		<!-- LOGGING -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -7,6 +7,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>esp-report</module>
+		<module>esp-starwars</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -89,6 +90,12 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>${slf4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.0.13</version>
 			</dependency>
 
 			<dependency>

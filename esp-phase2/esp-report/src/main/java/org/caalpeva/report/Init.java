@@ -24,9 +24,6 @@ public class Init {
 	//F:/ALBERTO/[EMPRESAS]/Otras/EsPublico/RegistroVentas2.csv"
 	
 	@Autowired
-	private CsvReportReader csvReader;
-	
-	@Autowired
 	private DataService dataService;
 	
 	public static void main(String[] args) {
@@ -40,7 +37,7 @@ public class Init {
 		Init init = context.getBean(Init.class);
 		
 		File file = new File(args[0]);
-		if (!init.validate(file)) {
+		if (init.validate(file)) {
 			init.start(file);
 		}
 	}
@@ -68,7 +65,7 @@ public class Init {
 		long startTimeInMillis = System.currentTimeMillis();
 		try {
 			// Importar csv a bbdd
-			dataService.importOrders(csvReader);
+			dataService.importOrders(new OpenCsvReportReader(new FileReader(file)));
 			// Exportar bbdd a csv ordenado por id
 			File file2 = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
 			dataService.sortOrdersAndExport(file2.getPath());
