@@ -28,50 +28,44 @@
 
       <h3>Listado de Peliculas</h3>
       
-      <c:if test="${successMessage != null}">      	
-      	<div class='alert alert-success' role="alert">${successMessage}</div>      	
-      </c:if>
-      
-      <a href="${movieFormUrl}" class="btn btn-success" role="button" title="Nueva Pelicula" >Nueva</a><br><br>
-	
-      <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered">
-            <tr>
-                <th>Titulo</th>
-                <th>Genero</th>
-                <th>Clasificacion</th>
-                <th>Duracion</th>
-                <th>Fecha Estreno</th>
-                <th>Estatus</th>
-                <th>Opciones</th>
-            </tr>
+<!--      <div class="table-responsive"> -->
+<!--         <table class="table table-hover table-striped table-bordered"> -->
+<!--             <tr> -->
+<!--                 <th>Titulo</th> -->
+<!--                 <th>Genero</th> -->
+<!--                 <th>Clasificacion</th> -->
+<!--                 <th>Duracion</th> -->
+<!--                 <th>Fecha Estreno</th> -->
+<!--                 <th>Estatus</th> -->
+<!--                 <th>Opciones</th> -->
+<!--             </tr> -->
             
-            <c:forEach var="movie" items="${movies}">
-            <tr>
-                <td>${movie.title}</td>
-                <td>${movie.type}</td>
-                <td>${movie.classification}</td>
-                <td>${movie.duration}</td>
-                <td><fmt:formatDate pattern="dd-MM-yyyy" value="${movie.releaseDate}" /></td>
-                <td>
-                <c:choose>
-                <c:when test="${movie.status eq 'ACTIVE'}">
-                   	<span class="label label-success">${movie.status}</span>
-                </c:when>
-                <c:otherwise>
-                	<span class="label label-danger">${movie.status}</span>
-                </c:otherwise>
-                </c:choose>
-                </td>
-                <td>
-                    <a href="${movieEditUrl}/${movie.id}" class="btn btn-success btn-sm" role="button" title="Edit" ><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="${movieDeleteUrl}/${movie.id}" onclick='return confirm("¿Esta seguro de eliminar la película \"${movie.title}\"?")' class="btn btn-danger btn-sm" role="button" title="Eliminar" ><span class="glyphicon glyphicon-trash"></span></a>
-                </td>
-            </tr>
-            </c:forEach>
+<%--             <c:forEach var="movie" items="${movies}"> --%>
+<!--             <tr> -->
+<%--                 <td>${movie.title}</td> --%>
+<%--                 <td>${movie.type}</td> --%>
+<%--                 <td>${movie.classification}</td> --%>
+<%--                 <td>${movie.duration}</td> --%>
+<%--                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${movie.releaseDate}" /></td> --%>
+<!--                 <td> -->
+<%--                 <c:choose> --%>
+<%--                 <c:when test="${movie.status eq 'ACTIVE'}"> --%>
+<%--                    	<span class="label label-success">${movie.status}</span> --%>
+<%--                 </c:when> --%>
+<%--                 <c:otherwise> --%>
+<%--                 	<span class="label label-danger">${movie.status}</span> --%>
+<%--                 </c:otherwise> --%>
+<%--                 </c:choose> --%>
+<!--                 </td> -->
+<!--                 <td> -->
+<%--                     <a href="${movieEditUrl}/${movie.id}" class="btn btn-success btn-sm" role="button" title="Edit" ><span class="glyphicon glyphicon-pencil"></span></a> --%>
+<%--                     <a href="${movieDeleteUrl}/${movie.id}" onclick='return confirm("¿Esta seguro de eliminar la película \"${movie.title}\"?")' class="btn btn-danger btn-sm" role="button" title="Eliminar" ><span class="glyphicon glyphicon-trash"></span></a> --%>
+<!--                 </td> -->
+<!--             </tr> -->
+<%--             </c:forEach> --%>
         
-        </table>
-      </div>
+<!--         </table> -->
+<!--       </div> -->
           
       <hr class="featurette-divider">
 

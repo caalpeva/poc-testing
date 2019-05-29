@@ -1,9 +1,9 @@
-package org.caalpeva.starwars.api.model;
+package org.caalpeva.starwars.ws.model;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class SWModelList<T> implements Serializable {
+public class Page<T> implements Serializable {
 	
 	private static final long serialVersionUID = 2745309082630597947L;
 	

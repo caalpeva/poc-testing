@@ -1,4 +1,4 @@
-package org.caalpeva.startwars.api;
+package org.caalpeva.startwars.ws.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

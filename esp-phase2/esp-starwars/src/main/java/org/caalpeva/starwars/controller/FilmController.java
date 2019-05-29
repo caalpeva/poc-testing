@@ -1,7 +1,7 @@
 package org.caalpeva.starwars.controller;
 
-import org.caalpeva.starwars.api.StarWarsApi;
 import org.caalpeva.starwars.service.PersonService;
+import org.caalpeva.starwars.ws.api.StarWarsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ public class FilmController {
 
 	@GetMapping("/import")
 	public String goIndex(Model model) {
-		starWarsApi.getPeoples();
+		//starWarsApi.getPeoples();
 		//filmService.importDataFromWsapi();
 		//model.addAttribute("movies", movieService.findAll());
 		return "films/filmList";

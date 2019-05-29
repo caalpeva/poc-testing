@@ -1,4 +1,4 @@
-package org.caalpeva.starwars.api.model;
+package org.caalpeva.starwars.ws.model;
 
 import java.io.Serializable;
 import java.util.List;

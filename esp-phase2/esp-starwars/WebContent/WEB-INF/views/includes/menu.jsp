@@ -15,7 +15,7 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-					<li><a href="${publicRootUrl}users/index">Usuarios</a></li>
+					<li><a href="${publicRootUrl}films/import">Usuarios</a></li>
 					<%-- <li><a href="${publicRootUrl}movies/index">Peliculas</a></li> --%>
 					<li><a href="${publicRootUrl}movies/paginateIndex?page=0">Peliculas</a></li>
 					<li><a href="${publicRootUrl}showtimes/create">Horarios</a></li>
