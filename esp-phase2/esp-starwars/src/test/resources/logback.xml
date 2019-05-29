@@ -24,7 +24,7 @@
 		<!--for further documentation -->
 		<File>${DEV_HOME}\logging.log</File>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd} %-5p %c{1}:%L - %m%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${DEV_HOME}\logging-%d{yyyy-MM-dd}.log
