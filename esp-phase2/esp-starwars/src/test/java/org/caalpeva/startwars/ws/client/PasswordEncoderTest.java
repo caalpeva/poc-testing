@@ -1,13 +1,12 @@
 package org.caalpeva.startwars.ws.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestContext;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.web.client.RestTemplate;
+
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(TestContext.class)
 //@ContextConfiguration(locations = {"classpath:spring-security-encryption.xml"})
