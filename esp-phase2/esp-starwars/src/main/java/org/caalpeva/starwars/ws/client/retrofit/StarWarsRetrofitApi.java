@@ -1,9 +1,9 @@
 package org.caalpeva.starwars.ws.client.retrofit;
 
-import org.caalpeva.starwars.ws.model.Film;
-import org.caalpeva.starwars.ws.model.Page;
-import org.caalpeva.starwars.ws.model.People;
-import org.caalpeva.starwars.ws.model.Starship;
+import org.caalpeva.starwars.ws.dto.FilmDTO;
+import org.caalpeva.starwars.ws.dto.PageDTO;
+import org.caalpeva.starwars.ws.dto.PeopleDTO;
+import org.caalpeva.starwars.ws.dto.StarshipDTO;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,22 +13,22 @@ import retrofit2.http.Query;
 public interface StarWarsRetrofitApi {
 
     @GET("people/")
-    Call<Page<People>> getAllPeople(@Query("page") int page);
+    Call<PageDTO<PeopleDTO>> getAllPeople(@Query("page") int page);
 
     @GET("people/{id}/")
-    Call<People> getPeople(@Path("id") int peopleId);
+    Call<PeopleDTO> getPeople(@Path("id") int peopleId);
 
     @GET("films/")
-    Call<Page<Film>> getAllFilms(@Query("page") int page);
+    Call<PageDTO<FilmDTO>> getAllFilms(@Query("page") int page);
 
     @GET("films/{id}/")
-    Call<Film> getFilm(@Path("id") int filmId);
+    Call<FilmDTO> getFilm(@Path("id") int filmId);
 
     @GET("starships")
-    Call<Page<Starship>> getAllStarships(@Query("page") int page);
+    Call<PageDTO<StarshipDTO>> getAllStarships(@Query("page") int page);
 
     @GET("starships/{id}/")
-    Call<Starship> getStarship(@Path("id") int starshipId);
+    Call<StarshipDTO> getStarship(@Path("id") int starshipId);
 
 //    @GET("vehicles/")
 //    Call<Page<Vehicle>> getAllVehicles(@Query("page") Integer page);

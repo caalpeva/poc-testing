@@ -17,12 +17,12 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@ComponentScan(basePackages = "org.caalpeva.starwars")
+@ComponentScan(basePackages = {
+		"org.caalpeva.starwars",
+		"org.caalpeva.starwars.controller",
+		"org.caalpeva.starwars.service"
+		})
 @Import(WebAppConfig.class)
-//@ComponentScan({
-//	"org.caalpeva.starwars.controller",
-//	"org.caalpeva.starwars.service",
-//	"org.caalpeva.starwars.api"})
 public class AppConfig {
 
 	@Bean

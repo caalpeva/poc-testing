@@ -1,4 +1,4 @@
-package org.caalpeva.starwars.ws.model;
+package org.caalpeva.starwars.ws.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-public class Film implements Serializable {
+public class FilmDTO implements Serializable {
 
 	private static final long serialVersionUID = -3688502534233875305L;
 

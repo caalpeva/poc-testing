@@ -1,13 +1,9 @@
 package org.caalpeva.starwars.controller;
 
-import org.caalpeva.starwars.service.PersonService;
-import org.modelmapper.ModelMapper;
+import org.caalpeva.starwars.service.ImportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequestMapping("/films")
@@ -17,31 +13,8 @@ public class FilmController {
 	//private StarWarsApi starWarsApi;
 	
 	@Autowired
-	private PersonService filmService;
+	private ImportService importService;
 	
-	@Autowired
-	private ModelMapper modelMapper;
-
-	@Autowired
-	private RestTemplate restTemplate;
-	
-	@GetMapping("/import")
-	public String goIndex(Model model) {
-		User user = new User();
-		user.email = "alberto@fsfd.es";
-		user.firstName = "alberto";
-		user.lastName = "Perez";
-		user.id = 1;
-		user.isAdmin = true;
-		System.out.println(user);
-		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-		System.out.println(userDTO);
-		//starWarsApi.getPeoples();
-		//filmService.importDataFromWsapi();
-		//model.addAttribute("movies", movieService.findAll());
-		System.out.println("RestTemplate injected" + restTemplate.toString());
-		return "films/filmList";
-	}
 //
 //	@GetMapping("/paginateIndex")
 //	public String goIndexPaginate(Model model, Pageable pageable) {

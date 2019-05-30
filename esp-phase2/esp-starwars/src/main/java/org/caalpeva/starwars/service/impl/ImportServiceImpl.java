@@ -1,22 +1,39 @@
-package org.caalpeva.starwars.service;
+package org.caalpeva.starwars.service.impl;
 
-import java.util.Arrays;
+import java.io.IOException;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.caalpeva.starwars.repository.PeopleRepository;
+import org.caalpeva.starwars.repository.model.People;
+import org.caalpeva.starwars.service.ImportService;
+import org.caalpeva.starwars.service.StarWarsApiService;
+import org.caalpeva.starwars.ws.dto.PeopleDTO;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class PersonServiceImpl implements PersonService {
+public class ImportServiceImpl implements ImportService {
 
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	@Qualifier("retrofit")
+	private StarWarsApiService starWarsApi;
+	
+	@Autowired
+	private PeopleRepository peopleRepository;
+	
 	@Override
-	public void importDataFromWsapi() {
-
-		
+	public void importDataFromWsapi() throws IOException {
+		PeopleDTO peopleDto = starWarsApi.getPeople(1);
+		People people = modelMapper.map(peopleDto, People.class);
+		peopleRepository.save(people);
 	}
 
 //	@Autowired

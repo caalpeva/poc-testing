@@ -49,7 +49,7 @@ public class JPAConfig {
 	@Bean(name = "entityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean() {
 		LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
-		lcemfb.setPackagesToScan("org.caalpeva.starwars.model");
+		lcemfb.setPackagesToScan("org.caalpeva.starwars.repository.model");
 		lcemfb.setDataSource(getDataSource());
 		lcemfb.setJpaVendorAdapter(getJpaVendorAdapter());
 		//lcemfb.setPersistenceUnitName("myJpaPersistenceUnit");

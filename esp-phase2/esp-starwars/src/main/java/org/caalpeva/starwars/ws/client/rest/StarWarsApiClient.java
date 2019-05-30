@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.caalpeva.starwars.ws.api.StarWarsApi;
+import org.caalpeva.starwars.service.StarWarsApiService;
 import org.caalpeva.starwars.ws.api.StarWarsEndpoint;
-import org.caalpeva.starwars.ws.model.Film;
-import org.caalpeva.starwars.ws.model.Page;
-import org.caalpeva.starwars.ws.model.People;
-import org.caalpeva.starwars.ws.model.Starship;
+import org.caalpeva.starwars.ws.dto.FilmDTO;
+import org.caalpeva.starwars.ws.dto.PageDTO;
+import org.caalpeva.starwars.ws.dto.PeopleDTO;
+import org.caalpeva.starwars.ws.dto.StarshipDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class StarWarsApiClient implements StarWarsApi {
+public class StarWarsApiClient implements StarWarsApiService {
 
     public final String USER_AGENT_NAME = "RestTemplate-Java-Client/1.0";
 	
@@ -26,7 +26,7 @@ public class StarWarsApiClient implements StarWarsApi {
 	//private RestTemplate restTemplate;
 	
 	@Override
-	public Page<People> getAllPeoples(int page) {
+	public PageDTO<PeopleDTO> getAllPeoples(int page) {
 //		ResponseEntity<Page<Person>> personEntity = new RestTemplate().exchange(
 //		StarWarsEndpoint.PEOPLE.getAllResourcesUrl(),
 //		HttpMethod.GET, getHttpEntity(),
@@ -37,13 +37,13 @@ public class StarWarsApiClient implements StarWarsApi {
 	}
     
 	@Override
-	public People getPeople(int id) {
+	public PeopleDTO getPeople(int id) {
 	    Map<String, String> params = new HashMap<String, String>();
 	    params.put("id", String.valueOf(id));
 	    return new RestTemplate().exchange(
 	    		StarWarsEndpoint.PEOPLE.getSpecificResourceUrl(),
 	    		HttpMethod.GET, getHttpEntity(),
-	    		People.class, params).getBody();
+	    		PeopleDTO.class, params).getBody();
 	}
 	
 	private HttpEntity<String> getHttpEntity() {
@@ -54,25 +54,25 @@ public class StarWarsApiClient implements StarWarsApi {
 	}
 
 	@Override
-	public Page<Film> getAllFilms(int page) {
+	public PageDTO<FilmDTO> getAllFilms(int page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Film getFilm(int id) {
+	public FilmDTO getFilm(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<Starship> getAllStarships(int page) {
+	public PageDTO<StarshipDTO> getAllStarships(int page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Starship getStarship(int id) {
+	public StarshipDTO getStarship(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

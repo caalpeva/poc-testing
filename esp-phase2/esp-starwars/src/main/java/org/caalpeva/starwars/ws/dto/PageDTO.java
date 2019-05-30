@@ -1,9 +1,9 @@
-package org.caalpeva.starwars.ws.model;
+package org.caalpeva.starwars.ws.dto;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Page<T> implements Serializable {
+public class PageDTO<T> implements Serializable {
 	
 	private static final long serialVersionUID = 2745309082630597947L;
 	

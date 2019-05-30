@@ -1,4 +1,4 @@
-package org.caalpeva.starwars.ws.model;
+package org.caalpeva.starwars.ws.dto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Starship implements Serializable {
+public class StarshipDTO implements Serializable {
 
 	private static final long serialVersionUID = -9040485442700351176L;
 	
