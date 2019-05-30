@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,6 +32,6 @@ public class RestTemplateTest {
 	      = new RestTemplate().exchange(urlOverHttps, HttpMethod.GET,
 	    		  new HttpEntity<String>("parameters", headers), String.class);
 	    System.out.println("Response: " + response.getBody());
-	    assertEquals(response.getStatusCode().value(), 200);
+	    assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 }
