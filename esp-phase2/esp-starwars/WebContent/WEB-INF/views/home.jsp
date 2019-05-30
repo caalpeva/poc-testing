@@ -24,9 +24,12 @@
 
   <div class="container theme-showcase" role="main">
 
-      <div class="jumbotron">        
+      <div class="jumbotron">      
         <h3>Aplicación de prueba de Alberto Pérez</h3>
         <p>Bienvenido(a) a la gestion de datos de Star Wars</p>
+        <div style="text-align:right;">
+        	<img alt="Star Wars Title Imagen" src="${publicResourcesUrl}/images/star-wars.png">
+       	</div>
       </div>
 
 	<jsp:include page="includes/footer.jsp"></jsp:include>   

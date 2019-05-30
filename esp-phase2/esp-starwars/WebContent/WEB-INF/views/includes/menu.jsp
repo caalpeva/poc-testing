@@ -15,10 +15,10 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-					<li><a href="${publicRootUrl}films/import">Usuarios</a></li>
+					<li><a href="${publicRootUrl}import">Import</a></li>
 					<%-- <li><a href="${publicRootUrl}movies/index">Peliculas</a></li> --%>
-					<li><a href="${publicRootUrl}movies/paginateIndex?page=0">Peliculas</a></li>
-					<li><a href="${publicRootUrl}showtimes/create">Horarios</a></li>
+					<li><a href="${publicRootUrl}movies/paginateIndex?page=0">Films</a></li>
+					<li><a href="${publicRootUrl}showtimes/create">Form</a></li>
 			</ul>
 		</div>
 		<!--/.nav-collapse -->
