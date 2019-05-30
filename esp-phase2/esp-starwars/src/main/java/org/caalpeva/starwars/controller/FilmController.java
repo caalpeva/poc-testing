@@ -2,6 +2,7 @@ package org.caalpeva.starwars.controller;
 
 import org.caalpeva.starwars.service.PersonService;
 import org.caalpeva.starwars.ws.api.StarWarsApi;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,14 +13,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/films")
 public class FilmController {
 
-	@Autowired
-	private StarWarsApi starWarsApi;
+	//@Autowired
+	//private StarWarsApi starWarsApi;
 	
 	@Autowired
 	private PersonService filmService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@GetMapping("/import")
 	public String goIndex(Model model) {
+		User user = new User();
+		user.email = "alberto@fsfd.es";
+		user.firstName = "alberto";
+		user.lastName = "Perez";
+		user.id = 1;
+		user.isAdmin = true;
+		System.out.println(user);
+		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+		System.out.println(userDTO);
 		//starWarsApi.getPeoples();
 		//filmService.importDataFromWsapi();
 		//model.addAttribute("movies", movieService.findAll());

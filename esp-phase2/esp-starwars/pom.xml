@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -96,6 +96,7 @@
 			<version>5.1.0.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
@@ -108,12 +109,19 @@
 			<version>1.1.0</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.11.1</version>
+		  <!-- TESTS -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.11.1</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.squareup.retrofit2</groupId>
 			<artifactId>retrofit</artifactId>
@@ -137,11 +145,11 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.fasterxml.jackson.datatype</groupId> -->
-<!-- 			<artifactId>jackson-datatype-jsr310</artifactId> -->
-<!-- 			<version>${jackson.version}</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.fasterxml.jackson.datatype</groupId> -->
+		<!-- <artifactId>jackson-datatype-jsr310</artifactId> -->
+		<!-- <version>${jackson.version}</version> -->
+		<!-- </dependency> -->
 
 		<!-- DATE / TIME API -->
 		<dependency>
@@ -154,6 +162,11 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.3.2</version>
 		</dependency>
 	</dependencies>
 
@@ -170,7 +183,7 @@
 				<configuration>
 					<attachClasses>true</attachClasses>
 					<warSourceDirectory>WebContent</warSourceDirectory>
-					<webXml>WebContent\WEB-INF\web.xml</webXml>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>

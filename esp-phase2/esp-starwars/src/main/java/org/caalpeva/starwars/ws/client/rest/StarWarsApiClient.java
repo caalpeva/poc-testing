@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class StarWarsApiClient implements StarWarsApi {
 
-    public final String USER_AGENT_NAME = "Java-Client"; // "SWAPI-Java-Client/1.0";
+    public final String USER_AGENT_NAME = "RestTemplate-Java-Client/1.0";
 	
 	//@Autowired
 	//private RestTemplate restTemplate;

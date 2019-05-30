@@ -45,4 +45,6 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	
+	<bean id="modelMapper" class="org.modelmapper.ModelMapper" />
+	
 </beans>
