@@ -1,13 +1,13 @@
 package org.caalpeva.starwars.controller;
 
 import org.caalpeva.starwars.service.PersonService;
-import org.caalpeva.starwars.ws.api.StarWarsApi;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequestMapping("/films")
@@ -22,6 +22,9 @@ public class FilmController {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	@GetMapping("/import")
 	public String goIndex(Model model) {
 		User user = new User();
@@ -36,6 +39,7 @@ public class FilmController {
 		//starWarsApi.getPeoples();
 		//filmService.importDataFromWsapi();
 		//model.addAttribute("movies", movieService.findAll());
+		System.out.println("RestTemplate injected" + restTemplate.toString());
 		return "films/filmList";
 	}
 //
