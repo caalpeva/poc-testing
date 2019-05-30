@@ -42,26 +42,39 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	
+
 		<!-- SPRING -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
-		</dependency>
-		
+
 		<!-- PERSISTENCE -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -71,7 +84,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
-		
+
 		<!-- DATABASE DRIVERS -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
@@ -90,7 +103,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		
+
 		<!-- REST -->
 		<dependency>
 			<groupId>com.squareup.retrofit2</groupId>
@@ -128,32 +141,48 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.2</version>
 		</dependency>
-		
+
 		<!-- LOGGING -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
-		
+
 		<!-- TESTS -->
-				<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.4.0-M1</version>
-			<scope>test</scope>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>5.1.0.RELEASE</version>
+
 		</dependency>
 		<dependency>
-			<groupId>org.junit.platform</groupId>
-			<artifactId>junit-platform-launcher</artifactId>
-			<version>1.1.0</version>
-			<scope>test</scope>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.assertj</groupId> -->
-<!-- 			<artifactId>assertj-core</artifactId> -->
-<!-- 			<version>3.11.1</version> -->
-<!-- 			<scope>test</scope> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>junit-addons</groupId>
+			<artifactId>junit-addons</artifactId>
+			<version>1.4</version>
+
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.junit.jupiter</groupId> -->
+		<!-- <artifactId>junit-jupiter-engine</artifactId> -->
+		<!-- <version>5.4.0-M1</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.junit.platform</groupId> -->
+		<!-- <artifactId>junit-platform-launcher</artifactId> -->
+		<!-- <version>1.1.0</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.11.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -180,22 +209,45 @@
 			<id>hsqldb</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<!-- <os><family>Windows</family></os> -->
 			</activation>
 			<properties>
 				<databaseType>hsqldb</databaseType>
 			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>databases/hsqldb</directory>
+					</resource>
+				</resources>
+			</build>
 		</profile>
 		<profile>
 			<id>sqlserver</id>
 			<properties>
 				<databaseType>sqlserver</databaseType>
 			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>databases/sqlserver</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
 		</profile>
 		<profile>
 			<id>mysql</id>
 			<properties>
 				<databaseType>mysql</databaseType>
 			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>databases/mysql</directory>
+					</resource>
+				</resources>
+			</build>
 		</profile>
 
 		<!-- Si se activa el perfil despliega el proyecto en tomcat 6 -->

@@ -1,11 +1,14 @@
-package org.caalpeva.startwars.ws.client;
+package org.caalpeva.startwars.ws.api;
 
-import org.aspectj.lang.annotation.Before;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.caalpeva.starwars.ws.client.retrofit.StarWarsRetrofitClient;
 import org.caalpeva.starwars.ws.model.Film;
 import org.caalpeva.starwars.ws.model.Page;
 import org.caalpeva.starwars.ws.model.People;
 import org.caalpeva.starwars.ws.model.Starship;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
