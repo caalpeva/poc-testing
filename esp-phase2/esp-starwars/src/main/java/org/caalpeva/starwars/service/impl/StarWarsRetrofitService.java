@@ -82,6 +82,14 @@ public class StarWarsRetrofitService implements StarWarsApiService {
 	}
 	
 	@Override
+	public StarshipDTO getStarship(String url) throws IOException {
+		Call<StarshipDTO> call = wsClient.getStarship(url);
+        Response<StarshipDTO> response = call.execute();
+        checkResponse(response, call);
+        return response.body();
+	}
+	
+	@Override
 	public PageDTO<PlanetDTO> getAllPlanets(int page) throws IOException {
 		Call<PageDTO<PlanetDTO>> call = wsClient.getAllPlanets(page);
         Response<PageDTO<PlanetDTO>> response = call.execute();

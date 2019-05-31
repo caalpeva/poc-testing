@@ -25,6 +25,7 @@ public interface StarWarsApiService {
 
     PageDTO<StarshipDTO> getAllStarships(int page) throws IOException;
     StarshipDTO getStarship(int id) throws IOException;
+    StarshipDTO getStarship(String url) throws IOException;
     
     PageDTO<PlanetDTO> getAllPlanets(int page) throws IOException;
     PlanetDTO getPlanet(int id) throws IOException;

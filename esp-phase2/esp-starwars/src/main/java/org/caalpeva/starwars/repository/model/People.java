@@ -38,6 +38,9 @@ public class People {
     
 	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
 	private Set<Film> filmList = new HashSet<Film>();
+	
+	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
+	private Set<Starship> starshipList = new HashSet<Starship>();
 	    
 	public int getId() {
 		return id;
@@ -117,12 +120,10 @@ public class People {
 	public void setFilmList(Set<Film> filmList) {
 		this.filmList = filmList;
 	}
-	
-	
-
-//    public List<String> filmsUrls;
-//    
-//    public List<String> starshipsUrls;
-    
-    
+	public Set<Starship> getStarshipList() {
+		return starshipList;
+	}
+	public void setStarshipList(Set<Starship> starshipList) {
+		this.starshipList = starshipList;
+	}	
 }

@@ -102,4 +102,10 @@ public class StarWarsApiClient implements StarWarsApiService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public StarshipDTO getStarship(String url) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

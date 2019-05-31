@@ -34,6 +34,9 @@ public interface StarWarsRetrofitApi {
 
     @GET("starships/{id}/")
     Call<StarshipDTO> getStarship(@Path("id") int starshipId);
+    
+    @GET
+    Call<StarshipDTO> getStarship(@Url String planet);
 
 //    @GET("vehicles/")
 //    Call<Page<Vehicle>> getAllVehicles(@Query("page") Integer page);
@@ -55,5 +58,4 @@ public interface StarWarsRetrofitApi {
     
     @GET
     Call<PlanetDTO> getPlanet(@Url String planet);
-
 }
