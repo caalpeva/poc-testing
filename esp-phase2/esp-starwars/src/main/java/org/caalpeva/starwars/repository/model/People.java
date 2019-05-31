@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,8 +40,9 @@ public class People {
 	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
 	private Set<Film> filmList = new HashSet<Film>();
 	
-	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
-	private Set<Starship> starshipList = new HashSet<Starship>();
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH },
+			mappedBy= "people", fetch = FetchType.LAZY)
+    public Set<PeopleStarship> peopleStarships;
 	    
 	public int getId() {
 		return id;
@@ -120,10 +122,10 @@ public class People {
 	public void setFilmList(Set<Film> filmList) {
 		this.filmList = filmList;
 	}
-	public Set<Starship> getStarshipList() {
-		return starshipList;
+	public Set<PeopleStarship> getPeopleStarships() {
+		return peopleStarships;
 	}
-	public void setStarshipList(Set<Starship> starshipList) {
-		this.starshipList = starshipList;
-	}	
+	public void setPeopleStarships(Set<PeopleStarship> peopleStarships) {
+		this.peopleStarships = peopleStarships;
+	}
 }

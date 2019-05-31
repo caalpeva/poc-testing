@@ -4,12 +4,13 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,9 +37,10 @@ public class Starship {
 	public String hyperdriveRating;
 	public String mglt;
 	
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
-			mappedBy = "starshipList", fetch = FetchType.LAZY)
-    public Set<People> pilotList;
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH },
+			mappedBy= "people", fetch = FetchType.LAZY)
+	@Column(name = "starship_id")
+    public Set<PeopleStarship> peopleStarships;
 
 	public int getId() {
 		return id;
@@ -184,11 +186,11 @@ public class Starship {
 		this.mglt = mglt;
 	}
 
-	public Set<People> getPilotList() {
-		return pilotList;
+	public Set<PeopleStarship> getPeopleStarships() {
+		return peopleStarships;
 	}
 
-	public void setPilotList(Set<People> pilotList) {
-		this.pilotList = pilotList;
-	}		
+	public void setPeopleStarships(Set<PeopleStarship> peopleStarships) {
+		this.peopleStarships = peopleStarships;
+	}	
 }

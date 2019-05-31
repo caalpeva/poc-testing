@@ -10,18 +10,16 @@ import java.util.Set;
 
 import org.caalpeva.starwars.repository.FilmRepository;
 import org.caalpeva.starwars.repository.PeopleRepository;
+import org.caalpeva.starwars.repository.PeopleStarShipRepository;
 import org.caalpeva.starwars.repository.PlanetRepository;
 import org.caalpeva.starwars.repository.StarShipRepository;
 import org.caalpeva.starwars.repository.model.Film;
-import org.caalpeva.starwars.repository.model.People;
 import org.caalpeva.starwars.repository.model.Planet;
 import org.caalpeva.starwars.repository.model.Starship;
 import org.caalpeva.starwars.service.ImportService;
 import org.caalpeva.starwars.service.StarWarsApiService;
 import org.caalpeva.starwars.ws.dto.FilmDTO;
-import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
-import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.caalpeva.starwars.ws.dto.StarshipDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -50,40 +48,43 @@ public class ImportServiceImpl implements ImportService {
 
 	@Autowired
 	private StarShipRepository starShipRepository;
+	
+	@Autowired
+	private PeopleStarShipRepository peopleStarShipRepository;
 
 	@Override
 	// @Transactional
 	public void importDataFromWsapi() throws IOException {
-		int page = 1;
-		PageDTO<PeopleDTO> peoplePageDTO;
-		do {
-			peoplePageDTO = starWarsApi.getAllPeople(page++);
-			List<PeopleDTO> peopleList = peoplePageDTO.results;
-			if (peopleList != null && peopleList.size() > 0) {
-				for (PeopleDTO peopleDTO : peopleList) {
-					People people = modelMapper.map(peopleDTO, People.class);
-					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
-					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
-					people.setFilmList(findOrSaveFilms(peopleDTO));
-					people.setStarshipList(findOrSaveStarShip(peopleDTO));
-					peopleRepository.save(people);
-				} // for
-			}
-		} while (peoplePageDTO.hasMore());
+//		int page = 1;
+//		PageDTO<PeopleDTO> peoplePageDTO;
+//		do {
+//			peoplePageDTO = starWarsApi.getAllPeople(page++);
+//			List<PeopleDTO> peopleList = peoplePageDTO.results;
+//			if (peopleList != null && peopleList.size() > 0) {
+//				for (PeopleDTO peopleDTO : peopleList) {
+//					People people = modelMapper.map(peopleDTO, People.class);
+//					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
+//					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
+//					people.setFilmList(findOrSaveFilms(peopleDTO));
+//					//people.setStarshipList(findOrSavePersonStarShip(peopleDTO));
+//					peopleRepository.save(people);
+//				} // for
+//			}
+//		} while (peoplePageDTO.hasMore());
 
-		page = 1;
-		PageDTO<StarshipDTO> starshipPageDTO;
-		do {
-			starshipPageDTO = starWarsApi.getAllStarships(page++);
-			List<StarshipDTO> starshipList = starshipPageDTO.results;
-			if (starshipList != null && starshipList.size() > 0) {
-				for (StarshipDTO starshipDTO : starshipList) {
-					if (starshipDTO.getPilotsUrls() != null) {
-						pilotadas += starshipDTO.getPilotsUrls().size();
-					}
-				} // for
-			}
-		} while (peoplePageDTO.hasMore());
+//		page = 1;
+//		PageDTO<StarshipDTO> starshipPageDTO;
+//		do {
+//			starshipPageDTO = starWarsApi.getAllStarships(page++);
+//			List<StarshipDTO> starshipList = starshipPageDTO.results;
+//			if (starshipList != null && starshipList.size() > 0) {
+//				for (StarshipDTO starshipDTO : starshipList) {
+//					if (starshipDTO.getPilotsUrls() != null) {
+//						pilotadas += starshipDTO.getPilotsUrls().size();
+//					}
+//				} // for
+//			}
+//		} while (peoplePageDTO.hasMore());
 		System.out.println("Pilotadas: " + pilotadas);
 		System.out.println("Pilotos: " + pilotos.size());
 	}
@@ -122,7 +123,7 @@ public class ImportServiceImpl implements ImportService {
 	static int pilotadas = 0;
 	static Set<String> pilotos = new HashSet<String>(); 
 
-	private Set<Starship> findOrSaveStarShip(PeopleDTO peopleDTO) throws IOException {
+	private Set<Starship> findOrSavePersonStarShip(PeopleDTO peopleDTO) throws IOException {
 		List<StarshipDTO> starShipDTOList = new ArrayList<StarshipDTO>();
 		for (String startShipUrl : peopleDTO.getStarshipsUrls()) {
 			pilotadas++;
@@ -138,6 +139,9 @@ public class ImportServiceImpl implements ImportService {
 		for (Starship starShip : starships) {
 			starShipSet.add(findOrSaveStarShip(starShip));
 		}
+		
+		//TODO: En este punto se debe crear la entidad intermedia
+		// findByPerson_idAndStarship_id
 
 		return starShipSet;
 	}
