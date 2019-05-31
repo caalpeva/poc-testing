@@ -11,21 +11,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "PEOPLE_STARSHIPS")
+@Table(name = "PEOPLE_STARSHIPS", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"people_id", "starship_id"})})
 public class PeopleStarship {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	public boolean pilot;
 
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch= FetchType.EAGER)
-	@JoinColumn(name = "people_id")  
+	@ManyToOne(cascade = {CascadeType.MERGE}, fetch= FetchType.EAGER)
+	@JoinColumn(name = "people_id", nullable = false)  
 	private People people;
 	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch= FetchType.EAGER)
-	@JoinColumn(name = "starship_id")  
+	@ManyToOne(cascade = {CascadeType.MERGE}, fetch= FetchType.EAGER)
+	@JoinColumn(name = "starship_id", nullable = false)  
 	private Starship starship;
 	
 	public int getId() {

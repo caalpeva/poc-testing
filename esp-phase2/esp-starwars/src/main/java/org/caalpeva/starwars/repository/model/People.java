@@ -40,7 +40,7 @@ public class People {
 	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
 	private Set<Film> filmList = new HashSet<Film>();
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH },
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
 			mappedBy= "people", fetch = FetchType.LAZY)
     public Set<PeopleStarship> peopleStarships;
 	    
@@ -127,5 +127,10 @@ public class People {
 	}
 	public void setPeopleStarships(Set<PeopleStarship> peopleStarships) {
 		this.peopleStarships = peopleStarships;
+		if (peopleStarships != null) {
+			for(PeopleStarship peopleStarship: peopleStarships) {
+				peopleStarship.setPeople(this);
+			} // for
+		}
 	}
 }
