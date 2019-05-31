@@ -1,5 +1,6 @@
 package org.caalpeva.starwars.ws.client.rest;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.caalpeva.starwars.ws.api.StarWarsEndpoint;
 import org.caalpeva.starwars.ws.dto.FilmDTO;
 import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
+import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.caalpeva.starwars.ws.dto.StarshipDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +28,7 @@ public class StarWarsApiClient implements StarWarsApiService {
 	//private RestTemplate restTemplate;
 	
 	@Override
-	public PageDTO<PeopleDTO> getAllPeoples(int page) {
+	public PageDTO<PeopleDTO> getAllPeople(int page) {
 //		ResponseEntity<Page<Person>> personEntity = new RestTemplate().exchange(
 //		StarWarsEndpoint.PEOPLE.getAllResourcesUrl(),
 //		HttpMethod.GET, getHttpEntity(),
@@ -73,6 +75,24 @@ public class StarWarsApiClient implements StarWarsApiService {
 
 	@Override
 	public StarshipDTO getStarship(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageDTO<PlanetDTO> getAllPlanets(int page) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PlanetDTO getPlanet(int id) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PlanetDTO getPlanet(String url) throws IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -3,12 +3,14 @@ package org.caalpeva.starwars.ws.client.retrofit;
 import org.caalpeva.starwars.ws.dto.FilmDTO;
 import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
+import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.caalpeva.starwars.ws.dto.StarshipDTO;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface StarWarsRetrofitApi {
 
@@ -42,10 +44,13 @@ public interface StarWarsRetrofitApi {
 //    @GET("species/{id}/")
 //    Call<Species> getSpecies(@Path("id") int speciesId);
 //
-//    @GET("planets/")
-//    Call<Page<Planet>> getAllPlanets(@Query("page") Integer page);
-//
-//    @GET("planets/{id}/")
-//    Call<Planet> getPlanet(@Path("id") int planetId);
+    @GET("planets/")
+    Call<PageDTO<PlanetDTO>> getAllPlanets(@Query("page") Integer page);
+   
+    @GET("planets/{id}/")
+    Call<PlanetDTO> getPlanet(@Path("id") int planetId);
+    
+    @GET
+    Call<PlanetDTO> getPlanet(@Url String planetId);
 
 }

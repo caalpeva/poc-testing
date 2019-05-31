@@ -1,9 +1,13 @@
 package org.caalpeva.starwars.repository.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,17 +18,19 @@ public class People {
 	private int id;
 	public String name;
     public String birthYear;
-
     public String gender;
-
     public String hairColor;
     public String height;
-    public String homeWorldUrl;
     public String mass;
     public String skinColor;
     public String created;
     public String edited;
     public String url;
+
+    @OneToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+	@JoinColumn(nullable=false)
+    public Planet homeWorld;
+    
 	public int getId() {
 		return id;
 	}
@@ -61,11 +67,11 @@ public class People {
 	public void setHeight(String height) {
 		this.height = height;
 	}
-	public String getHomeWorldUrl() {
-		return homeWorldUrl;
+	public Planet getHomeWorld() {
+		return homeWorld;
 	}
-	public void setHomeWorldUrl(String homeWorldUrl) {
-		this.homeWorldUrl = homeWorldUrl;
+	public void setHomeWorldUrl(Planet homeWorld) {
+		this.homeWorld = homeWorld;
 	}
 	public String getMass() {
 		return mass;

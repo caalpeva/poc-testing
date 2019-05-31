@@ -8,6 +8,7 @@ import org.caalpeva.starwars.ws.client.retrofit.StarWarsRetrofitApi;
 import org.caalpeva.starwars.ws.dto.FilmDTO;
 import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
+import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.caalpeva.starwars.ws.dto.StarshipDTO;
 import org.caalpeva.starwars.ws.exception.HttpCommunicationException;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class StarWarsRetrofitService implements StarWarsApiService {
 	}
 
 	@Override
-	public PageDTO<PeopleDTO> getAllPeoples(int page) throws IOException {
+	public PageDTO<PeopleDTO> getAllPeople(int page) throws IOException {
 		Call<PageDTO<PeopleDTO>> call = wsClient.getAllPeople(page);
         Response<PageDTO<PeopleDTO>> response = call.execute();
         checkResponse(response, call);
@@ -68,6 +69,30 @@ public class StarWarsRetrofitService implements StarWarsApiService {
 	public StarshipDTO getStarship(int id) throws IOException {
 		Call<StarshipDTO> call = wsClient.getStarship(id);
         Response<StarshipDTO> response = call.execute();
+        checkResponse(response, call);
+        return response.body();
+	}
+	
+	@Override
+	public PageDTO<PlanetDTO> getAllPlanets(int page) throws IOException {
+		Call<PageDTO<PlanetDTO>> call = wsClient.getAllPlanets(page);
+        Response<PageDTO<PlanetDTO>> response = call.execute();
+        checkResponse(response, call);
+        return response.body();
+	}
+
+	@Override
+	public PlanetDTO getPlanet(int id) throws IOException {
+		Call<PlanetDTO> call = wsClient.getPlanet(id);
+        Response<PlanetDTO> response = call.execute();
+        checkResponse(response, call);
+        return response.body();
+	}
+	
+	@Override
+	public PlanetDTO getPlanet(String url) throws IOException {
+		Call<PlanetDTO> call = wsClient.getPlanet(url);
+        Response<PlanetDTO> response = call.execute();
         checkResponse(response, call);
         return response.body();
 	}

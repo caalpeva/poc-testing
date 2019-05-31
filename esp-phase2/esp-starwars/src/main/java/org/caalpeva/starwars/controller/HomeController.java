@@ -30,23 +30,9 @@ public class HomeController {
 	
 	@GetMapping("/import")
 	public String goImport(Model model) {
-//		User user = new User();
-//		user.email = "alberto@fsfd.es";
-//		user.firstName = "alberto";
-//		user.lastName = "Perez";
-//		user.id = 1;
-//		user.isAdmin = true;
-//		System.out.println(user);
-//		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-//		System.out.println(userDTO);
-//		//starWarsApi.getPeoples();
-//		//filmService.importDataFromWsapi();
-//		//model.addAttribute("movies", movieService.findAll());
-//		System.out.println("RestTemplate injected" + restTemplate.toString());
 		try {
 			importService.importDataFromWsapi();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "films/filmList";

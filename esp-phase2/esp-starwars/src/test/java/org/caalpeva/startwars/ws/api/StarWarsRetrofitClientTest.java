@@ -42,7 +42,7 @@ public class StarWarsRetrofitClientTest {
 		int pageNum = 1;
 		PageDTO<PeopleDTO> personsPage;
 		do {
-			personsPage = wsClient.getAllPeoples(pageNum++);
+			personsPage = wsClient.getAllPeople(pageNum++);
 			int count = personsPage.count;
 			assertThat(count).isNotZero().isGreaterThan(0);
 			for (PeopleDTO people : personsPage.results) {

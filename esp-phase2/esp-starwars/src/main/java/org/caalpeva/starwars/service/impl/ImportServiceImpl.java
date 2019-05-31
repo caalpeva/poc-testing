@@ -1,12 +1,18 @@
 package org.caalpeva.starwars.service.impl;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 import org.caalpeva.starwars.repository.PeopleRepository;
+import org.caalpeva.starwars.repository.PlanetRepository;
 import org.caalpeva.starwars.repository.model.People;
+import org.caalpeva.starwars.repository.model.Planet;
 import org.caalpeva.starwars.service.ImportService;
 import org.caalpeva.starwars.service.StarWarsApiService;
+import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
+import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,57 +35,38 @@ public class ImportServiceImpl implements ImportService {
 	@Autowired
 	private PeopleRepository peopleRepository;
 	
+	@Autowired
+	private PlanetRepository planetRepository;
+	
 	@Override
+	//@Transactional
 	public void importDataFromWsapi() throws IOException {
-		PeopleDTO peopleDto = starWarsApi.getPeople(1);
-		People people = modelMapper.map(peopleDto, People.class);
-		peopleRepository.save(people);
+		int page = 1;
+		PageDTO<PeopleDTO> peoplePageDTO;
+		do {
+			peoplePageDTO = starWarsApi.getAllPeople(page++);
+			List<PeopleDTO> peopleList = peoplePageDTO.results;
+			if (peopleList != null && peopleList.size() > 0) {
+				for(PeopleDTO peopleDTO: peopleList) {
+					People people = modelMapper.map(peopleDTO, People.class);
+					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
+					people.setHomeWorldUrl(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
+					
+					
+					
+					peopleRepository.save(people);					
+				} // for
+			}
+		} while(peoplePageDTO.hasMore());
 	}
 
-//	@Autowired
-//	private MovieRepository movieRepository;
-//	
-//	@Override
-//	public List<Film> findAll() {
-//		return movieRepository.findAll();
-//	}
-//
-//	@Override
-//	public Page<Film> findAll(Pageable pageable) {
-//		return movieRepository.findAll(pageable);
-//	}
-//	
-//	@Override
-//	public List<Film> findAllActives() {
-//		return movieRepository.findByStatusOrderByTitle(Status.ACTIVE);
-//	}
-//
-//	@Override
-//	public List<Film> findAllByShowtimeDate(Date date) {
-//		List<Integer> ids = movieRepository.findMovieIdsByShowtimeDate(date);
-//		return movieRepository.findAllById(ids);
-//	}
-//
-//	@Override
-//	public Film findById(int movieId) {
-//		Optional<Film> optional = movieRepository.findById(movieId);
-//		return optional.isPresent()
-//				? optional.get()
-//				: null;
-//	}
-//
-//	@Override
-//	public void save(Film movie) {
-//		movieRepository.save(movie);
-//	}
-//
-//	@Override
-//	public List<FilmType> getMovieTypes() {
-//		return Arrays.asList(FilmType.values());
-//	}
-//
-//	@Override
-//	public void delete(int movieId) {
-//		movieRepository.deleteById(movieId);
-//	}
+	public Planet findOrSavePlanet(Planet planet) {
+		Optional<Planet> optional = planetRepository.findByName(planet.getName());
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+		
+		return planetRepository.save(planet);
+	}
+
 }
