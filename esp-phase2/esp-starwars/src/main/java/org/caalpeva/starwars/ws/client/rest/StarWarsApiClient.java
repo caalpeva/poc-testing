@@ -96,4 +96,10 @@ public class StarWarsApiClient implements StarWarsApiService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public FilmDTO getFilm(String url) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

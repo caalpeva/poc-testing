@@ -1,6 +1,7 @@
 package org.caalpeva.starwars.ws.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,8 +35,8 @@ public class PeopleDTO implements Serializable {
     @JsonProperty("skin_color")
     public String skinColor;
 
-    public String created;
-    public String edited;
+    public Date created;
+    public Date edited;
     public String url;
 
     @JsonProperty("species")
@@ -119,19 +120,19 @@ public class PeopleDTO implements Serializable {
 		this.skinColor = skinColor;
 	}
 
-	public String getCreated() {
+	public Date getCreated() {
 		return created;
 	}
 
-	public void setCreated(String created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
 
-	public String getEdited() {
+	public Date getEdited() {
 		return edited;
 	}
 
-	public void setEdited(String edited) {
+	public void setEdited(Date edited) {
 		this.edited = edited;
 	}
 

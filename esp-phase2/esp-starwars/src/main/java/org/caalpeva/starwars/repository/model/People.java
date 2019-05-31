@@ -1,5 +1,9 @@
 package org.caalpeva.starwars.repository.model;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,14 +28,17 @@ public class People {
     public String height;
     public String mass;
     public String skinColor;
-    public String created;
-    public String edited;
+    public Date created;
+    public Date edited;
     public String url;
 
     @OneToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
 	@JoinColumn(nullable=false)
     public Planet homeWorld;
     
+	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
+	private Set<Film> filmList = new HashSet<Film>();
+	    
 	public int getId() {
 		return id;
 	}
@@ -70,7 +78,7 @@ public class People {
 	public Planet getHomeWorld() {
 		return homeWorld;
 	}
-	public void setHomeWorldUrl(Planet homeWorld) {
+	public void setHomeWorld(Planet homeWorld) {
 		this.homeWorld = homeWorld;
 	}
 	public String getMass() {
@@ -85,16 +93,16 @@ public class People {
 	public void setSkinColor(String skinColor) {
 		this.skinColor = skinColor;
 	}
-	public String getCreated() {
+	public Date getCreated() {
 		return created;
 	}
-	public void setCreated(String created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
-	public String getEdited() {
+	public Date getEdited() {
 		return edited;
 	}
-	public void setEdited(String edited) {
+	public void setEdited(Date edited) {
 		this.edited = edited;
 	}
 	public String getUrl() {
@@ -103,6 +111,14 @@ public class People {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	public Set<Film> getFilmList() {
+		return filmList;
+	}
+	public void setFilmList(Set<Film> filmList) {
+		this.filmList = filmList;
+	}
+	
+	
 
 //    public List<String> filmsUrls;
 //    

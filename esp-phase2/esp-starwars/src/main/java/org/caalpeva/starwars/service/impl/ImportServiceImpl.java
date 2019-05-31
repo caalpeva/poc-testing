@@ -1,19 +1,26 @@
 package org.caalpeva.starwars.service.impl;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import org.caalpeva.starwars.repository.FilmRepository;
 import org.caalpeva.starwars.repository.PeopleRepository;
 import org.caalpeva.starwars.repository.PlanetRepository;
+import org.caalpeva.starwars.repository.model.Film;
 import org.caalpeva.starwars.repository.model.People;
 import org.caalpeva.starwars.repository.model.Planet;
 import org.caalpeva.starwars.service.ImportService;
 import org.caalpeva.starwars.service.StarWarsApiService;
+import org.caalpeva.starwars.ws.dto.FilmDTO;
 import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
 import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -31,6 +38,9 @@ public class ImportServiceImpl implements ImportService {
 	@Autowired
 	@Qualifier("retrofit")
 	private StarWarsApiService starWarsApi;
+
+	@Autowired
+	private FilmRepository filmRepository;
 	
 	@Autowired
 	private PeopleRepository peopleRepository;
@@ -50,9 +60,21 @@ public class ImportServiceImpl implements ImportService {
 				for(PeopleDTO peopleDTO: peopleList) {
 					People people = modelMapper.map(peopleDTO, People.class);
 					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
-					people.setHomeWorldUrl(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
+					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
 					
+					List<FilmDTO> filmDTOList = new ArrayList<FilmDTO>();
+					for(String filmUrl: peopleDTO.getFilmsUrls()) {
+						filmDTOList.add(starWarsApi.getFilm(filmUrl));
+					} // for
 					
+				    // Define the target type
+				    Type targetListType = new TypeToken<List<Film>>() {}.getType();
+				    List<Film> films = modelMapper.map(filmDTOList, targetListType);
+				    people.setFilmList(new HashSet<Film>());
+				    for(Film film: films) {
+				    	//film.setOpeningCrawl(film.getOpeningCrawl().substring(0, 10));
+				    	people.getFilmList().add(findOrSaveFilm(film));
+				    }
 					
 					peopleRepository.save(people);					
 				} // for
@@ -67,6 +89,15 @@ public class ImportServiceImpl implements ImportService {
 		}
 		
 		return planetRepository.save(planet);
+	}
+	
+	public Film findOrSaveFilm(Film film) {
+		Optional<Film> optional = filmRepository.findByEpisodeId(film.getEpisodeId());
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+		
+		return filmRepository.save(film);
 	}
 
 }

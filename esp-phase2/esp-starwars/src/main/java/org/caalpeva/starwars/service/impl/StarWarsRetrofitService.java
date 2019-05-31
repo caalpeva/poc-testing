@@ -56,6 +56,14 @@ public class StarWarsRetrofitService implements StarWarsApiService {
         checkResponse(response, call);
         return response.body();
 	}
+	
+	@Override
+	public FilmDTO getFilm(String url) throws IOException {
+		Call<FilmDTO> call = wsClient.getFilm(url);
+        Response<FilmDTO> response = call.execute();
+        checkResponse(response, call);
+        return response.body();
+	}
 
 	@Override
 	public PageDTO<StarshipDTO> getAllStarships(int page) throws IOException {

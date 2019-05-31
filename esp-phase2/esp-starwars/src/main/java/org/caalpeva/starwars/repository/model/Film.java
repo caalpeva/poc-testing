@@ -1,14 +1,20 @@
 package org.caalpeva.starwars.repository.model;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "FILMS")
@@ -17,16 +23,123 @@ public class Film {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	public String title;
+	
+	@Column(nullable = false, unique = true)
     public int episodeId;
+	
+	@Lob
     public String openingCrawl;
     public String director;
     public String producer;
     public String url;
-    public DateTime created;
-    public DateTime edited;
+    public Date created;
+    public Date edited;
     public LocalDate releaseDate;
 
 //    public List<String> starshipsUrls;
 //
-//    public List<String> charactersUrls;
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
+			mappedBy = "filmList", fetch = FetchType.LAZY)
+    public Set<People> characterList;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public int getEpisodeId() {
+		return episodeId;
+	}
+
+	public void setEpisodeId(int episodeId) {
+		this.episodeId = episodeId;
+	}
+
+	public String getOpeningCrawl() {
+		return openingCrawl;
+	}
+
+	public void setOpeningCrawl(String openingCrawl) {
+		this.openingCrawl = openingCrawl;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getProducer() {
+		return producer;
+	}
+
+	public void setProducer(String producer) {
+		this.producer = producer;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getEdited() {
+		return edited;
+	}
+
+	public void setEdited(Date edited) {
+		this.edited = edited;
+	}
+
+	public LocalDate getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(LocalDate releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public Set<People> getCharacterList() {
+		return characterList;
+	}
+
+	public void setCharacterList(Set<People> characters) {
+		this.characterList = characters;
+	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Film)) return false;
+        Film film = (Film) o;
+        return Objects.equals(getEpisodeId(), film.getEpisodeId());
+    }
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getEpisodeId());
+	}
 }
