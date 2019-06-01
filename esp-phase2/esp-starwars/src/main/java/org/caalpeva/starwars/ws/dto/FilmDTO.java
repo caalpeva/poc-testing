@@ -45,11 +45,11 @@ public class FilmDTO implements Serializable {
     @JsonProperty("vehicles")
     public List<String> vehiclesUrls;
 
-    @JsonProperty("planets")
-    public List<String> planetsUrls;
-
     @JsonProperty("characters")
     public List<String> charactersUrls;
+    
+    @JsonProperty("planets")
+    public List<String> planetsUrls;
 
 	public String getTitle() {
 		return title;

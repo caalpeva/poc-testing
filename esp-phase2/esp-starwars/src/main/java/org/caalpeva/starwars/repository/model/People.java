@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -38,7 +39,10 @@ public class People {
     public Planet homeWorld;
     
 	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
-	private Set<Film> filmList = new HashSet<Film>();
+	@JoinTable(
+			joinColumns = { @JoinColumn(name = "people_id") },
+			inverseJoinColumns = { @JoinColumn(name = "film_id") })
+	private Set<Film> films = new HashSet<Film>();
 	
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
 			mappedBy= "people", fetch = FetchType.LAZY)
@@ -116,11 +120,11 @@ public class People {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public Set<Film> getFilmList() {
-		return filmList;
+	public Set<Film> getFilms() {
+		return films;
 	}
-	public void setFilmList(Set<Film> filmList) {
-		this.filmList = filmList;
+	public void setFilms(Set<Film> films) {
+		this.films = films;
 	}
 	public Set<PeopleStarship> getPeopleStarships() {
 		return peopleStarships;

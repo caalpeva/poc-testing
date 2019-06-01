@@ -82,7 +82,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 					People people = modelMapper.map(peopleDTO, People.class);
 					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
 					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
-					people.setFilmList(findOrSaveFilms(peopleDTO));
+					people.setFilms(findOrSaveFilms(peopleDTO));
 					peopleRepository.save(people);
 
 					// Se relaciona un individuo con sus starships

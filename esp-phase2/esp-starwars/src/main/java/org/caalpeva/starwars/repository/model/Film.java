@@ -36,11 +36,9 @@ public class Film {
     public Date edited;
     public LocalDate releaseDate;
 
-//    public List<String> starshipsUrls;
-//
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
-			mappedBy = "filmList", fetch = FetchType.LAZY)
-    public Set<People> characterList;
+			mappedBy= "films", fetch = FetchType.LAZY)
+    public Set<People> characters;
 
 	public int getId() {
 		return id;
@@ -122,12 +120,12 @@ public class Film {
 		this.releaseDate = releaseDate;
 	}
 
-	public Set<People> getCharacterList() {
-		return characterList;
+	public Set<People> getCharacters() {
+		return characters;
 	}
 
-	public void setCharacterList(Set<People> characters) {
-		this.characterList = characters;
+	public void setCharacters(Set<People> characters) {
+		this.characters = characters;
 	}
 	
 	@Override

@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import org.caalpeva.commons.utils.DateUtils;
 import org.caalpeva.report.csv.CsvReportReader;
 import org.caalpeva.report.csv.opencsv.OpenCsvReportReader;
 import org.caalpeva.report.services.DataService;
-import org.caalpeva.report.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

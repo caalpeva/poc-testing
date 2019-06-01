@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.caalpeva</groupId>
-		<artifactId>samples</artifactId>
+		<artifactId>esp</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>esp-starwars</artifactId>
@@ -140,6 +140,13 @@
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.2</version>
+		</dependency>
+
+		<!-- COMMONS -->
+		<dependency>
+			<groupId>org.caalpeva</groupId>
+			<artifactId>esp-commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- LOGGING -->

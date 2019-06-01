@@ -12,26 +12,25 @@ public class StarshipDTO implements Serializable {
 	
 	public String name;
 	public String model;
+	public String manufacturer;
 
 	@JsonProperty("vehicle_class")
 	public String vehicleClass;
 
-	public String manufacturer;
-
 	@JsonProperty("cost_in_credits")
 	public String costInCredits;
 
-	public String length;
 	public String crew;
 	public String passengers;
-
-	@JsonProperty("max_atmosphering_speed")
-	public String maxAtmospheringSpeed;
+	public String consumables;
+	public String length;
 
 	@JsonProperty("cargo_capacity")
 	public String cargoCapacity;
+	
+	@JsonProperty("max_atmosphering_speed")
+	public String maxAtmospheringSpeed;
 
-	public String consumables;
 	public Date created;
 	public Date edited;
 	public String url;
