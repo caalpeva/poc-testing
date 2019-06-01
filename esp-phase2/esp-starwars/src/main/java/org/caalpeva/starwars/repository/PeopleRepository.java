@@ -6,10 +6,10 @@ import java.util.Optional;
 import org.caalpeva.starwars.repository.model.People;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.stereotype.Repository;
 
-//@Repository
-@NoRepositoryBean
+@Repository
+//@NoRepositoryBean
 public interface PeopleRepository extends JpaRepository<People, Integer> {
 	public Optional<People> findByName(String name);
 	

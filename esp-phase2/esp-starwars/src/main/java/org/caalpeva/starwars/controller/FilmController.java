@@ -21,14 +21,11 @@ public class FilmController {
 	
 	@GetMapping("/index")
 	public String goIndex(@ModelAttribute("filmFormInstance") FilmForm filmForm, Model model) {
-		
 		return "films/filmForm";
 	}
 	@PostMapping("/index")
 	public String save(@ModelAttribute("filmFormInstance") FilmForm filmForm, Model model) {
-		
-		
-		
+		model.addAttribute("result", "Pilot of Starship");
 		//System.out.println(filmForm);
 		//redirectAttributes.addFlashAttribute("successMessage", "Datos enviados correctamente");
 		//return "redirect:index";

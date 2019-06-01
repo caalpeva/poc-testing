@@ -36,6 +36,10 @@
 			</h3>
 		</div>
 
+		<c:if test="${result != null}">      	
+      		<div class='alert alert-success' role="alert">${result}</div>      	
+      	</c:if>
+
 		<form:form action="${filmQueryUrl}" method="post"
 			class="form-horizontal" modelAttribute="filmFormInstance">
 			<div class="table-responsive">
