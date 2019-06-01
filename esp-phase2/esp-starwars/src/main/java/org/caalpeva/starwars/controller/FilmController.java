@@ -1,70 +1,59 @@
 package org.caalpeva.starwars.controller;
 
+import java.util.List;
+
+import org.caalpeva.starwars.repository.model.Film;
+import org.caalpeva.starwars.service.DatabaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/films")
 public class FilmController {
 
+	@Autowired
+	private DatabaseService databaseService;
+	
+	@GetMapping("/index")
+	public String goIndex(@ModelAttribute("filmFormInstance") FilmForm filmForm, Model model) {
+		
+		return "films/filmForm";
+	}
+	@PostMapping("/index")
+	public String save(@ModelAttribute("filmFormInstance") FilmForm filmForm, Model model) {
+		
+		
+		
+		//System.out.println(filmForm);
+		//redirectAttributes.addFlashAttribute("successMessage", "Datos enviados correctamente");
+		//return "redirect:index";
+		return "films/filmForm";
+	}
 
-//	@GetMapping("/p")
-//	public String goIndexPaginate(Model model, Pageable pageable) {
-//		model.addAttribute("moviesPage", movieService.findAll(pageable));
-//		return "movies/moviePageableList";
-//	}
-//	
-//	@GetMapping("/create")
-//	public String create(@ModelAttribute Movie movie, Model model) {
-//		//model.addAttribute("movieTypes", movieService.getMovieTypes());
-//		return "movies/movieForm";
-//	}
-//	
-//	@PostMapping("/save")
-//	public String save(@ModelAttribute Movie movie, BindingResult result, RedirectAttributes redirectAttributes,
-//			@RequestParam("imageFile") MultipartFile multipartFile, HttpServletRequest request, Model model) {
-//		if (result.hasErrors()) {
-//			System.out.println(result.getAllErrors());
-//			//model.addAttribute("movieTypes", movieService.getMovieTypes());
-//			return "movies/movieForm";
-//		}
-//
-//		if (!multipartFile.isEmpty()) {
-//			String filename = Utils.saveImage(multipartFile, request);
-//			movie.setFilename(filename);
-//		}
-//
-//		System.out.println(movie);
-//		movieService.save(movie);
-//
-//		redirectAttributes.addFlashAttribute("successMessage", "El registro fue guardado");
-//		//return "redirect:/movies/index";
-//		return "redirect:/movies/paginateIndex?page=0"; // URL relativa al context path de la aplicaci�n
-//	}
-//
-//	@GetMapping(value="/edit/{id}")
-//	public String edit(@PathVariable("id") int movieId, Model model) {
-//		Movie movie = movieService.findById(movieId);
-//		model.addAttribute("movie", movie);
-//		//model.addAttribute("movieTypes", movieService.getMovieTypes());
-//		return "movies/movieForm";
-//	}
-//	
-//	@GetMapping(value="/delete/{id}")
-//	public String delete(@PathVariable("id") int movieId, RedirectAttributes attributes) {
-//		movieService.delete(movieId);
-//		attributes.addFlashAttribute("successMessage", "El registro fue eliminado");
-//		return "redirect:/movies/index";
-//	}
-//
-//	@ModelAttribute("movieTypes")
-//	public List<FilmType> getMovieTypes() {
-//		return movieService.getMovieTypes();
-//	}
-//	
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-//	}
+	@ModelAttribute("availableFilms")
+	public List<Film> getMovieTypes() {
+		return databaseService.findAllFilms();
+	}
+
+	public class FilmForm {
+		private List<String> films;
+
+		public List<String> getFilms() {
+			return films;
+		}
+
+		public void setFilms(List<String> films) {
+			this.films = films;
+		}
+
+		@Override
+		public String toString() {
+			return "FilmForm [films=" + films + "]";
+		}
+	}
 }

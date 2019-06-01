@@ -6,9 +6,10 @@ import java.util.Optional;
 import org.caalpeva.starwars.repository.model.People;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-@Repository
+//@Repository
+@NoRepositoryBean
 public interface PeopleRepository extends JpaRepository<People, Integer> {
 	public Optional<People> findByName(String name);
 	
@@ -26,5 +27,25 @@ public interface PeopleRepository extends JpaRepository<People, Integer> {
 //	inner join PEOPLE_FILMS pf on p.id = pf.characterList_id
 //	inner join FILMS f on pf.filmList_id = f.id
 //	group by p.name
+	
+	//public People getPilotOfStarshipThatMostHasAppeared();
+	
+//	select p.name from people p
+//	inner join PEOPLE_STARSHIPS ps on p.id = ps.people_id
+//	inner join STARSHIPS s on ps.starship_id = s.id
+//	where s.name = 
+//	 (
+//		select top 1 s.name from FILMS f
+//		inner join PEOPLE_FILMS pf on f.id = pf.film_id
+//		inner join PEOPLE p on pf.people_id = p.id
+//		inner join PEOPLE_STARSHIPS ps on p.id = ps.people_id
+//		inner join STARSHIPS s on ps.starship_id = s.id
+//		group by s.name
+//		having count(*) = (select distinct(count(*)) from FILMS f
+//		inner join PEOPLE_FILMS pf on f.id = pf.film_id
+//		inner join PEOPLE p on pf.people_id = p.id
+//		inner join PEOPLE_STARSHIPS ps on p.id = ps.people_id
+//		inner join STARSHIPS s on ps.starship_id = s.id
+//		group by s.name))
 
 }

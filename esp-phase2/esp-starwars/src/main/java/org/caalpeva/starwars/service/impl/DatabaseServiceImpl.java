@@ -274,4 +274,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return map;
 	}
 
+	@Override
+	public List<Film> findAllFilms() {
+		return filmRepository.findAll();
+	}
+	
+	
+
 }

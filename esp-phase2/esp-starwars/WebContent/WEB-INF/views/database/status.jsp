@@ -28,8 +28,6 @@
 
 	<div class="container theme-showcase" role="main">
 
-		<h3>Base de datos</h3>
-
 	<c:set var="scheme" value="${pageContext.request.scheme}"/>	
 	<c:set var="serverPort" value="${pageContext.request.serverPort}"/>
 	<c:set var="port" value=":${serverPort}"/>
@@ -40,6 +38,8 @@
 		<a href="#" onclick='if (confirm("¿Esta seguro de eliminar la base de datos?")) requestOperation("${scheme}://${pageContext.request.serverName}${port}${deleteDataUrl}");'
 			class="btn btn-danger btn-sm" role="button" title="Eliminar">
 		Eliminar datos <span class="glyphicon glyphicon-trash"></span></a>
+	
+		<hr class="featurette-divider">
 
 		<div>
 			<h4 id="messageId"></h4>

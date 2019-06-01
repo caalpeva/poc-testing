@@ -26,9 +26,13 @@
 
     <div class="container theme-showcase" role="main">
 
-      <h3>Listado de Personajes</h3>
-      
-     <div class="table-responsive">
+		<div class="page-header">
+			<h3 class="blog-title">
+				<span class="label label-success">Listado de Personajes</span>
+			</h3>
+		</div>
+
+		<div class="table-responsive">
         <table class="table table-hover table-striped table-bordered">
             <tr>
                 <th>Personaje</th>
