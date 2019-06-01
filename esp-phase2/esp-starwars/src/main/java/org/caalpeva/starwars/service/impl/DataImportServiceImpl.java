@@ -23,6 +23,7 @@ import org.caalpeva.starwars.service.StarWarsApiService;
 import org.caalpeva.starwars.ws.dto.FilmDTO;
 import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
+import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.caalpeva.starwars.ws.dto.StarshipDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -31,7 +32,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ImportServiceImpl implements ImportService {
+public class DataImportServiceImpl implements ImportService {
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -58,32 +59,39 @@ public class ImportServiceImpl implements ImportService {
 	@Override
 	// @Transactional
 	public void importDataFromWsapi() throws IOException {
-		int page = 1;
-//		PageDTO<PeopleDTO> peoplePageDTO;
-//		do {
-//			peoplePageDTO = starWarsApi.getAllPeople(page++);
-//			List<PeopleDTO> peopleList = peoplePageDTO.results;
-//			if (peopleList != null && peopleList.size() > 0) {
-//				for (PeopleDTO peopleDTO : peopleList) {
-//					// Se insertan o actualizan las starships de un individuo
-//					Type targetListType=new TypeToken<List<Starship>>(){}.getType();
-//					List<Starship> starships = modelMapper.map(extractStarshipDtoList(peopleDTO), targetListType);
-//					Set<Starship> starshipsOfPeople = saveOrUpdate(starships);
-//					
-//					// Se inserta la información de un individuo
-//					People people = modelMapper.map(peopleDTO, People.class);
-//					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
-//					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
-//					people.setFilmList(findOrSaveFilms(peopleDTO));
-//					peopleRepository.save(people);
-//
-//					// Se relaciona un individuo con sus starships
-//					saveOrUpdate(people, starshipsOfPeople);
-//				} // for
-//			}
-//		} while (peoplePageDTO.hasMore());
+		importRelationalDataFromPeople();
+		importRemainingStarShips();
+	}
 
-		page = 1;
+	public void importRelationalDataFromPeople() throws IOException {
+		int page = 1;
+		PageDTO<PeopleDTO> peoplePageDTO;
+		do {
+			peoplePageDTO = starWarsApi.getAllPeople(page++);
+			List<PeopleDTO> peopleList = peoplePageDTO.results;
+			if (peopleList != null && peopleList.size() > 0) {
+				for (PeopleDTO peopleDTO : peopleList) {
+					// Se insertan o actualizan las starships de un individuo
+					Type targetListType=new TypeToken<List<Starship>>(){}.getType();
+					List<Starship> starships = modelMapper.map(extractStarshipDtoList(peopleDTO), targetListType);
+					Set<Starship> starshipsOfPeople = saveOrUpdate(starships);
+					
+					// Se inserta la información de un individuo
+					People people = modelMapper.map(peopleDTO, People.class);
+					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
+					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
+					people.setFilmList(findOrSaveFilms(peopleDTO));
+					peopleRepository.save(people);
+
+					// Se relaciona un individuo con sus starships
+					saveOrUpdate(people, starshipsOfPeople);
+				} // for
+			}
+		} while (peoplePageDTO.hasMore());
+	}
+	
+	public void importRemainingStarShips() throws IOException {
+		int page = 1;
 		PageDTO<StarshipDTO> starshipPageDTO;
 		do {
 			starshipPageDTO = starWarsApi.getAllStarships(page++);
@@ -92,7 +100,6 @@ public class ImportServiceImpl implements ImportService {
 				for (StarshipDTO starshipDTO : starshipList) {
 					Starship starship = findOrSaveStarship(modelMapper.map(starshipDTO, Starship.class));
 					if (starshipDTO.getPilotsUrls() != null && starshipDTO.getPilotsUrls().size() > 0) {
-						vecespilotos += starshipDTO.getPilotsUrls().size();
 						for(String url: starshipDTO.getPilotsUrls()) {
 							PeopleDTO peopleDTO = starWarsApi.getPeople(url);
 							People people = findOrSavePeople(modelMapper.map(peopleDTO, People.class));
@@ -102,10 +109,7 @@ public class ImportServiceImpl implements ImportService {
 				} // for
 			}
 		} while (starshipPageDTO.hasMore());
-		System.out.println("VECES PILOTOS: " + vecespilotos);
 	}
-
-	public static int vecespilotos = 0;
 	
 	/************************************************/
 	/*************** METODOS PRIVADOS ***************/

@@ -66,7 +66,7 @@ public class JPAConfig {
 
 	private Properties getJpaProperties() {
 		Properties properties = new Properties();
-		properties.put("hibernate.hbm2ddl.auto", "validate");
+		properties.put("hibernate.hbm2ddl.auto", "create");
 		//properties.put("hibernate.hbm2ddl.import_files", "/import.sql");
 		//properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		properties.put("hibernate.show_sql", "true");
