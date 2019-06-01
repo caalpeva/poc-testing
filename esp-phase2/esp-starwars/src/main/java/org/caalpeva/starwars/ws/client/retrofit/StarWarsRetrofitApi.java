@@ -20,6 +20,9 @@ public interface StarWarsRetrofitApi {
     @GET("people/{id}/")
     Call<PeopleDTO> getPeople(@Path("id") int peopleId);
 
+    @GET
+    Call<PeopleDTO> getPeople(@Url String peopleId);
+    
     @GET("films/")
     Call<PageDTO<FilmDTO>> getAllFilms(@Query("page") int page);
 

@@ -18,6 +18,7 @@ public interface StarWarsApiService {
 	
 	PageDTO<PeopleDTO> getAllPeople(int page) throws IOException;
     PeopleDTO getPeople(int id) throws IOException;
+    PeopleDTO getPeople(String url) throws IOException;
     
     PageDTO<FilmDTO> getAllFilms(int page) throws IOException;
     FilmDTO getFilm(int id) throws IOException;

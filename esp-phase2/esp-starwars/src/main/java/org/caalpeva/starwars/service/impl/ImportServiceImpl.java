@@ -23,7 +23,6 @@ import org.caalpeva.starwars.service.StarWarsApiService;
 import org.caalpeva.starwars.ws.dto.FilmDTO;
 import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
-import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.caalpeva.starwars.ws.dto.StarshipDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -60,47 +59,54 @@ public class ImportServiceImpl implements ImportService {
 	// @Transactional
 	public void importDataFromWsapi() throws IOException {
 		int page = 1;
-		PageDTO<PeopleDTO> peoplePageDTO;
-		do {
-			peoplePageDTO = starWarsApi.getAllPeople(page++);
-			List<PeopleDTO> peopleList = peoplePageDTO.results;
-			if (peopleList != null && peopleList.size() > 0) {
-				for (PeopleDTO peopleDTO : peopleList) {
-					// Se insertan o actualizan las starships de un individuo
-					Type targetListType=new TypeToken<List<Starship>>(){}.getType();
-					List<Starship> starships = modelMapper.map(extractStarshipDtoList(peopleDTO), targetListType);
-					Set<Starship> starshipsOfPeople = saveOrUpdate(starships);
-					
-					// Se inserta la información de un individuo
-					People people = modelMapper.map(peopleDTO, People.class);
-					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
-					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
-					people.setFilmList(findOrSaveFilms(peopleDTO));
-					peopleRepository.save(people);
-
-					// Se relaciona un individuo con sus starships
-					saveOrUpdate(people, starshipsOfPeople);
-				} // for
-			}
-		} while (peoplePageDTO.hasMore());
-
-//		page = 1;
-//		PageDTO<StarshipDTO> starshipPageDTO;
+//		PageDTO<PeopleDTO> peoplePageDTO;
 //		do {
-//			starshipPageDTO = starWarsApi.getAllStarships(page++);
-//			List<StarshipDTO> starshipList = starshipPageDTO.results;
-//			if (starshipList != null && starshipList.size() > 0) {
-//				for (StarshipDTO starshipDTO : starshipList) {
-//					if (starshipDTO.getPilotsUrls() != null) {
-//						pilotadas += starshipDTO.getPilotsUrls().size();
-//					}
+//			peoplePageDTO = starWarsApi.getAllPeople(page++);
+//			List<PeopleDTO> peopleList = peoplePageDTO.results;
+//			if (peopleList != null && peopleList.size() > 0) {
+//				for (PeopleDTO peopleDTO : peopleList) {
+//					// Se insertan o actualizan las starships de un individuo
+//					Type targetListType=new TypeToken<List<Starship>>(){}.getType();
+//					List<Starship> starships = modelMapper.map(extractStarshipDtoList(peopleDTO), targetListType);
+//					Set<Starship> starshipsOfPeople = saveOrUpdate(starships);
+//					
+//					// Se inserta la información de un individuo
+//					People people = modelMapper.map(peopleDTO, People.class);
+//					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
+//					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
+//					people.setFilmList(findOrSaveFilms(peopleDTO));
+//					peopleRepository.save(people);
+//
+//					// Se relaciona un individuo con sus starships
+//					saveOrUpdate(people, starshipsOfPeople);
 //				} // for
 //			}
 //		} while (peoplePageDTO.hasMore());
-		System.out.println("Pilotadas: " + pilotadas);
-		System.out.println("Pilotos: " + pilotos.size());
+
+		page = 1;
+		PageDTO<StarshipDTO> starshipPageDTO;
+		do {
+			starshipPageDTO = starWarsApi.getAllStarships(page++);
+			List<StarshipDTO> starshipList = starshipPageDTO.results;
+			if (starshipList != null && starshipList.size() > 0) {
+				for (StarshipDTO starshipDTO : starshipList) {
+					Starship starship = findOrSaveStarship(modelMapper.map(starshipDTO, Starship.class));
+					if (starshipDTO.getPilotsUrls() != null && starshipDTO.getPilotsUrls().size() > 0) {
+						vecespilotos += starshipDTO.getPilotsUrls().size();
+						for(String url: starshipDTO.getPilotsUrls()) {
+							PeopleDTO peopleDTO = starWarsApi.getPeople(url);
+							People people = findOrSavePeople(modelMapper.map(peopleDTO, People.class));
+							saveOrUpdate(people, starship, true);
+						} // for
+					}
+				} // for
+			}
+		} while (starshipPageDTO.hasMore());
+		System.out.println("VECES PILOTOS: " + vecespilotos);
 	}
 
+	public static int vecespilotos = 0;
+	
 	/************************************************/
 	/*************** METODOS PRIVADOS ***************/
 	/************************************************/
@@ -132,14 +138,9 @@ public class ImportServiceImpl implements ImportService {
 		return filmSet;
 	}
 
-	static int pilotadas = 0;
-	static Set<String> pilotos = new HashSet<String>();
-
 	private List<StarshipDTO> extractStarshipDtoList(PeopleDTO peopleDTO) throws IOException {
 		List<StarshipDTO> starshipDtoList = new ArrayList<StarshipDTO>();
 		for (String startshipUrl : peopleDTO.getStarshipsUrls()) {
-			pilotadas++;
-			pilotos.add(startshipUrl);
 			starshipDtoList.add(starWarsApi.getStarship(startshipUrl));
 		} // for
 
@@ -169,15 +170,23 @@ public class ImportServiceImpl implements ImportService {
 		Set<PeopleStarship> peopleStarshipSet = new HashSet<PeopleStarship>();
 		if (starshipSet != null && starshipSet.size() > 0) {
 			for (Starship starship: starshipSet) {
-				PeopleStarship peopleStarship = new PeopleStarship();
-				peopleStarship.setPeople(people);
-				peopleStarship.setStarship(starship);
-				peopleStarshipSet.add(peopleStarship);
-				peopleStarShipRepository.save(peopleStarship);
+				saveOrUpdate(people, starship, false);
 			} // for
 		}
 
 		return peopleStarshipSet;
+	}
+	
+	private PeopleStarship saveOrUpdate(People people, Starship starship, boolean isPilot) throws IOException {
+		PeopleStarship peopleStarship = new PeopleStarship();
+		peopleStarship.setPeople(people);
+		peopleStarship.setStarship(starship);
+		
+		peopleStarship = findOrSavePeopleStarShip(peopleStarship);
+		peopleStarship.setPilot(isPilot);
+		peopleStarShipRepository.save(peopleStarship);
+
+		return peopleStarship;
 	}
 
 	private Planet findOrSavePlanet(Planet planet) {
@@ -187,6 +196,15 @@ public class ImportServiceImpl implements ImportService {
 		}
 
 		return planetRepository.save(planet);
+	}
+	
+	private People findOrSavePeople(People people) {
+		Optional<People> optional = peopleRepository.findByName(people.getName());
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+
+		return peopleRepository.save(people);
 	}
 
 	private Starship findOrSaveStarship(Starship starship) {

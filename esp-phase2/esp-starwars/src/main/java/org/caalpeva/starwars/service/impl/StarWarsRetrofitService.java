@@ -40,6 +40,15 @@ public class StarWarsRetrofitService implements StarWarsApiService {
         checkResponse(response, call);
         return response.body();
 	}
+	
+
+	@Override
+	public PeopleDTO getPeople(String url) throws IOException {
+		Call<PeopleDTO> call = wsClient.getPeople(url);
+        Response<PeopleDTO> response = call.execute();
+        checkResponse(response, call);
+        return response.body();
+	}
 
 	@Override
 	public PageDTO<FilmDTO> getAllFilms(int page) throws IOException {
