@@ -29,14 +29,6 @@ public class HomeController {
 //		//model.addAttribute("newsList", newsService.findLatest10());
 //		return "home";
 //	}
-//	
-//	@RequestMapping(value="detail/{id}/{searchDate}")
-//	public String goMovieDetail(@PathVariable("id") int movieId, @PathVariable("searchDate") Date date, Model model) {
-//		model.addAttribute("searchDate", dateFormat.format(date));
-//		model.addAttribute("showtimes", showtimesService.getShowTimes(movieId, date));
-//		model.addAttribute("movie", movieService.findById(movieId));
-//		return "movieDetail";
-//	}
 //
 //	@ModelAttribute("banners")
 //	public List<Banner> getBanners() {
@@ -46,25 +38,5 @@ public class HomeController {
 //	@ModelAttribute("newsList")
 //	public List<News> getNews() {
 //		return newsService.findLatest10();
-//	}
-//	
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-//	}
-//	
-//	private Date getStartDate() {
-//		// Se calcula una fecha de inicio en la que se conoce que existen datos
-//		Date startDate = showtimesService.findLatestShowtimesDate();
-//		if (startDate != null) {
-////			Calendar calendar = Calendar.getInstance();
-////			calendar.setTime(startDate);
-////			calendar.add(Calendar.DATE, -NUMBER_OF_DAYS);
-////			startDate = calendar.getTime();
-//		} else {
-//			startDate = new Date();			
-//		}
-//		return startDate;
 //	}
 }

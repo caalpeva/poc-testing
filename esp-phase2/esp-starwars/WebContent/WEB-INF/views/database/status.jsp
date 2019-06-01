@@ -41,6 +41,13 @@
 			class="btn btn-danger btn-sm" role="button" title="Eliminar">
 		Eliminar datos <span class="glyphicon glyphicon-trash"></span></a>
 
+		<div>
+			<h4 id="messageId"></h4>
+			<div>
+        		<img id="waitingImage" alt="Waiting" src="${publicResourcesUrl}/images/waiting.gif" style="visibility: hidden;">
+       		</div>
+		</div>
+
 		<hr class="featurette-divider">
 
 		<jsp:include page="../includes/footer.jsp"></jsp:include>
@@ -56,17 +63,19 @@
 	<script src="${publicResourcesUrl}/bootstrap/js/bootstrap.min.js"></script>
 	<script>
     function requestOperation(URLhost) {
+    	document.getElementById("messageId").innerHTML = "";
+    	document.getElementById("waitingImage").style.visibility = 'visible';
+    	
 	    var req = new XMLHttpRequest();
-	    //var URLhost = '${importDataUrl}';
-	    
 	    req.open('GET', URLhost, true);
 	    req.addEventListener('load',function(){
 	      if(req.status >= 200 && req.status < 400){
 	    	  var response = JSON.parse(req.responseText);
 	    	  //alert(response);
-	    	  get(response) {
-	    		  
-	    	  }
+	    	  document.getElementById("waitingImage").style.visibility = 'hidden';
+	    	  document.getElementById("messageId").innerHTML = (response)
+	    	  	? "La operación se ha realizado correctamente."
+	    	  	: "La operación no ha podido completarse. Consulte a su administrador."
 	    	  console.log(response);
 	      } else {
 	    	  console.log('Error in network request: ' + req.statusText);

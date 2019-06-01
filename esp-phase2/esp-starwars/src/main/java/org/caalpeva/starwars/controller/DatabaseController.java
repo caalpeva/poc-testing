@@ -15,23 +15,23 @@ public class DatabaseController {
 	
 	@GetMapping("/import")
 	public boolean importData() {
-//		try {
-//			importService.importData();
-//		} catch (Exception e) {
-//			return false;
-//		}
+		try {
+			importService.importData();
+		} catch (Exception e) {
+			return false;
+		}
 		
 		return true;
 	}
 	
 	@GetMapping("/delete")
 	public boolean delete() {
-//		try {
-//			importService.deleteData();
-//		} catch (Exception e) {
-//			return false;
-//		}
+		try {
+			importService.deleteData();
+		} catch (Exception e) {
+			return false;
+		}
 		
-		return false;
+		return true;
 	}
 }
