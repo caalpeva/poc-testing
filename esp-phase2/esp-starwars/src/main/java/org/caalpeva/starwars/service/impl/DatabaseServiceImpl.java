@@ -5,8 +5,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.caalpeva.starwars.repository.FilmRepository;
 import org.caalpeva.starwars.repository.PeopleRepository;
@@ -220,6 +222,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return starShipRepository.save(starship);
 	}
 
+	/**
+	 * 
+	 * @param peopleStarship
+	 * @return
+	 */
 	private PeopleStarship findOrSavePeopleStarShip(PeopleStarship peopleStarship) {
 		Optional<PeopleStarship> optional = peopleStarShipRepository.findByPeople_IdAndStarship_Id(
 				peopleStarship.getPeople().getId(), peopleStarship.getStarship().getId());
@@ -234,6 +241,28 @@ public class DatabaseServiceImpl implements DatabaseService {
 	public void deleteData() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * Método encargado de proporcionar la información de la consulta en un formato mas adecuado para su utilización
+	 */
+	@Override
+	public Map<String, List<String>> getPeopleWithFilms() {
+		Map<String, List<String>> map = new TreeMap<String, List<String>>();
+		List<Object[]> resultSet = peopleRepository.getPeopleWithFilms();
+		if (resultSet != null && resultSet.size() > 0) {
+			String lastName = null;
+			for (Object[] result: resultSet) {
+				if (lastName == null || !lastName.equals(result[0])) {
+					lastName = (String) result[0];
+					map.put(lastName, new ArrayList<String>());
+				}
+				
+				map.get(lastName).add((String) result[1]);
+			} // for
+		}
+			
+		return map;
 	}
 
 }

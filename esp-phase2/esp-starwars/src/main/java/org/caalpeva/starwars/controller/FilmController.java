@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/films")
 public class FilmController {
 
-//
-//	@GetMapping("/paginateIndex")
+
+//	@GetMapping("/p")
 //	public String goIndexPaginate(Model model, Pageable pageable) {
 //		model.addAttribute("moviesPage", movieService.findAll(pageable));
 //		return "movies/moviePageableList";
