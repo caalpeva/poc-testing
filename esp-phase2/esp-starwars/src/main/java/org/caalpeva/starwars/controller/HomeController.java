@@ -1,9 +1,5 @@
 package org.caalpeva.starwars.controller;
 
-import java.io.IOException;
-
-import org.caalpeva.starwars.service.ImportService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,29 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
-	@Autowired
-	private ImportService importService;
-	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String goHome(Model model) {
 		model.addAttribute("users", "");
-		//Date startDate = getStartDate();
-		//model.addAttribute("banners", bannerService.findAllActives());
-		//model.addAttribute("dates", Utils.getNextDays(startDate, NUMBER_OF_DAYS));
-		//model.addAttribute("searchDate", dateFormat.format(startDate));
-		//model.addAttribute("movies", movieService.findAllByShowtimeDate(startDate));
-		//model.addAttribute("newsList", newsService.findLatest10());
 		return "home";
 	}
 	
-	@GetMapping("/import")
+	@GetMapping("/database")
 	public String goImport(Model model) {
-		try {
-			importService.importDataFromWsapi();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "films/filmList";
+		return "database/status";
 	}
 //	
 //	@RequestMapping(value="/search", method=RequestMethod.POST)

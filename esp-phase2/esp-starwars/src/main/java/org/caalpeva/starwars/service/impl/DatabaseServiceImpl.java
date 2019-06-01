@@ -18,7 +18,7 @@ import org.caalpeva.starwars.repository.model.People;
 import org.caalpeva.starwars.repository.model.PeopleStarship;
 import org.caalpeva.starwars.repository.model.Planet;
 import org.caalpeva.starwars.repository.model.Starship;
-import org.caalpeva.starwars.service.ImportService;
+import org.caalpeva.starwars.service.DatabaseService;
 import org.caalpeva.starwars.service.StarWarsApiService;
 import org.caalpeva.starwars.ws.dto.FilmDTO;
 import org.caalpeva.starwars.ws.dto.PageDTO;
@@ -32,7 +32,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DataImportServiceImpl implements ImportService {
+public class DatabaseServiceImpl implements DatabaseService {
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -58,7 +58,7 @@ public class DataImportServiceImpl implements ImportService {
 
 	@Override
 	// @Transactional
-	public void importDataFromWsapi() throws IOException {
+	public void importData() throws IOException {
 		importRelationalDataFromPeople();
 		importRemainingStarShips();
 	}
@@ -228,6 +228,12 @@ public class DataImportServiceImpl implements ImportService {
 		}
 
 		return peopleStarShipRepository.save(peopleStarship);
+	}
+
+	@Override
+	public void deleteData() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

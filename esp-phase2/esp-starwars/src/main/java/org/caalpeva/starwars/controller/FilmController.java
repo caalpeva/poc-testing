@@ -1,6 +1,6 @@
 package org.caalpeva.starwars.controller;
 
-import org.caalpeva.starwars.service.ImportService;
+import org.caalpeva.starwars.service.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ public class FilmController {
 	//private StarWarsApi starWarsApi;
 	
 	@Autowired
-	private ImportService importService;
+	private DatabaseService importService;
 	
 //
 //	@GetMapping("/paginateIndex")
