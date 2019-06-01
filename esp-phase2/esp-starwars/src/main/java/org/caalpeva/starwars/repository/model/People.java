@@ -38,7 +38,7 @@ public class People {
 	@JoinColumn(nullable=false)
     public Planet homeWorld;
     
-	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE }, fetch= FetchType.LAZY)
 	@JoinTable(
 			joinColumns = { @JoinColumn(name = "people_id") },
 			inverseJoinColumns = { @JoinColumn(name = "film_id") })

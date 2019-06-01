@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ehcache.CacheManager;
+import org.ehcache.config.builders.CacheManagerBuilder;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
@@ -56,6 +58,14 @@ public class AppConfig {
 		restTemplate.setInterceptors(interceptors);
 
 		return restTemplate;
+	}
+
+	@Bean
+	public CacheManager cacheManager() {
+	    CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().build();
+        cacheManager.init();
+        
+        return cacheManager;
 	}
 
 //	@Bean

@@ -27,6 +27,7 @@ import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
 import org.caalpeva.starwars.ws.dto.PlanetDTO;
 import org.caalpeva.starwars.ws.dto.StarshipDTO;
+import org.ehcache.CacheManager;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Autowired
 	private PeopleStarshipRepository peopleStarShipRepository;
 
+	@Autowired
+	private CacheManager cacheManager;
+	
+	private Set<String> requestedUrls = new HashSet<String>();
+	
 	@Override
 	// @Transactional
 	public void importData() throws IOException {
@@ -239,8 +245,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 
 	@Override
 	public void deleteData() {
-		// TODO Auto-generated method stub
-		
+		peopleStarShipRepository.deleteAll();
+		peopleRepository.deleteAll();
+		filmRepository.deleteAll();
+		planetRepository.deleteAll();
+		starShipRepository.deleteAll();
 	}
 	
 	/**
