@@ -19,7 +19,7 @@ public interface PeopleRepository extends JpaRepository<People, Integer> {
 	 * de los personajes para obtener su listado de películas.
 	 * @return
 	 */
-	@Query("select p.name, f.title from People p inner join Film f order by p.name")
+	@Query("select p.name, f.title from People p inner join p.filmList f order by p.name")
 	public List<Object[]> getPeopleWithFilms();
 
 //	select p.name, count(*) from people p
