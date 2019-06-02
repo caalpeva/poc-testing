@@ -20,7 +20,7 @@ import org.caalpeva.starwars.repository.model.People;
 import org.caalpeva.starwars.repository.model.Planet;
 import org.caalpeva.starwars.repository.model.Starship;
 import org.caalpeva.starwars.service.DatabaseService;
-import org.caalpeva.starwars.service.StarWarsApiService;
+import org.caalpeva.starwars.service.StarWarsApiCacheService;
 import org.caalpeva.starwars.ws.dto.FilmDTO;
 import org.caalpeva.starwars.ws.dto.PageDTO;
 import org.caalpeva.starwars.ws.dto.PeopleDTO;
@@ -40,8 +40,8 @@ public class DatabaseServiceImpl implements DatabaseService {
 	private ModelMapper modelMapper;
 
 	@Autowired
-	@Qualifier("retrofit")
-	private StarWarsApiService starWarsApi;
+	@Qualifier("cacheRetrofit")
+	private StarWarsApiCacheService starWarsApi;
 
 	@Autowired
 	private FilmRepository filmRepository;
@@ -66,8 +66,9 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Override
 	// @Transactional
 	public void importData() throws IOException {
-		//importRelationalDataFromPeople();
-		importRemainingStarShips();
+		starWarsApi.cleanCache();
+		importRelationalDataFromPeople();
+		importFilmsAndStarShips();		
 	}
 
 	public void importRelationalDataFromPeople() throws IOException {
@@ -98,7 +99,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 		} while (peoplePageDTO.hasMore());
 	}
 	
-	public void importRemainingStarShips() throws IOException {
+	public void importFilmsAndStarShips() throws IOException {
 		int page = 1;
 		PageDTO<StarshipDTO> starshipPageDTO;
 		do {
@@ -107,13 +108,6 @@ public class DatabaseServiceImpl implements DatabaseService {
 			if (starshipList != null && starshipList.size() > 0) {
 				for (StarshipDTO starshipDTO : starshipList) {
 					Starship starship = findOrSaveStarship(modelMapper.map(starshipDTO, Starship.class));
-//					if (starshipDTO.getPilotsUrls() != null && starshipDTO.getPilotsUrls().size() > 0) {
-//						for(String url: starshipDTO.getPilotsUrls()) {
-//							PeopleDTO peopleDTO = starWarsApi.getPeople(url);
-//							People people = findOrSavePeople(modelMapper.map(peopleDTO, People.class));
-//							saveOrUpdate(people, starship, true);
-//						} // for
-//					}
 				} // for
 			}
 		} while (starshipPageDTO.hasMore());
