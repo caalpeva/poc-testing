@@ -30,21 +30,21 @@ public interface PeopleRepository extends JpaRepository<People, Integer> {
 	
 	
 	@Query("select p from People p "
-			+ "inner join p.films f ")
-//			+ "where s.name in ("
-//				+ "select s.name from Films f "
-//				+ "inner join f.characters.starships s "
-//				+ "where f.id in :ids "
-//				+ "group by s.name"
-//				+ "having count(*) = ( "
-//					+ "select max(cuenta) from ( "
-//						+ "select count(*) cuenta from Starship s"
-//							+ "inner join s.pilots.films f"
-//							+ "where f.id in :ids "
-//							+ "group by s.name)"
-//						+ ")"
-//					+ ")"
-//				+ "group by p.name")
-	public List<People> getPilotOfStarshipThatMostHasAppeared2(@Param("ids") List<Integer> ids);
+			+ "inner join p.starships s "
+			+ "where s.name in ("
+				+ "select s.name from Film f "
+				+ "inner join f.starships s "
+				+ "where f.id in :ids "
+				+ "group by s.name "
+				+ "having count(*) = ("
+					+ "select count(s.name) as A from Starship s "
+						+ "inner join s.films f "
+						+ "where f.id in :ids "
+						+ "group by s.name "
+						+ "order by A "
+						+ "limit 1 "
+					+ ")"
+				+ ")")
+	public List<People> getPilotOfStarshipThatMostHasAppeared(@Param("ids") List<Integer> ids);
 
 }

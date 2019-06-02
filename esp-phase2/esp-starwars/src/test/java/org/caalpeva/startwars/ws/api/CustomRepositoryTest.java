@@ -29,11 +29,13 @@ public class CustomRepositoryTest {
 	@Test
 	public void testRepository() throws IOException {
 		List<Integer> lista = new ArrayList<Integer>();
-		lista.add(34);
-		lista.add(35);
-		List<People> people = peopleRepository.getPilotOfStarshipThatMostHasAppeared2(lista);
+		lista.add(1);
+		lista.add(2);
+		lista.add(5);
+		List<People> people = peopleRepository.getPilotOfStarshipThatMostHasAppeared(lista);
 		for (People person: people) {
 			System.out.println(person.getName());
 		} // for
+		System.out.println("TOTAL " + people.size());
 	}
 }
