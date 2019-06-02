@@ -18,7 +18,6 @@ import org.caalpeva.starwars.repository.PlanetRepository;
 import org.caalpeva.starwars.repository.StarShipRepository;
 import org.caalpeva.starwars.repository.model.Film;
 import org.caalpeva.starwars.repository.model.People;
-//import org.caalpeva.starwars.repository.model.PeopleStarship;
 import org.caalpeva.starwars.repository.model.Planet;
 import org.caalpeva.starwars.repository.model.Starship;
 import org.caalpeva.starwars.service.DatabaseService;
@@ -64,10 +63,10 @@ public class DatabaseServiceImpl implements DatabaseService {
 	 * Método encargado de realizar la importación de datos
 	 */
 	@Override
-	// @Transactional
+	@Transactional
 	public void importData() throws IOException {
 		starWarsApi.cleanCache();
-		//deleteData();
+		deleteData();
 		importFilms();
 		importStarShips();
 		importPlanets();
@@ -313,5 +312,12 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Override
 	public List<Film> findAllFilms() {
 		return filmRepository.findAll();
+	}
+
+	@Override
+	public List<People> getPilotOfStarshipThatMostHasAppeared(List<Integer> filmsIds) {
+		// TODO: Descomentar cuando esté resuelta esta consulta
+		//return peopleRepository.getPilotOfStarshipThatMostHasAppeared(filmsIds);
+		return null;
 	}
 }

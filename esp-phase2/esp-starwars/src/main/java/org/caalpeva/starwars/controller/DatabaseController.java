@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Clase controlador encargada de proporcionar métodos REST 
+ * @author Alberto
+ */
 @RestController
 @RequestMapping("/api/database")
 public class DatabaseController {

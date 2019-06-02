@@ -2,6 +2,10 @@ package org.caalpeva.starwars.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+/**
+ * Clase inicializadora del contexto de spring por anotaciones
+ * @author Alberto
+ */
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer   {
 
 	@Override

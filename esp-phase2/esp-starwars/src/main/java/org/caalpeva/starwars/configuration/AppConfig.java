@@ -17,6 +17,10 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Archivo de configuración de Spring 
+ * @author Alberto
+ */
 @Configuration
 @ComponentScan(basePackages = {
 		"org.caalpeva.starwars",

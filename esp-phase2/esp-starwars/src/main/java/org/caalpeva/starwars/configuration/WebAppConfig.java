@@ -12,6 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+/**
+ * Archivo de configuración del entorno web
+ * @author Alberto
+ *
+ */
 @Configuration
 @EnableWebMvc
 //@ComponentScan(basePackages = "org.caalpeva.starwars")

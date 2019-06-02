@@ -7,6 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Clase controlador encargada de la navegación de las pantallas de personajes
+ * @author Alberto
+ */
 @Controller
 @RequestMapping("/people")
 public class PeopleController {

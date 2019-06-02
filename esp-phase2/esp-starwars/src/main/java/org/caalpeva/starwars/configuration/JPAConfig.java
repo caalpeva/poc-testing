@@ -18,9 +18,14 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * Archivo de configuración de persistencia 
+ * @author Alberto
+ */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "org.caalpeva.starwars.repository")
+@EnableJpaRepositories(basePackages = "org.caalpeva.starwars.repository",
+	transactionManagerRef = "txManager")
 @PropertySource("classpath:database.properties")
 public class JPAConfig {
 
@@ -57,7 +62,7 @@ public class JPAConfig {
 		return lcemfb;
 	}
 
-	@Bean(name = "transactionManager")
+	@Bean(name = "txManager")
 	public PlatformTransactionManager txManager() {
 		JpaTransactionManager jpaTransactionManager = new JpaTransactionManager(
 				getEntityManagerFactoryBean().getObject());
@@ -66,7 +71,7 @@ public class JPAConfig {
 
 	private Properties getJpaProperties() {
 		Properties properties = new Properties();
-		properties.put("hibernate.hbm2ddl.auto", "validate");
+		properties.put("hibernate.hbm2ddl.auto", "create");
 		// properties.put("hibernate.hbm2ddl.import_files", "/import.sql");
 		// properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		properties.put("hibernate.show_sql", "true");

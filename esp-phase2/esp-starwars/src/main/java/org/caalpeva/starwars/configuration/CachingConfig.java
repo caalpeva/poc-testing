@@ -5,6 +5,11 @@ import org.ehcache.config.builders.CacheManagerBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Archivo de configuración de cache
+ * @author Alberto
+ *
+ */
 @Configuration
 //@EnableCaching
 public class CachingConfig {

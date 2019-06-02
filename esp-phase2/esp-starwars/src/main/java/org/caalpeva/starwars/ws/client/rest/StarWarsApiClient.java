@@ -19,22 +19,19 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+//TODO: No se ha completado su desarrollo debido a que se utiliza Retrofit.
+// Sin embargo para no depender de implementaciones de terceros se debería
+// implementar un cliente basado en RestTemplate de Spring
 @Service
 public class StarWarsApiClient implements StarWarsApiService {
 
     public final String USER_AGENT_NAME = "RestTemplate-Java-Client/1.0";
 	
 	//@Autowired
-	//private RestTemplate restTemplate;
+	private RestTemplate restTemplate;
 	
 	@Override
 	public PageDTO<PeopleDTO> getAllPeople(int page) {
-//		ResponseEntity<Page<Person>> personEntity = new RestTemplate().exchange(
-//		StarWarsEndpoint.PEOPLE.getAllResourcesUrl(),
-//		HttpMethod.GET, getHttpEntity(),
-//		Page<Person>.class);
-//		return personEntity.getBody();
-
 		return null;
 	}
     
@@ -42,7 +39,7 @@ public class StarWarsApiClient implements StarWarsApiService {
 	public PeopleDTO getPeople(int id) {
 	    Map<String, String> params = new HashMap<String, String>();
 	    params.put("id", String.valueOf(id));
-	    return new RestTemplate().exchange(
+	    return restTemplate.exchange(
 	    		StarWarsEndpoint.PEOPLE.getSpecificResourceUrl(),
 	    		HttpMethod.GET, getHttpEntity(),
 	    		PeopleDTO.class, params).getBody();

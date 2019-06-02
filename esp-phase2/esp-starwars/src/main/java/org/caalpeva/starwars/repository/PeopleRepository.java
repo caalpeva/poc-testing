@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.caalpeva.starwars.repository.model.People;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -29,22 +28,41 @@ public interface PeopleRepository extends JpaRepository<People, Integer> {
 //	group by p.name
 	
 	
-	@Query("select p from People p "
-			+ "inner join p.starships s "
-			+ "where s.name in ("
-				+ "select s.name from Film f "
-				+ "inner join f.starships s "
-				+ "where f.id in :ids "
-				+ "group by s.name "
-				+ "having count(*) = ("
-					+ "select count(s.name) as A from Starship s "
-						+ "inner join s.films f "
-						+ "where f.id in :ids "
-						+ "group by s.name "
-						+ "order by A "
-						+ "limit 1 "
-					+ ")"
-				+ ")")
-	public List<People> getPilotOfStarshipThatMostHasAppeared(@Param("ids") List<Integer> ids);
+//	@Query("select p from People p "
+//			+ "inner join p.starships s "
+//			+ "where s.name in ("
+//				+ "select s.name from Film f "
+//				+ "inner join f.starships s "
+//				+ "where f.id in :ids "
+//				+ "group by s.name "
+//				+ "having count(*) = ("
+//					+ "select count(s.name) as A from Starship s"
+//						+ "inner join s.films f "
+//						+ "where f.id in :ids "
+//						+ "group by s.name "
+//						+ "order by A "
+//						+ "limit 1"
+//					+ ")"
+//				+ ")")
+//	public List<People> getPilotOfStarshipThatMostHasAppeared(@Param("ids") List<Integer> ids);
+//	
+//	select s.name from STARSHIPS s
+//	inner join STARSHIPS_FILMS sf on s.id = sf.starship_id
+//	inner join FILMS f on sf.film_id = f.id
+//	inner join PEOPLE_STARSHIPS ps on s.id = ps.starship_id
+//	inner join PEOPLE p on ps.people_id = p.id
+//	where f.id in (1, 2, 3)
+//	group by s.name
+//	having count(*) = (
+//		select max(NUM) from (
+//			select count(*) as NUM from STARSHIPS s
+//				inner join STARSHIPS_FILMS sf on s.id = sf.starship_id
+//				inner join FILMS f on sf.film_id = f.id
+//				inner join PEOPLE_STARSHIPS ps on s.id = ps.starship_id
+//				inner join PEOPLE p on ps.people_id = p.id
+//				where f.id in (1, 2, 3)
+//				group by s.name
+//			) A
+//		)
 
 }
