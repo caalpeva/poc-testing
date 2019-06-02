@@ -5,5 +5,5 @@ package org.caalpeva.starwars.service;
  * @author Alberto
  */
 public interface StarWarsApiCacheService extends StarWarsApiService {
-	public void cleanCache();
+	public void clearCache();
 }

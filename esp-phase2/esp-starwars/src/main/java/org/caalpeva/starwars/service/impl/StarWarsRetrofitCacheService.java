@@ -33,7 +33,7 @@ public class StarWarsRetrofitCacheService implements StarWarsApiCacheService {
 	private Cache<Integer, PlanetDTO> planetCache;
 
 	@Override
-	public void cleanCache() {
+	public void clearCache() {
 		if (filmCache == null) {
 			filmCache = cacheManager.createCache("filmCache", CacheConfigurationBuilder
 					.newCacheConfigurationBuilder(Integer.class, FilmDTO.class, ResourcePoolsBuilder.heap(10)));

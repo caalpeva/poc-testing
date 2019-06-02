@@ -65,7 +65,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Override
 	@Transactional
 	public void importData() throws IOException {
-		starWarsApi.cleanCache();
+		starWarsApi.clearCache();
 		deleteData();
 		importFilms();
 		importStarShips();
