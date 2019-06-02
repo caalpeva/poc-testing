@@ -39,6 +39,10 @@ public class Film {
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
 			mappedBy= "films", fetch = FetchType.LAZY)
     public Set<People> characters;
+	
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
+			mappedBy= "films", fetch = FetchType.LAZY)
+    public Set<Starship> starships;
 
 	public int getId() {
 		return id;
@@ -128,6 +132,14 @@ public class Film {
 		this.characters = characters;
 	}
 	
+	public Set<Starship> getStarships() {
+		return starships;
+	}
+
+	public void setStarships(Set<Starship> starships) {
+		this.starships = starships;
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;

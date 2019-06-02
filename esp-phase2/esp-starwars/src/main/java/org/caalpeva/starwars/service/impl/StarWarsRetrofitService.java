@@ -21,8 +21,11 @@ public class StarWarsRetrofitService implements StarWarsApiService {
 
 	private StarWarsRetrofitApi wsClient;
 	
+	public static int requestNum = 0;
+	
 	public StarWarsRetrofitService() {
         wsClient = RetrofitServiceGenerator.createService(StarWarsApiService.BASE_URL, StarWarsRetrofitApi.class);
+        requestNum = 0;
 	}
 
 	@Override
@@ -123,6 +126,8 @@ public class StarWarsRetrofitService implements StarWarsApiService {
 	}
 	
 	private void checkResponse(Response<?> response, Call<?> call) throws HttpCommunicationException {
+		requestNum++;
+		System.out.println("Número de petición: " + requestNum);
 		if (!response.isSuccessful()) {
 			throw new HttpCommunicationException(response.code(),
 					call.request().url().url());

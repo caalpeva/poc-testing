@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -44,9 +43,15 @@ public class People {
 			inverseJoinColumns = { @JoinColumn(name = "film_id") })
 	private Set<Film> films = new HashSet<Film>();
 	
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
-			mappedBy= "people", fetch = FetchType.LAZY)
-    public Set<PeopleStarship> peopleStarships;
+//	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
+//			mappedBy= "people", fetch = FetchType.LAZY)
+//    public Set<PeopleStarship> peopleStarships;
+	
+	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
+	@JoinTable(
+			joinColumns = { @JoinColumn(name = "people_id") },
+			inverseJoinColumns = { @JoinColumn(name = "starship_id") })
+	private Set<Starship> starships = new HashSet<Starship>();
 	    
 	public int getId() {
 		return id;
@@ -126,15 +131,21 @@ public class People {
 	public void setFilms(Set<Film> films) {
 		this.films = films;
 	}
-	public Set<PeopleStarship> getPeopleStarships() {
-		return peopleStarships;
+//	public Set<PeopleStarship> getPeopleStarships() {
+//		return peopleStarships;
+//	}
+//	public void setPeopleStarships(Set<PeopleStarship> peopleStarships) {
+//		this.peopleStarships = peopleStarships;
+//		if (peopleStarships != null) {
+//			for(PeopleStarship peopleStarship: peopleStarships) {
+//				peopleStarship.setPeople(this);
+//			} // for
+//		}
+//	}
+	public Set<Starship> getStarships() {
+		return starships;
 	}
-	public void setPeopleStarships(Set<PeopleStarship> peopleStarships) {
-		this.peopleStarships = peopleStarships;
-		if (peopleStarships != null) {
-			for(PeopleStarship peopleStarship: peopleStarships) {
-				peopleStarship.setPeople(this);
-			} // for
-		}
+	public void setStarships(Set<Starship> starships) {
+		this.starships = starships;
 	}
 }

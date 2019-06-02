@@ -2,9 +2,11 @@ package org.caalpeva.startwars.ws.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.caalpeva.starwars.configuration.AppConfig;
 import org.caalpeva.starwars.repository.PeopleRepository;
+import org.caalpeva.starwars.repository.model.People;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -26,6 +28,12 @@ public class CustomRepositoryTest {
 	
 	@Test
 	public void testRepository() throws IOException {
-		peopleRepository.getPilotOfStarshipThatMostHasAppeared(new ArrayList<Integer>());
+		List<Integer> lista = new ArrayList<Integer>();
+		lista.add(34);
+		lista.add(35);
+		List<People> people = peopleRepository.getPilotOfStarshipThatMostHasAppeared2(lista);
+		for (People person: people) {
+			System.out.println(person.getName());
+		} // for
 	}
 }

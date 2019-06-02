@@ -12,12 +12,11 @@ import java.util.TreeMap;
 
 import org.caalpeva.starwars.repository.FilmRepository;
 import org.caalpeva.starwars.repository.PeopleRepository;
-import org.caalpeva.starwars.repository.PeopleStarshipRepository;
 import org.caalpeva.starwars.repository.PlanetRepository;
 import org.caalpeva.starwars.repository.StarShipRepository;
 import org.caalpeva.starwars.repository.model.Film;
 import org.caalpeva.starwars.repository.model.People;
-import org.caalpeva.starwars.repository.model.PeopleStarship;
+//import org.caalpeva.starwars.repository.model.PeopleStarship;
 import org.caalpeva.starwars.repository.model.Planet;
 import org.caalpeva.starwars.repository.model.Starship;
 import org.caalpeva.starwars.service.DatabaseService;
@@ -56,8 +55,8 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Autowired
 	private StarShipRepository starShipRepository;
 
-	@Autowired
-	private PeopleStarshipRepository peopleStarShipRepository;
+	//@Autowired
+	//private PeopleStarshipRepository peopleStarShipRepository;
 
 	@Autowired
 	private CacheManager cacheManager;
@@ -67,7 +66,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Override
 	// @Transactional
 	public void importData() throws IOException {
-		importRelationalDataFromPeople();
+		//importRelationalDataFromPeople();
 		importRemainingStarShips();
 	}
 
@@ -89,10 +88,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
 					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
 					people.setFilms(findOrSaveFilms(peopleDTO));
+					people.setStarships(starshipsOfPeople);
 					peopleRepository.save(people);
 
 					// Se relaciona un individuo con sus starships
-					saveOrUpdate(people, starshipsOfPeople);
+					//saveOrUpdate(people, starshipsOfPeople);
 				} // for
 			}
 		} while (peoplePageDTO.hasMore());
@@ -107,13 +107,13 @@ public class DatabaseServiceImpl implements DatabaseService {
 			if (starshipList != null && starshipList.size() > 0) {
 				for (StarshipDTO starshipDTO : starshipList) {
 					Starship starship = findOrSaveStarship(modelMapper.map(starshipDTO, Starship.class));
-					if (starshipDTO.getPilotsUrls() != null && starshipDTO.getPilotsUrls().size() > 0) {
-						for(String url: starshipDTO.getPilotsUrls()) {
-							PeopleDTO peopleDTO = starWarsApi.getPeople(url);
-							People people = findOrSavePeople(modelMapper.map(peopleDTO, People.class));
-							saveOrUpdate(people, starship, true);
-						} // for
-					}
+//					if (starshipDTO.getPilotsUrls() != null && starshipDTO.getPilotsUrls().size() > 0) {
+//						for(String url: starshipDTO.getPilotsUrls()) {
+//							PeopleDTO peopleDTO = starWarsApi.getPeople(url);
+//							People people = findOrSavePeople(modelMapper.map(peopleDTO, People.class));
+//							saveOrUpdate(people, starship, true);
+//						} // for
+//					}
 				} // for
 			}
 		} while (starshipPageDTO.hasMore());
@@ -178,28 +178,28 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return starshipSet;
 	}
 
-	private Set<PeopleStarship> saveOrUpdate(People people, Set<Starship> starshipSet) throws IOException {
-		Set<PeopleStarship> peopleStarshipSet = new HashSet<PeopleStarship>();
-		if (starshipSet != null && starshipSet.size() > 0) {
-			for (Starship starship: starshipSet) {
-				saveOrUpdate(people, starship, false);
-			} // for
-		}
-
-		return peopleStarshipSet;
-	}
+//	private Set<PeopleStarship> saveOrUpdate(People people, Set<Starship> starshipSet) throws IOException {
+//		Set<PeopleStarship> peopleStarshipSet = new HashSet<PeopleStarship>();
+//		if (starshipSet != null && starshipSet.size() > 0) {
+//			for (Starship starship: starshipSet) {
+//				saveOrUpdate(people, starship, false);
+//			} // for
+//		}
+//
+//		return peopleStarshipSet;
+//	}
 	
-	private PeopleStarship saveOrUpdate(People people, Starship starship, boolean isPilot) throws IOException {
-		PeopleStarship peopleStarship = new PeopleStarship();
-		peopleStarship.setPeople(people);
-		peopleStarship.setStarship(starship);
-		
-		peopleStarship = findOrSavePeopleStarShip(peopleStarship);
-		peopleStarship.setPilot(isPilot);
-		peopleStarShipRepository.save(peopleStarship);
-
-		return peopleStarship;
-	}
+//	private PeopleStarship saveOrUpdate(People people, Starship starship, boolean isPilot) throws IOException {
+//		PeopleStarship peopleStarship = new PeopleStarship();
+//		peopleStarship.setPeople(people);
+//		peopleStarship.setStarship(starship);
+//		
+//		peopleStarship = findOrSavePeopleStarShip(peopleStarship);
+//		peopleStarship.setPilot(isPilot);
+//		peopleStarShipRepository.save(peopleStarship);
+//
+//		return peopleStarship;
+//	}
 
 	private Planet findOrSavePlanet(Planet planet) {
 		Optional<Planet> optional = planetRepository.findByName(planet.getName());
@@ -233,19 +233,19 @@ public class DatabaseServiceImpl implements DatabaseService {
 	 * @param peopleStarship
 	 * @return
 	 */
-	private PeopleStarship findOrSavePeopleStarShip(PeopleStarship peopleStarship) {
-		Optional<PeopleStarship> optional = peopleStarShipRepository.findByPeople_IdAndStarship_Id(
-				peopleStarship.getPeople().getId(), peopleStarship.getStarship().getId());
-		if (optional.isPresent()) {
-			return optional.get();
-		}
-
-		return peopleStarShipRepository.save(peopleStarship);
-	}
+//	private PeopleStarship findOrSavePeopleStarShip(PeopleStarship peopleStarship) {
+//		Optional<PeopleStarship> optional = peopleStarShipRepository.findByPeople_IdAndStarship_Id(
+//				peopleStarship.getPeople().getId(), peopleStarship.getStarship().getId());
+//		if (optional.isPresent()) {
+//			return optional.get();
+//		}
+//
+//		return peopleStarShipRepository.save(peopleStarship);
+//	}
 
 	@Override
 	public void deleteData() {
-		peopleStarShipRepository.deleteAll();
+		//peopleStarShipRepository.deleteAll();
 		peopleRepository.deleteAll();
 		filmRepository.deleteAll();
 		planetRepository.deleteAll();

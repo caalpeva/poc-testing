@@ -1,16 +1,18 @@
 package org.caalpeva.starwars.repository.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -37,11 +39,21 @@ public class Starship {
 	public String hyperdriveRating;
 	public String mglt;
 	
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
-			mappedBy= "people", fetch = FetchType.LAZY)
-	@Column(name = "starship_id")
-    public Set<PeopleStarship> peopleStarships;
+//	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
+//			mappedBy= "people", fetch = FetchType.LAZY)
+//	@Column(name = "starship_id")
+//    public Set<PeopleStarship> peopleStarships;
 
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
+			mappedBy = "starships", fetch = FetchType.LAZY)
+    public Set<People> peoples;
+	
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE }, fetch= FetchType.LAZY)
+	@JoinTable(
+			joinColumns = { @JoinColumn(name = "starship_id") },
+			inverseJoinColumns = { @JoinColumn(name = "film_id") })
+	private Set<Film> films = new HashSet<Film>();
+	
 	public int getId() {
 		return id;
 	}
@@ -186,11 +198,27 @@ public class Starship {
 		this.mglt = mglt;
 	}
 
-	public Set<PeopleStarship> getPeopleStarships() {
-		return peopleStarships;
+	public Set<People> getPeoples() {
+		return peoples;
 	}
 
-	public void setPeopleStarships(Set<PeopleStarship> peopleStarships) {
-		this.peopleStarships = peopleStarships;
-	}	
+	public void setPeoples(Set<People> peoples) {
+		this.peoples = peoples;
+	}
+
+	public Set<Film> getFilms() {
+		return films;
+	}
+
+	public void setFilms(Set<Film> films) {
+		this.films = films;
+	}
+
+//	public Set<PeopleStarship> getPeopleStarships() {
+//		return peopleStarships;
+//	}
+//
+//	public void setPeopleStarships(Set<PeopleStarship> peopleStarships) {
+//		this.peopleStarships = peopleStarships;
+//	}
 }

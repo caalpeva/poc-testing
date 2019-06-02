@@ -6,10 +6,11 @@ import java.util.Optional;
 import org.caalpeva.starwars.repository.model.People;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PeopleRepository extends JpaRepository<People, Integer>, CustomPeopleRepository {
+public interface PeopleRepository extends JpaRepository<People, Integer> {
 	public Optional<People> findByName(String name);
 	
 	/**
@@ -27,24 +28,23 @@ public interface PeopleRepository extends JpaRepository<People, Integer>, Custom
 //	inner join FILMS f on pf.filmList_id = f.id
 //	group by p.name
 	
-	//public People getPilotOfStarshipThatMostHasAppeared();
 	
-//	select p.name from people p
-//	inner join PEOPLE_STARSHIPS ps on p.id = ps.people_id
-//	inner join STARSHIPS s on ps.starship_id = s.id
-//	where s.name = 
-//	 (
-//		select top 1 s.name from FILMS f
-//		inner join PEOPLE_FILMS pf on f.id = pf.film_id
-//		inner join PEOPLE p on pf.people_id = p.id
-//		inner join PEOPLE_STARSHIPS ps on p.id = ps.people_id
-//		inner join STARSHIPS s on ps.starship_id = s.id
-//		group by s.name
-//		having count(*) = (select distinct(count(*)) from FILMS f
-//		inner join PEOPLE_FILMS pf on f.id = pf.film_id
-//		inner join PEOPLE p on pf.people_id = p.id
-//		inner join PEOPLE_STARSHIPS ps on p.id = ps.people_id
-//		inner join STARSHIPS s on ps.starship_id = s.id
-//		group by s.name))
+	@Query("select p from People p "
+			+ "inner join p.films f ")
+//			+ "where s.name in ("
+//				+ "select s.name from Films f "
+//				+ "inner join f.characters.starships s "
+//				+ "where f.id in :ids "
+//				+ "group by s.name"
+//				+ "having count(*) = ( "
+//					+ "select max(cuenta) from ( "
+//						+ "select count(*) cuenta from Starship s"
+//							+ "inner join s.pilots.films f"
+//							+ "where f.id in :ids "
+//							+ "group by s.name)"
+//						+ ")"
+//					+ ")"
+//				+ "group by p.name")
+	public List<People> getPilotOfStarshipThatMostHasAppeared2(@Param("ids") List<Integer> ids);
 
 }

@@ -3,19 +3,16 @@ package org.caalpeva.starwars.repository.model;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
-@Entity
-@Table(name = "PEOPLE_STARSHIPS", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"people_id", "starship_id"})})
+//@Entity
+//@Table(name = "PEOPLE_STARSHIPS", uniqueConstraints = {
+//		@UniqueConstraint(columnNames = {"people_id", "starship_id"})})
 public class PeopleStarship {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
