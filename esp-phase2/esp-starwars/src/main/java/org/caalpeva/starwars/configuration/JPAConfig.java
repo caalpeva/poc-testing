@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories("org.caalpeva.starwars.repository")
+@EnableJpaRepositories(basePackages = "org.caalpeva.starwars.repository")
 @PropertySource("classpath:database.properties")
 public class JPAConfig {
 
@@ -45,14 +45,14 @@ public class JPAConfig {
 		adapter.setDatabasePlatform(env.getProperty("dialect"));
 		return adapter;
 	}
-	
+
 	@Bean(name = "entityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean() {
 		LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
 		lcemfb.setPackagesToScan("org.caalpeva.starwars.repository.model");
 		lcemfb.setDataSource(getDataSource());
 		lcemfb.setJpaVendorAdapter(getJpaVendorAdapter());
-		//lcemfb.setPersistenceUnitName("myJpaPersistenceUnit");
+		// lcemfb.setPersistenceUnitName("myJpaPersistenceUnit");
 		lcemfb.setJpaProperties(getJpaProperties());
 		return lcemfb;
 	}
@@ -67,11 +67,12 @@ public class JPAConfig {
 	private Properties getJpaProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.hbm2ddl.auto", "validate");
-		//properties.put("hibernate.hbm2ddl.import_files", "/import.sql");
-		//properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+		// properties.put("hibernate.hbm2ddl.import_files", "/import.sql");
+		// properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		properties.put("hibernate.show_sql", "true");
 		properties.put("hibernate.format_sql", "true");
-		//properties.put("hibernate.id.new_generator_mappings", env.getProperty("hibernate.id.new_generator_mappings"));
+		// properties.put("hibernate.id.new_generator_mappings",
+		// env.getProperty("hibernate.id.new_generator_mappings"));
 		return properties;
 	}
 }

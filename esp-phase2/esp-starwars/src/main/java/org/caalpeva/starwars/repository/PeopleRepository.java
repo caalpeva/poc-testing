@@ -9,8 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-//@NoRepositoryBean
-public interface PeopleRepository extends JpaRepository<People, Integer> {
+public interface PeopleRepository extends JpaRepository<People, Integer>, CustomPeopleRepository {
 	public Optional<People> findByName(String name);
 	
 	/**

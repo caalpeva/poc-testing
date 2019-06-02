@@ -278,7 +278,4 @@ public class DatabaseServiceImpl implements DatabaseService {
 	public List<Film> findAllFilms() {
 		return filmRepository.findAll();
 	}
-	
-	
-
 }
