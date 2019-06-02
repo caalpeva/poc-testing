@@ -14,7 +14,7 @@ import org.caalpeva.starwars.repository.model.People;
 public interface DatabaseService {
 	public void importData() throws IOException;
 	public void deleteData();
-	public Map<String, List<String>> getPeopleWithFilms();
 	public List<Film> findAllFilms();
+	public Map<String, List<String>> getPeopleWithFilms();
 	public List<People> getPilotOfStarshipThatMostHasAppeared(List<Integer> filmsIds);
 }

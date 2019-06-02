@@ -85,6 +85,48 @@ public class DatabaseServiceImpl implements DatabaseService {
 		starShipRepository.deleteAll();
 	}
 	
+	/**
+	 * Método encargado de proporcionar todas las películas
+	 */
+	@Override
+	public List<Film> findAllFilms() {
+		return filmRepository.findAll();
+	}
+
+	/**
+	 * Método encargado de formatear la información de la
+	 * consulta en un formato mas adecuado para su recorrido
+	 */
+	@Override
+	public Map<String, List<String>> getPeopleWithFilms() {
+		Map<String, List<String>> map = new TreeMap<String, List<String>>();
+		List<Object[]> resultSet = peopleRepository.getPeopleWithFilms();
+		if (resultSet != null && resultSet.size() > 0) {
+			String lastName = null;
+			for (Object[] result: resultSet) {
+				if (lastName == null || !lastName.equals(result[0])) {
+					lastName = (String) result[0];
+					map.put(lastName, new ArrayList<String>());
+				}
+				
+				map.get(lastName).add((String) result[1]);
+			} // for
+		}
+			
+		return map;
+	}
+	
+	/**
+	 * Método encargado de proporcionar la lista de pilotos
+	 * que conducen la nave que mas aparece en las películas seleccionadas.
+	 */
+	@Override
+	public List<People> getPilotOfStarshipThatMostHasAppeared(List<Integer> filmsIds) {
+		// TODO: Descomentar cuando esté resuelta esta consulta
+		//return peopleRepository.getPilotOfStarshipThatMostHasAppeared(filmsIds);
+		return null;
+	}
+	
 	/************************************************/
 	/*************** METODOS PRIVADOS ***************/
 	/************************************************/
@@ -122,7 +164,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 				for (StarshipDTO starshipDTO: starshipDtos) {
 					// Se inserta la información de un individuo
 					Starship starship = modelMapper.map(starshipDTO, Starship.class);
-					starship.setFilms(findOrSaveFilms(starshipDTO));
+					starship.setFilms(extractFilms(starshipDTO));
 					starShipRepository.save(starship);
 				} // for
 			}
@@ -163,7 +205,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 					People people = modelMapper.map(peopleDTO, People.class);
 					PlanetDTO planetDTO = starWarsApi.getPlanet(peopleDTO.getHomeWorldUrl());
 					people.setHomeWorld(findOrSavePlanet(modelMapper.map(planetDTO, Planet.class)));
-					people.setFilms(findOrSaveFilms(peopleDTO));
+					people.setFilms(extractFilms(peopleDTO));
 					people.setStarships(findOrSaveStarships(peopleDTO));
 					peopleRepository.save(people);
 
@@ -172,6 +214,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 		} while (peoplePageDTO.hasMore());
 	}
 
+	/**
+	 * Método auxiliar encargado de encontrar o guardar una película
+	 * @param film
+	 * @return
+	 */
 	private Film findOrSaveFilm(Film film) {
 		Optional<Film> optional = filmRepository.findByEpisodeId(film.getEpisodeId());
 		if (optional.isPresent()) {
@@ -181,7 +228,40 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return filmRepository.save(film);
 	}
 
-	private Set<Film> findOrSaveFilms(PeopleDTO peopleDTO) throws IOException {
+	/**
+	 * Método auxiliar encargado de encontrar o guardar una planeta
+	 * @param planet
+	 * @return
+	 */
+	private Planet findOrSavePlanet(Planet planet) {
+		Optional<Planet> optional = planetRepository.findByName(planet.getName());
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+
+		return planetRepository.save(planet);
+	}
+	
+	/**
+	 * Método auxiliar encargado de encontrar o guardar una nave
+	 * @param starship
+	 * @return
+	 */
+	private Starship findOrSaveStarship(Starship starship) {
+		Optional<Starship> optional = starShipRepository.findByName(starship.getName());
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+
+		return starShipRepository.save(starship);
+	}
+	
+	/**
+	 * Método auxiliar encargado de extraer la información de películas
+	 * @param film
+	 * @return
+	 */
+	private Set<Film> extractFilms(PeopleDTO peopleDTO) throws IOException {
 		List<FilmDTO> filmDtos = new ArrayList<FilmDTO>();
 		if (peopleDTO.getFilmsUrls() != null && peopleDTO.getFilmsUrls().size() > 0) {
 			for (String url : peopleDTO.getFilmsUrls()) {
@@ -192,7 +272,12 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return convertList(filmDtos);
 	}
 	
-	private Set<Film> findOrSaveFilms(StarshipDTO starshipDTO) throws IOException {
+	/**
+	 * Método auxiliar encargado de extraer la información de películas
+	 * @param film
+	 * @return
+	 */
+	private Set<Film> extractFilms(StarshipDTO starshipDTO) throws IOException {
 		List<FilmDTO> filmDtos = new ArrayList<FilmDTO>();
 		if (starshipDTO.getFilmsUrls() != null && starshipDTO.getFilmsUrls().size() > 0) {
 			for (String url: starshipDTO.getFilmsUrls()) {
@@ -203,6 +288,12 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return convertList(filmDtos);
 	}
 	
+	/**
+	 * Método auxiliar encargado de extraer la información de naves
+	 * @param peopleDTO
+	 * @return
+	 * @throws IOException
+	 */
 	private Set<Starship> findOrSaveStarships(PeopleDTO peopleDTO) throws IOException {
 		List<StarshipDTO> starshipDtos = new ArrayList<StarshipDTO>();
 		if (peopleDTO.getStarshipsUrls() != null && peopleDTO.getStarshipsUrls().size() > 0) {
@@ -214,6 +305,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return convertStarshipList(starshipDtos);
 	}
 
+	/**
+	 * Método auxiliar que mapea una lista de objetos FilmDTO a una lista de Film
+	 * @param filmDtos
+	 * @return
+	 */
 	private Set<Film> convertList(List<FilmDTO> filmDtos) {
 		Set<Film> filmSet = new HashSet<Film>();
 		Type targetListType = new TypeToken<List<Film>>() {}.getType();
@@ -224,7 +320,12 @@ public class DatabaseServiceImpl implements DatabaseService {
 		
 		return filmSet;
 	}
-	
+
+	/**
+	 * Método auxiliar que mapea una lista de objetos StarshipDTO a una lista de Starship
+	 * @param starshipDtos
+	 * @return
+	 */
 	private Set<Starship> convertStarshipList(List<StarshipDTO> starshipDtos) {
 		Set<Starship> starshipSet = new HashSet<Starship>();
 		Type targetListType = new TypeToken<List<Starship>>() {}.getType();
@@ -234,90 +335,5 @@ public class DatabaseServiceImpl implements DatabaseService {
 		} // for
 		
 		return starshipSet;
-	}
-	
-	private Set<Starship> saveOrUpdate(List<Starship> starships) {
-		Set<Starship> starshipSet = new HashSet<Starship>();
-		for(Starship starship: starships) {
-			starshipSet.add(findOrSaveStarship(starship));
-		} // for
-		
-		return starshipSet;
-	}
-
-	private Planet findOrSavePlanet(Planet planet) {
-		Optional<Planet> optional = planetRepository.findByName(planet.getName());
-		if (optional.isPresent()) {
-			return optional.get();
-		}
-
-		return planetRepository.save(planet);
-	}
-	
-	private People findOrSavePeople(People people) {
-		Optional<People> optional = peopleRepository.findByName(people.getName());
-		if (optional.isPresent()) {
-			return optional.get();
-		}
-
-		return peopleRepository.save(people);
-	}
-
-	private Starship findOrSaveStarship(Starship starship) {
-		Optional<Starship> optional = starShipRepository.findByName(starship.getName());
-		if (optional.isPresent()) {
-			return optional.get();
-		}
-
-		return starShipRepository.save(starship);
-	}
-
-	/**
-	 * 
-	 * @param peopleStarship
-	 * @return
-	 */
-//	private PeopleStarship findOrSavePeopleStarShip(PeopleStarship peopleStarship) {
-//		Optional<PeopleStarship> optional = peopleStarShipRepository.findByPeople_IdAndStarship_Id(
-//				peopleStarship.getPeople().getId(), peopleStarship.getStarship().getId());
-//		if (optional.isPresent()) {
-//			return optional.get();
-//		}
-//
-//		return peopleStarShipRepository.save(peopleStarship);
-//	}
-
-	/**
-	 * Método encargado de proporcionar la información de la consulta en un formato mas adecuado para su utilización
-	 */
-	@Override
-	public Map<String, List<String>> getPeopleWithFilms() {
-		Map<String, List<String>> map = new TreeMap<String, List<String>>();
-		List<Object[]> resultSet = peopleRepository.getPeopleWithFilms();
-		if (resultSet != null && resultSet.size() > 0) {
-			String lastName = null;
-			for (Object[] result: resultSet) {
-				if (lastName == null || !lastName.equals(result[0])) {
-					lastName = (String) result[0];
-					map.put(lastName, new ArrayList<String>());
-				}
-				
-				map.get(lastName).add((String) result[1]);
-			} // for
-		}
-			
-		return map;
-	}
-
-	@Override
-	public List<Film> findAllFilms() {
-		return filmRepository.findAll();
-	}
-
-	@Override
-	public List<People> getPilotOfStarshipThatMostHasAppeared(List<Integer> filmsIds) {
-		// TODO: Descomentar cuando esté resuelta esta consulta
-		//return peopleRepository.getPilotOfStarshipThatMostHasAppeared(filmsIds);
-		return null;
 	}
 }
