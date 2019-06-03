@@ -89,19 +89,6 @@ public class DataReportServiceImpl implements  DataReportService {
 						.findAll(PageRequest.of(index, PAGE_SIZE, Sort.by(Sort.Direction.ASC, "id")));
 				for (Order order : orderPages) {
 					csvWriter.writeLine(convertFrom(order));
-//					ColumnPositionMappingStrategy<CsvReportLine> mappingStrategy = new ColumnPositionMappingStrategy<CsvReportLine>();
-//					mappingStrategy.setType(CsvReportLine.class);
-//
-//					// Se organiza el orden de las columnas
-//					//Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,
-//					//Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
-//					String[] columns = new String[] { "region", "country", "itemType", "salesChannel", "orderPriority", "date", "id", "shipDate",
-//							"soldUnits", "unitPrice", "unitCost", "totalRevenue", "totalCost", "totalProfit" };
-//					mappingStrategy.setColumnMapping(columns);
-//
-//					StatefulBeanToCsvBuilder<CsvReportLine> builder = new StatefulBeanToCsvBuilder<CsvReportLine>(writer);
-//					StatefulBeanToCsv<CsvReportLine> beanWriter = builder.withMappingStrategy(mappingStrategy).build();
-//					beanWriter.write(convertFrom(order));
 				} // for
 			} // for
 		} catch (Exception e) {
@@ -246,7 +233,7 @@ public class DataReportServiceImpl implements  DataReportService {
 	 * @param order
 	 * @return
 	 */
-	private CsvReportLine convertFrom(Order order) {
+	private CsvReportLine convertFrom(final Order order) {
 		return new CsvBaseLine() {
 
 			@Override

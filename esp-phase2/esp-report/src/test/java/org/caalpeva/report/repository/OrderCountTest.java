@@ -48,7 +48,7 @@ public class OrderCountTest {
 		long total = 0;
 		if (groupedOrders != null && groupedOrders.size() > 0) {
 			for(Object[] group: groupedOrders) {
-				total += (long) group[1];
+				total += Long.parseLong(group[1].toString());
 				logger.debug(String.format("%10s | %s", group[1], group[0]));
 			} // for
 		}

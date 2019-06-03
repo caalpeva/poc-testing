@@ -1,4 +1,4 @@
-package org.caalpeva.startwars.ws.api;
+package org.caalpeva.startwars.ws.api.itest;
 
 import static org.junit.Assert.assertEquals;
 

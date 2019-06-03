@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -8,6 +9,12 @@
 	</parent>
 	<artifactId>esp-report</artifactId>
 	<packaging>jar</packaging>
+	
+	<properties>
+		<project.encoding>cp1252</project.encoding>
+<!-- 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
+	</properties>
+	
 	<dependencies>
 		<!-- SPRING -->
 		<dependency>
@@ -26,7 +33,7 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
-		
+
 		<!-- PERSISTENCE -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -36,7 +43,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
-		
+
 		<!-- DATABASE DRIVERS -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
@@ -50,14 +57,14 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		
+
 		<!-- OPEN CSV -->
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
 			<version>4.5</version>
 		</dependency>
-		
+
 		<!-- COMMONS -->
 		<dependency>
 			<groupId>org.caalpeva</groupId>
@@ -69,7 +76,7 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
-		
+
 		<!-- TESTS -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -92,21 +99,40 @@
 	</dependencies>
 
 	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+		<!-- TODO: Construir el jar, empaquetar las dependencias en un zip -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
+				<configuration>
+					<!-- <useDefaultManifestFile>true</useDefaultManifestFile> -->
+					<archive>
+						<!-- <manifestFile>resources/META-INF/MANIFEST.MF</manifestFile> -->
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+	              			<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+	              			<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<mainClass>org.caalpeva.report.Init</mainClass>
+						</manifest>
+						<manifestEntries>
+                			<Class-Path>.</Class-Path>
+            			</manifestEntries>
+					</archive>
+				</configuration>
 			</plugin>
 		</plugins>
+
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<id>hsqldb</id>

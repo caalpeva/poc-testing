@@ -18,7 +18,7 @@ public class ConsoleUtils {
 		if (groupedOrders != null && groupedOrders.size() > 0) {
 			System.out.println("----------------------");
 			for(Object[] group: groupedOrders) {
-				total += (long) group[1];
+				total += Long.parseLong(group[1].toString());
 				System.out.println(String.format("|%10s | %s", group[1], group[0]));
 			} // for
 		}
