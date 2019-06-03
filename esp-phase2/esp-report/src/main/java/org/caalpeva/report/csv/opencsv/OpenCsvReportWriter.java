@@ -3,6 +3,7 @@ package org.caalpeva.report.csv.opencsv;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.caalpeva.report.csv.CsvHeader;
 import org.caalpeva.report.csv.CsvReportLine;
 import org.caalpeva.report.csv.CsvReportWriter;
 
@@ -20,6 +21,11 @@ public class OpenCsvReportWriter implements CsvReportWriter {
 		writer = new CSVWriter(fileWriter);
 	}
 
+	@Override
+	public void writeHeader() throws IOException {
+		writer.writeNext(CsvHeader.getHeaders());
+	}
+	
 	@Override
 	public void writeLine(CsvReportLine csvReportLine) throws IOException {
 		writer.writeNext(csvReportLine.getCsvLine());

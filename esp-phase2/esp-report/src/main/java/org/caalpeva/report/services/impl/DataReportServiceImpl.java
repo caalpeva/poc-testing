@@ -82,6 +82,7 @@ public class DataReportServiceImpl implements  DataReportService {
 	public void sortOrdersAndExport(OpenCsvReportWriter csvWriter) throws IOException {
 		try {
 			long count = orderRepository.count();
+			csvWriter.writeHeader();
 			int pageNums = (int) ((count / PAGE_SIZE) + ((count % PAGE_SIZE) > 0 ? 1 : 0));
 			for (int index = 0; index < pageNums; index++) {
 				Page<Order> orderPages = orderRepository

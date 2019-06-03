@@ -7,6 +7,7 @@ import java.io.IOException;
  * @author Alberto
  */
 public interface CsvReportWriter {
+	public void writeHeader() throws IOException;
 	public void writeLine(CsvReportLine csvReportLine) throws IOException;
 	public void close() throws IOException;
 }
