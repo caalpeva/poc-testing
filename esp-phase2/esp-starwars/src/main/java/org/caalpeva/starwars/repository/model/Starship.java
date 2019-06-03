@@ -39,11 +39,6 @@ public class Starship {
 	public String hyperdriveRating;
 	public String mglt;
 	
-//	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
-//			mappedBy= "people", fetch = FetchType.LAZY)
-//	@Column(name = "starship_id")
-//    public Set<PeopleStarship> peopleStarships;
-
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
 			mappedBy = "starships", fetch = FetchType.LAZY)
     public Set<People> peoples;

@@ -43,10 +43,6 @@ public class People {
 			inverseJoinColumns = { @JoinColumn(name = "film_id") })
 	private Set<Film> films = new HashSet<Film>();
 	
-//	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
-//			mappedBy= "people", fetch = FetchType.LAZY)
-//    public Set<PeopleStarship> peopleStarships;
-	
 	@ManyToMany(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
 	@JoinTable(
 			joinColumns = { @JoinColumn(name = "people_id") },
