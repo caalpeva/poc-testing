@@ -1,6 +1,6 @@
 package org.caalpeva.report.repository;
 
-import org.caalpeva.report.model.Order;
+import org.caalpeva.report.repository.model.Order;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

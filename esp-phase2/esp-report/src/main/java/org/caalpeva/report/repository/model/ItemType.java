@@ -1,4 +1,4 @@
-package org.caalpeva.report.model;
+package org.caalpeva.report.repository.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="REGIONS")
-public class Region {
+@Table(name="ITEM_TYPES")
+public class ItemType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

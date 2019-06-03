@@ -1,4 +1,4 @@
-package org.caalpeva.report.model;
+package org.caalpeva.report.repository.model;
 
 import java.util.Date;
 
