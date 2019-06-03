@@ -30,7 +30,7 @@
 	</bean>
 	
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="org.caalpeva.report.model" />
+		<property name="packagesToScan" value="org.caalpeva.report.repository.model" />
 		<property name="dataSource" ref="datasource" />
 		<property name="jpaVendorAdapter" ref="jpaVenderAdapter" />
 		<property name="jpaProperties">

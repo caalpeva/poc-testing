@@ -84,6 +84,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
 		</dependency>
+		
 		<!-- DATABASE DRIVERS -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
