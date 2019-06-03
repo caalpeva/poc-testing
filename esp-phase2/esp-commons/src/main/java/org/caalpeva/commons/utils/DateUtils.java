@@ -1,10 +1,6 @@
 package org.caalpeva.commons.utils;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Clase auxiliar que facilita la manipulación de fechas y tiempos.
@@ -22,40 +18,6 @@ public class DateUtils {
     private static final long MILLIS_IN_A_MINUTE = 60 * MILLIS_IN_A_SECOND;
     private static final long MILLIS_IN_A_HOUR = 60 * MILLIS_IN_A_MINUTE;
     private static final long MILLIS_IN_A_DAY = 24 * MILLIS_IN_A_HOUR;
-	
-    /**
-     * Método encargado de formatear la diferencia de tiempo entre la fecha especificada y zona UTC.
-     * @param calendar Fecha de referencia para obtener la diferencia de tiempo
-     * @return Formato de tiempo transcurrido
-     */
-	public static String formatUtcOffset(Calendar calendar)  {
-		int offSet = (calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET));
-		int offsetHours = offSet / 1000 / 60 / 60;
-		int offsetMinutes = offSet / 1000 / 60 % 60;
-		int offsetSeconds = offSet / 1000 % 60;
-		return String.format(FORMAT_HHMMSS, offsetHours, offsetMinutes, offsetSeconds);
-	}
-	
-	/**
-	 * Método encargado de formatear una fecha en el correspondiente a la zona UTC.
-	 * @param date Fecha de referencia
-	 * @return Formato del momento especificado en UTC
-	 */
-	public static String formatUTC(Date date) {
-	    return formatUTC(date, DateFormat.getDateInstance(DateFormat.DEFAULT));
-	}
-	
-	/**
-	 * Método encargado de formatear una fecha en el correspondiente a la zona UTC.
-	 * @param date Fecha de referencia
-	 * @param dateFormat Formato de fecha
-	 * @return Formato del momento especificado en UTC
-	 */
-	public static String formatUTC(Date date, DateFormat dateFormat) {
-		DateFormat clonedDateFormat = (DateFormat) dateFormat.clone();
-		clonedDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-	    return clonedDateFormat.format(date);
-	}
 	
 	/**
 	 * Método encargado de formatear adecuadamente según el tiempo especificado

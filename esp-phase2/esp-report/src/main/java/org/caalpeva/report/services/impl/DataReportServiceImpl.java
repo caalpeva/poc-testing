@@ -22,6 +22,7 @@ import org.caalpeva.report.repository.model.Order;
 import org.caalpeva.report.repository.model.Region;
 import org.caalpeva.report.repository.model.SalesChannel;
 import org.caalpeva.report.services.DataReportService;
+import org.caalpeva.report.utils.ConsoleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -54,6 +55,9 @@ public class DataReportServiceImpl implements  DataReportService {
 
 	@Autowired
 	private ItemTypeRepository itemTypeRepository;
+	
+	@Autowired
+	private SalesChannelRepository salesChannelRepository;
 
 	@Override
 	public void importOrders(CsvReportReader csvReader) {
@@ -275,4 +279,17 @@ public class DataReportServiceImpl implements  DataReportService {
 		};
 	}
 
+	@Override
+	public void printOrderSummary() {
+		System.out.println("# Orders grouped by regions:");
+		ConsoleUtils.printSumOrderReport(regionRepository.getOrderCountGroupByRegion());
+		System.out.println("# Orders grouped by countries:");
+		ConsoleUtils.printSumOrderReport(countryRepository.getOrderCountGroupByCountry());
+		System.out.println("# Orders grouped by item type:");
+		ConsoleUtils.printSumOrderReport(itemTypeRepository.getOrderCountGroupByItemType());
+		System.out.println("# Orders grouped by sale channels:");
+		ConsoleUtils.printSumOrderReport(salesChannelRepository.getOrderCountGroupBySalesChannel());
+		System.out.println("# Orders grouped by priority:");
+		ConsoleUtils.printSumOrderReport(orderRepository.getOrderCountGroupByPriority());
+	}
 }
