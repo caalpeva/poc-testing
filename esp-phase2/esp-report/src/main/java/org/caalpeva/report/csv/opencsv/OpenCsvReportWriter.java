@@ -8,6 +8,10 @@ import org.caalpeva.report.csv.CsvReportWriter;
 
 import com.opencsv.CSVWriter;
 
+/**
+ * Clase encargada de facilitar escritura de los datos de los pedidos en formato CSV  
+ * @author Alberto
+ */
 public class OpenCsvReportWriter implements CsvReportWriter {
 
 	private CSVWriter writer;

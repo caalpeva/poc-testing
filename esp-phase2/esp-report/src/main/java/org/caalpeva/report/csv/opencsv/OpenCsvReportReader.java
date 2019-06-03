@@ -10,6 +10,10 @@ import org.caalpeva.report.csv.CsvReportReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+/**
+ * Clase encargada de facilitar la lectura de los datos de los pedidos en formato CSV  
+ * @author Alberto
+ */
 public class OpenCsvReportReader implements CsvReportReader {
 
 	private CsvToBean<CsvReportLine> csvToBean;
@@ -26,6 +30,7 @@ public class OpenCsvReportReader implements CsvReportReader {
 		return csvToBean.parse();
 	}
 
+	@Override
 	public Iterator<CsvReportLine> iterator() {
 		return csvToBean.iterator();
 	}

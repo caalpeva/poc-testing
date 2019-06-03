@@ -1,5 +1,9 @@
 package org.caalpeva.report.csv;
 
+/**
+ * Clase encargada de mantener el nombre de las cabeceras de las columnas y su orden
+ * @author Alberto
+ */
 public class CsvHeader {
 	
 	public static final String REGION = "Region";

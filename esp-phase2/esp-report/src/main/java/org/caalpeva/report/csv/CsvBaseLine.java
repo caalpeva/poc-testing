@@ -2,6 +2,11 @@ package org.caalpeva.report.csv;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Clase base que representa a un objeto CSV
+ * @author Alberto
+ *
+ */
 public abstract class CsvBaseLine implements CsvReportLine {
 
 	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");

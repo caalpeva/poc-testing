@@ -2,6 +2,10 @@ package org.caalpeva.report.csv;
 
 import java.time.LocalDate;
 
+/**
+ * Interfaz de los campos y tipos asociados al fichero CSV
+ * @author Alberto
+ */
 public interface CsvReportLine {
 	public int getId();
 	public String getPriority();

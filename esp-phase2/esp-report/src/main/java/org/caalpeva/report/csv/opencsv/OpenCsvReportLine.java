@@ -8,6 +8,10 @@ import org.caalpeva.report.csv.CsvHeader;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 
+/**
+ * Clase encargada de realizar el mapeo de los campos del fichero CSV
+ * @author Alberto
+ */
 public class OpenCsvReportLine extends CsvBaseLine {
 
 	@CsvBindByName(column = CsvHeader.ORDER_ID)
