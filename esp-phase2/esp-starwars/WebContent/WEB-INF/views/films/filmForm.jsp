@@ -37,7 +37,14 @@
 		</div>
 
 		<c:if test="${result != null}">      	
-      		<div class='alert alert-success' role="alert">${result}</div>      	
+      		<div class='alert alert-success' role="alert">
+      			<div>La nave pilotada que mas aparece en las peliculas seleccionadas es: <b>${starship}</b></div>
+      			<div>Los pilotos de esa nave son:
+						<c:forEach var="pilot" items="${pilots}">
+							<b>${pilot}</b>&nbsp;&nbsp;&nbsp;
+						</c:forEach>
+      			</div>
+      		</div>
       	</c:if>
 
 		<form:form action="${filmQueryUrl}" method="post"
@@ -58,11 +65,13 @@
 
 				</table>
 
+				<c:if test="${not empty availableFilms}">
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-success">Enviar</button>
 					</div>
 				</div>
+				</c:if>
 
 			</div>
 		</form:form>

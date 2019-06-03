@@ -1,7 +1,6 @@
 package org.caalpeva.starwars.controller;
 
 import java.util.List;
-import java.util.Random;
 
 import org.caalpeva.starwars.repository.model.Film;
 import org.caalpeva.starwars.service.DatabaseService;
@@ -33,14 +32,14 @@ public class FilmController {
 	}
 	@PostMapping("/index")
 	public String save(@ModelAttribute("filmFormInstance") FilmForm filmForm, Model model) {
-		String pilot = "Pilot of Starship " + new Random().nextInt(87);
-// TODO: Descomentar cuando se solucionen los inconvenientes de la consulta		
-//		List<People> peoples = databaseService.getPilotOfStarshipThatMostHasAppeared(filmForm.films);
-//		if (peoples != null && peoples.size() > 0) {
-//			pilot = peoples.get(0).getName();
-//		}
+		String starship = databaseService.getFirstStarshipThatAppearsMostInTheFilms(filmForm.films);
+		model.addAttribute("starship", starship);
+		if (starship != null) {
+			List<String> pilots = databaseService.getPilotsOfStarship(starship);
+			model.addAttribute("pilots", pilots);
+		}
 
-		model.addAttribute("result", pilot);
+		model.addAttribute("result", true);
 		return "films/filmForm";
 	}
 

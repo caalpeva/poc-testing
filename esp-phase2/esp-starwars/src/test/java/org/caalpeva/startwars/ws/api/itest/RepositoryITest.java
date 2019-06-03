@@ -1,4 +1,4 @@
-package org.caalpeva.startwars.ws.api;
+package org.caalpeva.startwars.ws.api.itest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
-public class RepositoryTest {
+public class RepositoryITest {
 
 	@Autowired
 	private StarShipRepository starshipRepository;
@@ -33,15 +33,8 @@ public class RepositoryTest {
 		String name = starshipRepository.getStarshipThatAppearsMostInTheFilms(ids);
 		if (name != null) {
 			System.out.println(name + "-" + peopleRepository.getPilotsOfStarship(name));
+		} else {
+			System.out.println("NO DATA");
 		}
-		
-		System.out.println("NO DATA");
-		
-//		List<Object[]> resultSet = repository.getStarshipThatAppearsMostInTheFilms(ids);
-//		if (resultSet != null) {
-//			for(Object[] objects: resultSet) {
-//				System.out.println(objects[0] + " " + objects[1]);
-//			}
-//		}
 	}
 }

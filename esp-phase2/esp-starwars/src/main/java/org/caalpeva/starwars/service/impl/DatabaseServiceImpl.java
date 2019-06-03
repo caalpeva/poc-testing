@@ -116,6 +116,10 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return map;
 	}
 	
+	/**
+	 * Método encargado de proporcionar la nave espacial pilotada
+	 * que mas aparece en las películas especificadas.
+	 */
 	@Override
 	public String getFirstStarshipThatAppearsMostInTheFilms(List<Integer> filmIds) {
 		return starShipRepository.getStarshipThatAppearsMostInTheFilms(filmIds);
@@ -123,11 +127,13 @@ public class DatabaseServiceImpl implements DatabaseService {
 	
 	/**
 	 * Método encargado de proporcionar la lista de pilotos
-	 * que conducen la nave que mas aparece en las películas seleccionadas.
+	 * que conducen la nave especificada.
 	 */
 	@Override
 	public List<String> getPilotsOfStarship(String starshipName) {
-		return peopleRepository.getPilotsOfStarship(starshipName);
+		return (starshipName != null)
+				? peopleRepository.getPilotsOfStarship(starshipName)
+				: null;
 	}
 	
 	/************************************************/

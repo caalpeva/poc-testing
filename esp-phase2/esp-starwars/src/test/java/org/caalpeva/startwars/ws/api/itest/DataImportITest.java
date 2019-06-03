@@ -1,4 +1,4 @@
-package org.caalpeva.startwars.ws.api;
+package org.caalpeva.startwars.ws.api.itest;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
-public class DatabaseServiceTest {
+public class DataImportITest {
 
 	@Autowired
 	private DatabaseService databaseService;

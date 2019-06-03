@@ -53,22 +53,9 @@ public class AppConfig {
 				return execution.execute(request, body);
 			}
 		});
-//        ClientHttpRequestInterceptor interceptor = (request, body, execution) -> {
-//	        request.getHeaders().add("user-agent", "spring");
-//	        return execution.execute(request, body);
-//	    };
 		restTemplate.setInterceptors(interceptors);
 
 		return restTemplate;
 	}
 
-//	@Bean
-//	public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
-//	    ClientHttpRequestInterceptor interceptor = (request, body, execution) -> {
-//	        request.getHeaders().add("user-agent", "spring");
-//	        return execution.execute(request, body);
-//	    };
-//	    
-//	    return restTemplateBuilder.additionalInterceptors(interceptor).build();
-//	}
 }
