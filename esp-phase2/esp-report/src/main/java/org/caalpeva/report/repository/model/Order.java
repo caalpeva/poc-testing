@@ -15,7 +15,7 @@ public class Order {
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String priority; // TODO: Cambiar a char
+	private String priority; // FIXME: Decidir si sería conveniente cambiar a tipo char
 
 	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(nullable=false)

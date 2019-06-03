@@ -1,7 +1,8 @@
 package org.caalpeva.report.csv.opencsv;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+import org.caalpeva.report.csv.CsvBaseLine;
 
 import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
@@ -15,7 +16,6 @@ public class LocalDateConverter extends AbstractBeanField<LocalDate> {
 	
     @Override
     protected LocalDate convert(String text) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-        return LocalDate.parse(text.trim(), formatter);
+        return LocalDate.parse(text.trim(), CsvBaseLine.formatter);
     }
 }

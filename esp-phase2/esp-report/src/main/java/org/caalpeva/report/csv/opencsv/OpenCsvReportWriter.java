@@ -18,11 +18,11 @@ public class OpenCsvReportWriter implements CsvReportWriter {
 
 	@Override
 	public void writeLine(CsvReportLine csvReportLine) throws IOException {
-		String[] record = "4,David,Miller,Australia,30".split(",");
-		writer.writeNext(record);
-
-		// close the writer
-		writer.close();
+		writer.writeNext(csvReportLine.getCsvLine());
 	}
-
+	
+	@Override
+	public void close() throws IOException {
+		writer.close();		
+	}
 }

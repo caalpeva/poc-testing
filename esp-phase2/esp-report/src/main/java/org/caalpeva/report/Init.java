@@ -1,10 +1,10 @@
 package org.caalpeva.report;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileWriter;
 
 import org.caalpeva.commons.utils.DateUtils;
-import org.caalpeva.report.csv.opencsv.OpenCsvReportReader;
+import org.caalpeva.report.csv.opencsv.OpenCsvReportWriter;
 import org.caalpeva.report.services.DataReportService;
 import org.caalpeva.report.utils.ConsoleUtils;
 import org.slf4j.Logger;
@@ -86,12 +86,12 @@ public class Init {
 			System.out.println("Wait a moment this may take a few minutes.");
 			
 			long importstartTime = System.currentTimeMillis();
-			dataService.importOrders(new OpenCsvReportReader(new FileReader(file)));
+//			dataService.importOrders(new OpenCsvReportReader(new FileReader(file)));
 			long importEndTime = System.currentTimeMillis();
-			long importElapsedTime = System.currentTimeMillis() - importstartTime;
-			System.out.println(String.format("Elapsed time in the import of data: %s",
-					DateUtils.formatElapsedTime(importElapsedTime)));
-			
+//			long importElapsedTime = System.currentTimeMillis() - importstartTime;
+//			System.out.println(String.format("Elapsed time in the import of data: %s",
+//					DateUtils.formatElapsedTime(importElapsedTime)));
+//			
 			// Exportar bbdd a csv ordenado por id
 			System.out.println("The data import was finished.");
 			System.out.println("Exporting data..");
@@ -101,7 +101,7 @@ public class Init {
 			// TODO: Para más seguridad sería adecuado añadir algún timestamp
 			// o generación de números aleatorios en el nombre del fichero exportado
 			File exportFile = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
-			dataService.sortOrdersAndExport(exportFile.getPath());
+			dataService.sortOrdersAndExport(new OpenCsvReportWriter(new FileWriter(exportFile.getPath())));
 			long exportElapsedTime = importEndTime - System.currentTimeMillis();
 			System.out.println(String.format("Elapsed time in the export of data: %s",
 					DateUtils.formatElapsedTime(exportElapsedTime)));
@@ -109,7 +109,7 @@ public class Init {
 			// Realizar un resumen de queries
 			System.out.println("Generating reports...");
 			ConsoleUtils.waitForAnyPressedKeyToContinue();
-			dataService.printOrderSummary();
+			dataService.generateOrderReports();
 		} catch(Exception e) {
 			System.err.println("An error occurred in the application. Contact your administrator.");
 			logger.error(e.getMessage());

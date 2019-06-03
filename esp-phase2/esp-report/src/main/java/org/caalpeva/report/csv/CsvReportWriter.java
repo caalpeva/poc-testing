@@ -4,4 +4,5 @@ import java.io.IOException;
 
 public interface CsvReportWriter {
 	public void writeLine(CsvReportLine csvReportLine) throws IOException;
+	public void close() throws IOException;
 }

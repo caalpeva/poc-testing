@@ -1,10 +1,10 @@
 package org.caalpeva.report.csv;
 
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 public abstract class CsvBaseLine implements CsvReportLine {
 
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 	
 	@Override
 	public String[] getCsvLine() {
@@ -14,9 +14,9 @@ public abstract class CsvBaseLine implements CsvReportLine {
 				getItemType(),
 				getSalesChannel(), 
 				getPriority(),
-				sdf.format(getDate()),
+				getDate().format(formatter),
 				String.valueOf(getId()),
-				sdf.format(getShipDate()),
+				getShipDate().format(formatter),
 				String.valueOf(getSoldUnits()),
 				String.valueOf(getUnitPrice()),
 				String.valueOf(getUnitCost()),
