@@ -84,11 +84,11 @@ public class Init {
 			// Importar csv a bbdd
 			System.out.println("Importing data..");
 			System.out.println("Wait a moment this may take a few minutes.");
+			
 			long importstartTime = System.currentTimeMillis();
 			dataService.importOrders(new OpenCsvReportReader(new FileReader(file)));
 			long importEndTime = System.currentTimeMillis();
 			long importElapsedTime = System.currentTimeMillis() - importstartTime;
-			
 			System.out.println(String.format("Elapsed time in the import of data: %s",
 					DateUtils.formatElapsedTime(importElapsedTime)));
 			
@@ -96,10 +96,13 @@ public class Init {
 			System.out.println("The data import was finished.");
 			System.out.println("Exporting data..");
 			System.out.println("Wait a moment this may take a few minutes.");
-			File file2 = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
-			dataService.sortOrdersAndExport(file2.getPath());
-			long exportElapsedTime = importEndTime - System.currentTimeMillis();
 			
+			// Se exporta en el mismo directorio del fichero importado
+			// TODO: Para más seguridad sería adecuado añadir algún timestamp
+			// o generación de números aleatorios en el nombre del fichero exportado
+			File exportFile = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
+			dataService.sortOrdersAndExport(exportFile.getPath());
+			long exportElapsedTime = importEndTime - System.currentTimeMillis();
 			System.out.println(String.format("Elapsed time in the export of data: %s",
 					DateUtils.formatElapsedTime(exportElapsedTime)));
 			

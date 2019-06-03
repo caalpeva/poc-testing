@@ -74,14 +74,9 @@ public class DataReportServiceImpl implements  DataReportService {
 	}
 
 	@Override
-	public void sortOrdersAndExport(String fileName) {
-		FileWriter writer;
-		try {
-			writer = new FileWriter(fileName);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			return;
-		}
+	public void sortOrdersAndExport(String fileName) throws IOException {
+		FileWriter writer = new FileWriter(fileName);
+
 		try {
 			long count = orderRepository.count();
 			int pageNums = (int) ((count / PAGE_SIZE) + ((count % PAGE_SIZE) > 0 ? 1 : 0));
@@ -119,14 +114,35 @@ public class DataReportServiceImpl implements  DataReportService {
 			}
 
 		}
-
 	}
 
+	/**
+	 * Método encargado de mostrar por consola el resultado de los informes
+	 */
+	@Override
+	public void printOrderSummary() {
+		System.out.println("# Orders grouped by regions:");
+		ConsoleUtils.printSumOrderReport(regionRepository.getOrderCountGroupByRegion());
+		System.out.println("# Orders grouped by countries:");
+		ConsoleUtils.printSumOrderReport(countryRepository.getOrderCountGroupByCountry());
+		System.out.println("# Orders grouped by item type:");
+		ConsoleUtils.printSumOrderReport(itemTypeRepository.getOrderCountGroupByItemType());
+		System.out.println("# Orders grouped by sale channels:");
+		ConsoleUtils.printSumOrderReport(salesChannelRepository.getOrderCountGroupBySalesChannel());
+		System.out.println("# Orders grouped by priority:");
+		ConsoleUtils.printSumOrderReport(orderRepository.getOrderCountGroupByPriority());
+	}
+	
 	/******************************************************/
 	/****************** METODOS PRIVADOS ******************/
 	/******************************************************/
 
-	public SalesChannel findOrSaveSalesChannel(String channelStatus) {
+	/**
+	 * Método auxiliar encargado de extraer la información de canales
+	 * @param channelStatus
+	 * @return
+	 */
+	private SalesChannel findOrSaveSalesChannel(String channelStatus) {
 		SalesChannel salesChannel;
 		Optional<SalesChannel> channelOptional = channelRepository.findByName(channelStatus);
 		if (channelOptional.isPresent()) {
@@ -140,7 +156,13 @@ public class DataReportServiceImpl implements  DataReportService {
 		return salesChannel;
 	}
 
-	public Country findOrSaveCountry(String countryName, String regionName) {
+	/**
+	 * Método auxiliar encargado de extraer la información de paises
+	 * @param countryName
+	 * @param regionName
+	 * @return
+	 */
+	private Country findOrSaveCountry(String countryName, String regionName) {
 		Country country;
 		Optional<Country> countryOptional = countryRepository.findByName(countryName);
 		if (countryOptional.isPresent()) {
@@ -164,7 +186,14 @@ public class DataReportServiceImpl implements  DataReportService {
 		return country;
 	}
 
-	public Item findOrSaveItemType(String itemTypeName, double unitCost, double unitPrice) {
+	/**
+	 * Método auxiliar encargado de extraer la información de tipos de items
+	 * @param itemTypeName
+	 * @param unitCost
+	 * @param unitPrice
+	 * @return
+	 */
+	private Item findOrSaveItemType(String itemTypeName, double unitCost, double unitPrice) {
 		ItemType itemType;
 		Optional<ItemType> itemTypeOptional = itemTypeRepository.findByName(itemTypeName);
 		if (itemTypeOptional.isPresent()) {
@@ -191,7 +220,12 @@ public class DataReportServiceImpl implements  DataReportService {
 		return item;
 	}
 
-	public Order convertFrom(CsvReportLine csvLine) {
+	/**
+	 * Método auxiliar encargado de convertir un objeto csv a Order
+	 * @param csvLine
+	 * @return
+	 */
+	private Order convertFrom(CsvReportLine csvLine) {
 		Order order = new Order();
 		order.setId(csvLine.getId());
 		order.setPriority(csvLine.getPriority());
@@ -207,7 +241,12 @@ public class DataReportServiceImpl implements  DataReportService {
 		return order;
 	}
 
-	public CsvReportLine convertFrom(Order order) {
+	/**
+	 * Método auxiliar encargado de convertir un objeto Order a Csv
+	 * @param order
+	 * @return
+	 */
+	private CsvReportLine convertFrom(Order order) {
 		return new CsvBaseLine() {
 
 			@Override
@@ -280,19 +319,5 @@ public class DataReportServiceImpl implements  DataReportService {
 				return order.getCountry().getName();
 			}
 		};
-	}
-
-	@Override
-	public void printOrderSummary() {
-		System.out.println("# Orders grouped by regions:");
-		ConsoleUtils.printSumOrderReport(regionRepository.getOrderCountGroupByRegion());
-		System.out.println("# Orders grouped by countries:");
-		ConsoleUtils.printSumOrderReport(countryRepository.getOrderCountGroupByCountry());
-		System.out.println("# Orders grouped by item type:");
-		ConsoleUtils.printSumOrderReport(itemTypeRepository.getOrderCountGroupByItemType());
-		System.out.println("# Orders grouped by sale channels:");
-		ConsoleUtils.printSumOrderReport(salesChannelRepository.getOrderCountGroupBySalesChannel());
-		System.out.println("# Orders grouped by priority:");
-		ConsoleUtils.printSumOrderReport(orderRepository.getOrderCountGroupByPriority());
 	}
 }
