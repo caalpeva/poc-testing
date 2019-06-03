@@ -1,13 +1,13 @@
 package org.caalpeva.report.csv;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface CsvReportLine {
 	public int getId();
 	public String getPriority();
 	public String getSalesChannel();
-	public Date getDate();
-	public Date getShipDate();
+	public LocalDate getDate();
+	public LocalDate getShipDate();
 	public double getUnitCost();
 	public double getUnitPrice();
 	public int getSoldUnits();

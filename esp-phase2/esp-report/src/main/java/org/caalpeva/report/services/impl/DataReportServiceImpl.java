@@ -2,7 +2,7 @@ package org.caalpeva.report.services.impl;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ import org.caalpeva.report.repository.model.ItemType;
 import org.caalpeva.report.repository.model.Order;
 import org.caalpeva.report.repository.model.Region;
 import org.caalpeva.report.repository.model.SalesChannel;
-import org.caalpeva.report.services.DataService;
+import org.caalpeva.report.services.DataReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,7 +33,7 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
-public class DataReportService implements DataService {
+public class DataReportServiceImpl implements  DataReportService {
 
 	private final int PAGE_SIZE = 100;
 
@@ -234,7 +234,7 @@ public class DataReportService implements DataService {
 			}
 
 			@Override
-			public Date getShipDate() {
+			public LocalDate getShipDate() {
 				return order.getShipDate();
 			}
 
@@ -264,7 +264,7 @@ public class DataReportService implements DataService {
 			}
 
 			@Override
-			public Date getDate() {
+			public LocalDate getDate() {
 				return order.getDate();
 			}
 

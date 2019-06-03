@@ -1,12 +1,11 @@
 package org.caalpeva.report.repository.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,8 +21,8 @@ public class Order {
 	@JoinColumn(nullable=false)
 	private SalesChannel salesChannel;
 	
-	private Date date;
-	private Date shipDate;
+	private LocalDate date;
+	private LocalDate shipDate;
 	
 	private int soldUnits;
 	private double totalCost;
@@ -56,16 +55,16 @@ public class Order {
 	public void setSalesChannel(SalesChannel salesChannel) {
 		this.salesChannel = salesChannel;
 	}
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public Date getShipDate() {
+	public LocalDate getShipDate() {
 		return shipDate;
 	}
-	public void setShipDate(Date shipDate) {
+	public void setShipDate(LocalDate shipDate) {
 		this.shipDate = shipDate;
 	}
 	public int getSoldUnits() {

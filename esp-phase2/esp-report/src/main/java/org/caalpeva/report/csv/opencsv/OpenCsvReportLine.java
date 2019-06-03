@@ -1,12 +1,12 @@
 package org.caalpeva.report.csv.opencsv;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.caalpeva.report.csv.CsvBaseLine;
 import org.caalpeva.report.csv.CsvHeader;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvDate;
+import com.opencsv.bean.CsvCustomBindByName;
 
 public class OpenCsvReportLine extends CsvBaseLine {
 
@@ -18,13 +18,13 @@ public class OpenCsvReportLine extends CsvBaseLine {
 	@CsvBindByName(column = CsvHeader.SALES_CHANNEL)
 	private String salesChannel;
 	
-	@CsvDate(value="dd/MM/yyyy")
-	@CsvBindByName(column = CsvHeader.ORDER_DATE)
-	private Date date;
+	//@CsvDate(value="dd/MM/yyyy")
+	@CsvCustomBindByName(column = CsvHeader.ORDER_DATE, converter = LocalDateConverter.class)
+	private LocalDate date;
 	
-	@CsvDate(value="dd/MM/yyyy")
-	@CsvBindByName(column = CsvHeader.SHIP_DATE)
-	private Date shipDate;
+	//@CsvDate(value="dd/MM/yyyy")
+	@CsvCustomBindByName(column = CsvHeader.SHIP_DATE, converter = LocalDateConverter.class)
+	private LocalDate shipDate;
 	
 	@CsvBindByName(column = CsvHeader.UNIT_COST)
 	private double unitCost;
@@ -47,84 +47,98 @@ public class OpenCsvReportLine extends CsvBaseLine {
 	@CsvBindByName(column = CsvHeader.ITEM_TYPE)
 	private String itemType;
 	
+	@Override
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	@Override
 	public String getPriority() {
 		return priority;
 	}
 	public void setPriority(String priority) {
 		this.priority = priority;
 	}
+	@Override
 	public String getSalesChannel() {
 		return salesChannel;
 	}
 	public void setSalesChannel(String salesChannel) {
 		this.salesChannel = salesChannel;
 	}
-	public Date getDate() {
+	@Override
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public Date getShipDate() {
+	@Override
+	public LocalDate getShipDate() {
 		return shipDate;
 	}
-	public void setShipDate(Date shipDate) {
+	public void setShipDate(LocalDate shipDate) {
 		this.shipDate = shipDate;
 	}
+	@Override
 	public double getUnitCost() {
 		return unitCost;
 	}
 	public void setUnitCost(double unitCost) {
 		this.unitCost = unitCost;
 	}
+	@Override
 	public double getUnitPrice() {
 		return unitPrice;
 	}
 	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
+	@Override
 	public int getSoldUnits() {
 		return soldUnits;
 	}
 	public void setSoldUnits(int soldUnits) {
 		this.soldUnits = soldUnits;
 	}
+	@Override
 	public double getTotalCost() {
 		return totalCost;
 	}
 	public void setTotalCost(double totalCost) {
 		this.totalCost = totalCost;
 	}
+	@Override
 	public double getTotalRevenue() {
 		return totalRevenue;
 	}
 	public void setTotalRevenue(double totalRevenue) {
 		this.totalRevenue = totalRevenue;
 	}
+	@Override
 	public double getTotalProfit() {
 		return totalProfit;
 	}
 	public void setTotalProfit(double totalProfit) {
 		this.totalProfit = totalProfit;
 	}
+	@Override
 	public String getCountry() {
 		return country;
 	}
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	@Override
 	public String getRegion() {
 		return region;
 	}
 	public void setRegion(String region) {
 		this.region = region;
 	}
+	@Override
 	public String getItemType() {
 		return itemType;
 	}

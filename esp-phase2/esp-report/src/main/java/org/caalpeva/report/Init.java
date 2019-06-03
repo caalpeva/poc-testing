@@ -5,7 +5,7 @@ import java.io.FileReader;
 
 import org.caalpeva.commons.utils.DateUtils;
 import org.caalpeva.report.csv.opencsv.OpenCsvReportReader;
-import org.caalpeva.report.services.DataService;
+import org.caalpeva.report.services.DataReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -22,7 +22,7 @@ public class Init {
 	//F:/ALBERTO/[EMPRESAS]/Otras/EsPublico/RegistroVentas1 - con retorno.csv"
 	
 	@Autowired
-	private DataService dataService;
+	private DataReportService dataService;
 	
 	public static void main(String[] args) {
 		if (args.length != 1) {
@@ -70,7 +70,7 @@ public class Init {
 			// Realizar un resumen de queries
 			System.out.println("Time elapsed: " + DateUtils.formatElapsedTime(System.currentTimeMillis() - startTimeInMillis, true, true));
 		} catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 }
