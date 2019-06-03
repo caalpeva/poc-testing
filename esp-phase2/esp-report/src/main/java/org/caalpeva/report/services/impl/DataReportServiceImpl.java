@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.caalpeva.report.csv.CsvBaseLine;
 import org.caalpeva.report.csv.CsvReportLine;
 import org.caalpeva.report.csv.CsvReportReader;
@@ -60,6 +62,7 @@ public class DataReportServiceImpl implements  DataReportService {
 	private SalesChannelRepository salesChannelRepository;
 
 	@Override
+	@Transactional
 	public void importOrders(CsvReportReader csvReader) {
 		// CsvReportReader csvReader = new OpenCsvReportReader(reader);
 		Iterator<CsvReportLine> csvLineIterator = csvReader.iterator();

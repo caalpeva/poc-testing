@@ -1,13 +1,16 @@
 package org.caalpeva.report;
 
 import java.io.File;
+import java.io.FileReader;
 
+import org.caalpeva.commons.utils.DateUtils;
+import org.caalpeva.report.csv.opencsv.OpenCsvReportReader;
 import org.caalpeva.report.services.DataReportService;
 import org.caalpeva.report.utils.ConsoleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -32,11 +35,11 @@ public class Init {
 	 */
 	public static void main(String[] args) {
 		if (args.length != 1) {
-			System.err.println("Syntax error. Format: filepath");
+			System.err.println("Syntax error. Format: <filepath>");
 			System.exit(1);
 		}
 
-		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {
+		ConfigurableApplicationContext  context = new ClassPathXmlApplicationContext(new String[] {
 				"spring-context.xml", "spring-persistence.xml"});
 		Init init = context.getBean(Init.class);
 		
@@ -44,6 +47,8 @@ public class Init {
 		if (init.validate(file)) {
 			init.start(file);
 		}
+		
+		context.close();
 	}
 	
 	/**
@@ -75,30 +80,37 @@ public class Init {
 	 * @param file
 	 */
 	public void start(File file) {
-		long importstartTime = System.currentTimeMillis();
 		try {
 			// Importar csv a bbdd
-//			dataService.importOrders(new OpenCsvReportReader(new FileReader(file)));
-//			long importEndTime = System.currentTimeMillis();
-//			long importElapsedTime = System.currentTimeMillis() - importEndTime;
+			System.out.println("Importing data..");
+			System.out.println("Wait a moment this may take a few minutes.");
+			long importstartTime = System.currentTimeMillis();
+			dataService.importOrders(new OpenCsvReportReader(new FileReader(file)));
+			long importEndTime = System.currentTimeMillis();
+			long importElapsedTime = System.currentTimeMillis() - importstartTime;
+			
+			System.out.println(String.format("Elapsed time in the import of data: %s",
+					DateUtils.formatElapsedTime(importElapsedTime)));
 			
 			// Exportar bbdd a csv ordenado por id
-//			File file2 = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
-//			dataService.sortOrdersAndExport(file2.getPath());
-//			long exportElapsedTime = importEndTime - System.currentTimeMillis();
+			System.out.println("The data import was finished.");
+			System.out.println("Exporting data..");
+			System.out.println("Wait a moment this may take a few minutes.");
+			File file2 = new File(file.getParentFile().getPath(), "sorted_" + file.getName());
+			dataService.sortOrdersAndExport(file2.getPath());
+			long exportElapsedTime = importEndTime - System.currentTimeMillis();
 			
-			// Se muestran el tiempo transcurrido para cada operación
-//			System.out.println(String.format("Elapsed time in the import of data: %s",
-//					DateUtils.formatElapsedTime(importElapsedTime)));
-//			System.out.println(String.format("Elapsed time in the export of data: %s",
-//					DateUtils.formatElapsedTime(exportElapsedTime)));
+			System.out.println(String.format("Elapsed time in the export of data: %s",
+					DateUtils.formatElapsedTime(exportElapsedTime)));
 			
 			// Realizar un resumen de queries
+			System.out.println("Generating reports...");
 			ConsoleUtils.waitForAnyPressedKeyToContinue();
 			dataService.printOrderSummary();
 		} catch(Exception e) {
 			System.err.println("An error occurred in the application. Contact your administrator.");
 			logger.error(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }
