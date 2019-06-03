@@ -116,15 +116,18 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return map;
 	}
 	
+	@Override
+	public String getFirstStarshipThatAppearsMostInTheFilms(List<Integer> filmIds) {
+		return starShipRepository.getStarshipThatAppearsMostInTheFilms(filmIds);
+	}
+	
 	/**
 	 * Método encargado de proporcionar la lista de pilotos
 	 * que conducen la nave que mas aparece en las películas seleccionadas.
 	 */
 	@Override
-	public List<People> getPilotOfStarshipThatMostHasAppeared(List<Integer> filmsIds) {
-		// TODO: Descomentar cuando esté resuelta esta consulta
-		//return peopleRepository.getPilotOfStarshipThatMostHasAppeared(filmsIds);
-		return null;
+	public List<String> getPilotsOfStarship(String starshipName) {
+		return peopleRepository.getPilotsOfStarship(starshipName);
 	}
 	
 	/************************************************/
