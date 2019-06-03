@@ -49,11 +49,11 @@ public class OrderCountTest {
 		if (groupedOrders != null && groupedOrders.size() > 0) {
 			for(Object[] group: groupedOrders) {
 				total += (long) group[1];
-				logger.info(String.format("Group: %s numOrders: %s", group[0], group[1]));
+				logger.debug(String.format("%10s | %s", group[1], group[0]));
 			} // for
 		}
 		
-		logger.info("Order Total: " + total);
+		logger.debug("Order total: " + total);
 		return total;
 	}
 }

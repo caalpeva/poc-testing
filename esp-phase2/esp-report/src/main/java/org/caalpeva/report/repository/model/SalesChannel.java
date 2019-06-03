@@ -1,15 +1,10 @@
 package org.caalpeva.report.repository.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,10 +16,10 @@ public class SalesChannel {
 	@Column(nullable = false, unique = true)
 	private String name;
 	
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
-			mappedBy= "salesChannel", fetch = FetchType.LAZY)
-	@Column(name = "salesChannel_id")
-	private Set<Order> orders;
+//	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
+//			mappedBy= "salesChannel", fetch = FetchType.LAZY)
+//	@Column(name = "salesChannel_id")
+//	private Set<Order> orders;
 	
 	public int getId() {
 		return id;
@@ -38,10 +33,10 @@ public class SalesChannel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<Order> getOrders() {
-		return orders;
-	}
-	public void setOrders(Set<Order> orders) {
-		this.orders = orders;
-	}	
+//	public Set<Order> getOrders() {
+//		return orders;
+//	}
+//	public void setOrders(Set<Order> orders) {
+//		this.orders = orders;
+//	}	
 }

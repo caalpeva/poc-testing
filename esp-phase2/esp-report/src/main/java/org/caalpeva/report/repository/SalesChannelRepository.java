@@ -16,6 +16,6 @@ public interface SalesChannelRepository extends JpaRepository<SalesChannel, Inte
 	 * Método que se encarga de obtener el numero de pedidos por cada canal de venta.
 	 * @return
 	 */
-	@Query("select s.name, count(*) from SalesChannel s inner join s.orders o group by s.name order by s.name")
+	@Query("select s.name, count(*) from Order o inner join o.salesChannel s group by s.name order by s.name")
 	public List<Object[]> getOrderCountGroupBySalesChannel();
 }

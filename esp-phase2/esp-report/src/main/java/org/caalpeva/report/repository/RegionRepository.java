@@ -16,9 +16,9 @@ public interface RegionRepository extends JpaRepository<Region, Integer> {
 	 * Método que se encarga de obtener el numero de pedidos por cada región.
 	 * @return
 	 */
-	@Query("select r.name, count(*) from Region r "
-			+ "inner join r.country c "
-			+ "inner join c.orders o "
+	@Query("select r.name, count(*) from Order o "
+			+ "inner join o.country c "
+			+ "inner join c.region r "
 			+ "group by r.name "
 			+ "order by r.name")
 	public List<Object[]> getOrderCountGroupByRegion();

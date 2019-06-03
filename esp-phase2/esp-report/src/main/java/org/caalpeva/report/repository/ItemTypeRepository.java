@@ -16,9 +16,9 @@ public interface ItemTypeRepository extends JpaRepository<ItemType, Integer> {
 	 * Método que se encarga de obtener el numero de pedidos agrupados por cada tipo de item.
 	 * @return
 	 */
-	@Query("select t.name, count(*) from ItemType t "
-			+ "inner join t.items i "
-			+ "inner join i.orders o "
+	@Query("select t.name, count(*) from Order o "
+			+ "inner join o.item i "
+			+ "inner join i.itemType t "
 			+ "group by t.name "
 			+ "order by t.name")
 	public List<Object[]> getOrderCountGroupByItemType();

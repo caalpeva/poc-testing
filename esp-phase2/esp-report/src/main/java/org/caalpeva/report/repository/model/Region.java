@@ -1,15 +1,10 @@
 package org.caalpeva.report.repository.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,10 +16,10 @@ public class Region {
 	@Column(nullable = false, unique = true)
 	private String name;
 	
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
-			mappedBy= "region", fetch = FetchType.LAZY)
-	@Column(name = "region_id")
-	private Set<Country> country;
+//	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH },
+//			mappedBy= "region", fetch = FetchType.LAZY)
+//	@Column(name = "region_id")
+//	private Set<Country> country;
 	
 	public int getId() {
 		return id;
@@ -38,10 +33,10 @@ public class Region {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<Country> getCountry() {
-		return country;
-	}
-	public void setCountry(Set<Country> country) {
-		this.country = country;
-	}	
+//	public Set<Country> getCountry() {
+//		return country;
+//	}
+//	public void setCountry(Set<Country> country) {
+//		this.country = country;
+//	}	
 }

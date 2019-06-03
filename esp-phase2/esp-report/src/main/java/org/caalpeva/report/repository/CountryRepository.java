@@ -17,6 +17,6 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
 	 * Método que se encarga de obtener el numero de pedidos por cada pais.
 	 * @return
 	 */
-	@Query("select c.name, count(*) from Country c inner join c.orders o group by c.name order by c.name")
+	@Query("select c.name, count(*) from Order o inner join o.country c group by c.name order by c.name")
 	public List<Object[]> getOrderCountGroupByCountry();
 }
