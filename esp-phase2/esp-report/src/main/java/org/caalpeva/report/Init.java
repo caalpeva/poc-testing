@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Clase encargada de la validación de los argumentos de la línea de comandos
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
  * @author Alberto
  */
 @Component
+@EnableTransactionManagement
 public class Init {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
