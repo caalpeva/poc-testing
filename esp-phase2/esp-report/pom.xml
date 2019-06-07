@@ -9,12 +9,12 @@
 	</parent>
 	<artifactId>esp-report</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<properties>
 		<project.encoding>cp1252</project.encoding>
-<!-- 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
+		<!-- <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
 	</properties>
-	
+
 	<dependencies>
 		<!-- SPRING -->
 		<dependency>
@@ -106,7 +106,7 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-		<!-- TODO: Construir el jar, empaquetar las dependencias en un zip -->
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -119,15 +119,32 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-	              			<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-	              			<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 							<mainClass>org.caalpeva.report.Init</mainClass>
 						</manifest>
 						<manifestEntries>
-                			<Class-Path>.</Class-Path>
-            			</manifestEntries>
+							<Class-Path>.</Class-Path>
+						</manifestEntries>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>assembly/distribution.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 
