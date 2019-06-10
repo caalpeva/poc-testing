@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
-public class RestTemplateTest {
+public class RestTemplateITest {
 	
 	@Autowired
 	private RestTemplate restTemplate;

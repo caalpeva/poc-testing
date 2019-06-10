@@ -1,5 +1,11 @@
 package org.caalpeva.starwars.configuration;
 
+import java.util.EnumSet;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.SessionTrackingMode;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -8,6 +14,12 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  */
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer   {
 
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		super.onStartup(servletContext);
+        servletContext.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
+	}
+	
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class[] { AppConfig.class };
@@ -22,4 +34,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
 	}
+	
+	
 }
