@@ -83,6 +83,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 		filmRepository.deleteAll();
 		planetRepository.deleteAll();
 		starShipRepository.deleteAll();
+		starShipRepository.flush();
 	}
 	
 	/**
