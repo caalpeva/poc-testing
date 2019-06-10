@@ -79,10 +79,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Override
 	@Transactional
 	public void deleteData() {
-		peopleRepository.deleteAll();
 		filmRepository.deleteAll();
+		filmRepository.flush();
+		//peopleRepository.deleteAll();
 		planetRepository.deleteAll();
-		starShipRepository.deleteAll();
+		//starShipRepository.deleteAll();
 		starShipRepository.flush();
 	}
 	

@@ -36,7 +36,7 @@ public class Film {
     public Date edited;
     public LocalDate releaseDate;
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE },
 			mappedBy= "films", fetch = FetchType.LAZY)
     public Set<People> characters;
 	

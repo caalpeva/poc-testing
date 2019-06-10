@@ -43,7 +43,7 @@ public class Starship {
 			mappedBy = "starships", fetch = FetchType.LAZY)
     public Set<People> peoples;
 	
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE }, fetch= FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.MERGE }, fetch= FetchType.LAZY)
 	@JoinTable(
 			joinColumns = { @JoinColumn(name = "starship_id") },
 			inverseJoinColumns = { @JoinColumn(name = "film_id") })
