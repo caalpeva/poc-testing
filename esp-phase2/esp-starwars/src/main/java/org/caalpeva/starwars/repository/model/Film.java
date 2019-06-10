@@ -40,7 +40,7 @@ public class Film {
 			mappedBy= "films", fetch = FetchType.LAZY)
     public Set<People> characters;
 	
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH },
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE },
 			mappedBy= "films", fetch = FetchType.LAZY)
     public Set<Starship> starships;
 
