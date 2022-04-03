@@ -35,8 +35,7 @@ pipeline {
             sh "./gradlew checkstyleTest"
             publishHTML (target: [
               reportDir: 'build/reports/checkstyle/',
-              reportFiles: 'main.html, test.html',
-              reportTitles: 'Main, Test',
+              reportFiles: 'test.html',
               reportName: "Checkstyle Report"
             ])
           }
