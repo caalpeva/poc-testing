@@ -1,4 +1,4 @@
-package team.boolbee.poc_calculator;
+package team.boolbee.calculator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
