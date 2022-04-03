@@ -6,6 +6,7 @@ plugins {
 }
 
 apply plugin: "jacoco"
+apply plugin: 'checkstyle'
 
 group = 'team.boolbee'
 version = '0.0.1-SNAPSHOT'
@@ -30,6 +31,10 @@ jacocoTestCoverageVerification {
 			}
 		}
 	}
+}
+
+checkstyle {
+	checkstyleTest.enabled = true
 }
 
 tasks.named('test') {
