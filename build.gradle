@@ -33,10 +33,6 @@ jacocoTestCoverageVerification {
 	}
 }
 
-checkstyle {
-	checkstyleTest.enabled = true
-}
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
