@@ -36,3 +36,10 @@ jacocoTestCoverageVerification {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.withType(Checkstyle) {
+	//ignoreFailures = true
+ 	reports {
+ 		html.enabled = true
+ 	}
+}
