@@ -3,6 +3,9 @@ package team.boolbee.calculator;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+/**
+* Calculator test
+*/
 public class CalculatorTest {
 	private Calculator calculator = new Calculator();
 
