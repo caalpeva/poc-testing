@@ -8,13 +8,16 @@ pipeline {
       DOCKER_IMAGE="poc-calculator"
     }
     stages {
+        /*
         stage("Env Variables") {
           steps {
             sh "printenv"
           }
         }
+        */
 
-        /*stage ("Checkout") {
+        /*
+        stage ("Checkout") {
             steps {
                 //git branch: '1.0.0', url: 'https://github.com/caalpeva/poc-java.git'
                 git url: 'https://github.com/caalpeva/esp.git'
