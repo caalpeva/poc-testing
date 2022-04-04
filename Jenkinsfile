@@ -43,4 +43,18 @@ pipeline {
           }
         }
     }
+
+    post {
+      always {
+        mail to: 'hyeepaa@gmail.com',
+        subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
+        body: "Your build completed, please check: ${env.BUILD_URL}"
+      }
+
+      /*failure {
+        slackSend channel: '#dragons-team',
+        color: 'danger',
+        message: "The pipeline ${currentBuild.fullDisplayName} failed."
+      }*/
+    }
 }
