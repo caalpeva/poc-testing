@@ -97,10 +97,8 @@ pipeline {
 
         stage("Acceptance test") {
           steps {
-            sleep 60
-            dir("scripts") {
-              sh "./acceptance_test.sh"
-            }
+            sleep 20
+            sh "./acceptance_test.sh"
           }
         }
     }
