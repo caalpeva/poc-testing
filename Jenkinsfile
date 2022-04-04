@@ -112,6 +112,10 @@ pipeline {
         body: "Your build completed, please check: ${env.BUILD_URL}"
       }
 
+      always {
+        sh "docker stop calculator"
+      }
+
       /*failure {
         slackSend channel: '#dragons-team',
         color: 'danger',
