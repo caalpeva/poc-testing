@@ -88,6 +88,19 @@ pipeline {
             sh "docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
           }
         }
+
+        stage("Deploy to staging") {
+          steps {
+            sh "docker run -d --rm -p 8082:8081 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+          }
+        }
+
+        stage("Acceptance test") {
+          steps {
+            sleep 60
+            sh "scripts/acceptance_test.sh"
+          }
+        }
     }
 
     post {
