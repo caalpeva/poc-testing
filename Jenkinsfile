@@ -65,7 +65,7 @@ pipeline {
 
         stage("Docker build") {
           steps {
-            sh "docker build -t ${DOCKER_REGISTRY_URL}/{DOCKER_IMAGE}:${BUILD_NUMBER} ."
+            sh "docker build -t ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
           }
         }
 
@@ -82,7 +82,7 @@ pipeline {
 
         stage("Docker push") {
           steps {
-            sh "docker push ${DOCKER_REGISTRY_URL}/{DOCKER_IMAGE}:${BUILD_NUMBER}"
+            sh "docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
           }
         }
     }
