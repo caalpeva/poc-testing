@@ -8,6 +8,12 @@ pipeline {
       DOCKER_IMAGE="poc-calculator"
     }
     stages {
+        stage("Env Variables") {
+          steps {
+            sh "printenv"
+          }
+        }
+
         /*stage ("Checkout") {
             steps {
                 //git branch: '1.0.0', url: 'https://github.com/caalpeva/poc-java.git'
@@ -59,7 +65,7 @@ pipeline {
 
         stage("Docker build") {
           steps {
-            sh "docker build -t ${DOCKER_REGISTRY_URL}/{DOCKER_IMAGE}:${BUILD_TIMESTAMP} ."
+            sh "docker build -t ${DOCKER_REGISTRY_URL}/{DOCKER_IMAGE}:${BUILD_NUMBER} ."
           }
         }
 
@@ -76,7 +82,7 @@ pipeline {
 
         stage("Docker push") {
           steps {
-            sh "docker push ${DOCKER_REGISTRY_URL}/{DOCKER_IMAGE}:${BUILD_TIMESTAMP}"
+            sh "docker push ${DOCKER_REGISTRY_URL}/{DOCKER_IMAGE}:${BUILD_NUMBER}"
           }
         }
     }
