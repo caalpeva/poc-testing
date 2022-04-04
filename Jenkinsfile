@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    triggers {
+      pollSCM('* * * * *')
+    }
     stages {
         /*stage ("Checkout") {
             steps {
@@ -36,7 +39,7 @@ pipeline {
               reportDir: 'build/reports/checkstyle/',
               reportFiles: 'main.html',
               reportName: "Checkstyle Report"
-            ])            
+            ])
           }
         }
     }
