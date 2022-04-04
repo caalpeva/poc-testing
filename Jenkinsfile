@@ -3,6 +3,10 @@ pipeline {
     triggers {
       pollSCM('* * * * *')
     }
+    environment {
+      DOCKER_REGISTRY_URL="localhost:5000"
+      DOCKER_IMAGE="poc-calculator"
+    }
     stages {
         /*stage ("Checkout") {
             steps {
@@ -11,16 +15,19 @@ pipeline {
 
             }
         }*/
+
         stage ("Compile") {
             steps {
                 sh "./gradlew compileJava"
             }
         }
+
         stage ("Unit test") {
             steps {
                 sh "./gradlew test"
             }
         }
+
         stage ("Code coverage") {
           steps {
             sh "./gradlew jacocoTestReport"
@@ -32,6 +39,7 @@ pipeline {
             sh "./gradlew jacocoTestCoverageVerification"
           }
         }
+
         stage ("Static code Analysis") {
           steps {
             sh "./gradlew checkstyleMain"
@@ -42,9 +50,33 @@ pipeline {
             ])
           }
         }
+
         stage("Package") {
           steps {
             sh "./gradlew build"
+          }
+        }
+
+        stage("Docker build") {
+          steps {
+            sh "docker build -t ${DOCKER_REGISTRY_URL}/{DOCKER_IMAGE}:${BUILD_TIMESTAMP} ."
+          }
+        }
+
+        /*
+        stage("Docker login") {
+          steps {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
+              usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                sh "docker login --username $USERNAME --password $PASSWORD"
+              }
+          }
+        }
+        */
+
+        stage("Docker push") {
+          steps {
+            sh "docker push ${DOCKER_REGISTRY_URL}/{DOCKER_IMAGE}:${BUILD_TIMESTAMP}"
           }
         }
     }
