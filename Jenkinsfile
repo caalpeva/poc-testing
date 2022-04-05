@@ -33,7 +33,7 @@ pipeline {
         /*
         stage("Env Variables") {
           steps {
-            sh "printenv; exit 1"
+            sh "printenv"
           }
         }
         */
@@ -50,6 +50,7 @@ pipeline {
         stage ("Compile") {
             steps {
                 sh "./gradlew compileJava"
+                sh "exit 1"
             }
         }
 
