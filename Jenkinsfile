@@ -117,8 +117,9 @@ pipeline {
 
     post {
       always {
-        sh "docker stop calculator"
+        //sh "docker stop calculator"
         //sh "docker-compose down"
+        sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-test.yml -p acceptance down"
         mail to: 'hyeepaa@gmail.com',
         subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
         body: "Your build completed, please check: ${env.BUILD_URL}"
