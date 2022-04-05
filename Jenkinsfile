@@ -91,9 +91,9 @@ pipeline {
 
         stage("Update image version") {
           steps {
-            sh "cat docker-compose.yml"
+            //sh "cat docker-compose.yml"
             sh "sed  -i 's+{app-image}+${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}+g' docker-compose.yml"
-            sh "cat docker-compose.yml"
+            //sh "cat docker-compose.yml"
           }
         }
 
@@ -106,7 +106,7 @@ pipeline {
 
         stage("Acceptance test") {
           steps {
-            sleep 20
+            sleep 30
             sh "chmod +x acceptance_test.sh && ./acceptance_test.sh"
           }
         }
