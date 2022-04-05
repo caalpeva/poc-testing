@@ -114,8 +114,8 @@ pipeline {
 
     post {
       always {
-        //sh "docker stop calculator"
-        sh "docker-compose down"
+        sh "docker stop calculator"
+        //sh "docker-compose down"
         mail to: 'hyeepaa@gmail.com',
         subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
         body: "Your build completed, please check: ${env.BUILD_URL}"
