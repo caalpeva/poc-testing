@@ -91,7 +91,9 @@ pipeline {
 
         stage("Update image version") {
           steps {
-            sh "sed  -i 's+{{app-image}}+${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}+g' docker-compose.yml"
+            sh "cat docker-compose.yml"
+            sh "sed  -i 's+{app-image}+${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}+g' docker-compose.yml"
+            sh "cat docker-compose.yml"
           }
         }
 
