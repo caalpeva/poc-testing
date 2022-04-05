@@ -106,12 +106,13 @@ pipeline {
 
         stage("Acceptance test") {
           steps {
-            sleep 10
-            #!/bin/bash
-            CALCULATOR_PORT=$(docker-compose port calculator 8080 | cut -d: -f2)
-            echo "El numero de puerto es ${CALCULATOR_PORT}"
-            sleep 60
-            test $(curl localhost:${CALCULATOR_PORT}/sum?a=1\&b=2) -eq 3
+            sh '''
+              sleep 10
+              CALCULATOR_PORT=$(docker-compose port calculator 8080 | cut -d: -f2)
+              echo "El numero de puerto es ${CALCULATOR_PORT}"
+              sleep 60
+              test $(curl localhost:${CALCULATOR_PORT}/sum?a=1\&b=2) -eq 3
+            '''
             //sh "chmod +x acceptance_test.sh && ./acceptance_test.sh"
           }
         }
