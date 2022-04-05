@@ -16,7 +16,7 @@ def notifyStatusChangeViaEmail(buildStatus) {
     }
 
     mail to: 'hyeepaa@gmail.com',
-    subject: "${Subject}: ${currentBuild.fullDisplayName}",
+    subject: "${subject}: ${currentBuild.fullDisplayName}",
     body: "See ${env.BUILD_URL} for more details"
 }
 
