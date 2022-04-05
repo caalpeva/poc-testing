@@ -1,0 +1,7 @@
+version: "3"
+services:
+  calculator:
+    container_name: poc-calculator
+    image: {app-image}
+    ports:
+      - 8080

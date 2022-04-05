@@ -89,9 +89,16 @@ pipeline {
           }
         }
 
+        stage("Update image version") {
+          steps {
+            sh "sed  -i 's/{{app-image}}/${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}/g' docker-compose.yml"
+          }
+        }
+
         stage("Deploy to staging") {
           steps {
-            sh "docker run -d --rm -p 8082:8081 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            //sh "docker run -d --rm -p 8082:8080 --name poc-calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            sh "docker-compose up -d"
           }
         }
 
@@ -105,7 +112,8 @@ pipeline {
 
     post {
       always {
-        sh "docker stop calculator"
+        //sh "docker stop poc-calculator"
+        sh "docker-compose down"
         mail to: 'hyeepaa@gmail.com',
         subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
         body: "Your build completed, please check: ${env.BUILD_URL}"
