@@ -1,6 +1,9 @@
 version: "3"
 services:
   calculator:
-    image: {app-image}
+    image: poc-calculator
+    build:
+      context: .
+      dockerfile: Dockerfile-app
     ports:
       - 8080

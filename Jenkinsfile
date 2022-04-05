@@ -68,7 +68,8 @@ pipeline {
 
         stage("Docker build") {
           steps {
-            sh "docker build -t ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+            // sh "docker build -f Dockerfile-app -t ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+            sh "docker-compose build"
           }
         }
 
@@ -85,7 +86,9 @@ pipeline {
 
         stage("Docker push") {
           steps {
-            sh "docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            // sh "docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            sh "docker tag ${DOCKER_IMAGE} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            sh "docker-compose push"
           }
         }
 
@@ -99,8 +102,8 @@ pipeline {
 
         stage("Deploy to staging") {
           steps {
-            sh "docker run -d --rm -p 8082:8080 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
-            //sh "docker-compose up -d"
+            //sh "docker run -d --rm -p 8082:8080 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            sh "docker-compose up -d"
           }
         }
 
