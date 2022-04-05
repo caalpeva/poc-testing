@@ -106,12 +106,13 @@ pipeline {
             //sh "docker-compose up -d"
             sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-acceptance.yml build test"
             sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-acceptance.yml -p acceptance up -d"
-
           }
         }
 
         stage("Acceptance test") {
-          sh 'test $(docker wait acceptance_test_1) -eq 0'
+          steps {
+            sh 'test $(docker wait acceptance_test_1) -eq 0'
+            }
         }
     }
 
