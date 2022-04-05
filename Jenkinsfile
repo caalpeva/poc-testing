@@ -50,7 +50,6 @@ pipeline {
         stage ("Compile") {
             steps {
                 sh "./gradlew compileJava"
-                sh "exit 1"
             }
         }
 
