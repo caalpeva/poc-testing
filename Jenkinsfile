@@ -137,7 +137,7 @@ pipeline {
       }
 
       changed {
-        notifyStatusChangeViaEmail(currentBuild)
+        notifyStatusChangeViaEmail(currentBuild.currentResult)
       }
 
       /*failure {
