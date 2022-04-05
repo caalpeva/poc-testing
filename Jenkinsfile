@@ -99,13 +99,14 @@ pipeline {
 
         stage("Deploy to staging") {
           steps {
-            //sh "docker run -d --rm -p 8082:8080 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
-            sh "docker-compose up -d"
+            sh "docker run -d --rm -p 8082:8080 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            #sh "docker-compose up -d"
           }
         }
 
         stage("Acceptance test") {
           steps {
+            sh "sleep 10"
             sh "chmod +x acceptance_test.sh && ./acceptance_test.sh"
           }
         }
