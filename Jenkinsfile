@@ -1,3 +1,25 @@
+def notifyStatusChangeViaEmail(buildStatus) {
+    def subject
+
+    switch (buildStatus) {
+        case 'SUCCESS':
+            subject="Jenkins build is back to normal"
+            break
+
+        case 'UNSTABLE':
+            subject="Jenkins build is unstable"
+            break
+
+        case 'FAILURE':
+            subject="Build failed in Jenkins"
+            break
+    }
+
+    mail to: 'hyeepaa@gmail.com',
+    subject: "${Subject}: ${currentBuild.fullDisplayName}",
+    body: "See ${env.BUILD_URL} for more details"
+}
+
 pipeline {
     agent any
     triggers {
@@ -114,9 +136,7 @@ pipeline {
       }
 
       changed {
-        mail to: 'hyeepaa@gmail.com',
-        subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
-        body: "Your build completed, please check: ${env.BUILD_URL}"
+        notifyStatusChangeViaEmail(currentBuild)
       }
 
       /*failure {
