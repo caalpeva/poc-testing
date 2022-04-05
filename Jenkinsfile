@@ -88,15 +88,9 @@ pipeline {
           steps {
             // sh "docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
             sh "docker tag ${DOCKER_IMAGE} ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
-            sh "docker-compose push"
-          }
-        }
-
-        stage("Update image version") {
-          steps {
-            //sh "cat docker-compose.yml"
             sh "sed  -i 's+${DOCKER_IMAGE}+${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}+g' docker-compose.yml"
             sh "cat docker-compose.yml"
+            sh "docker-compose push"
           }
         }
 
