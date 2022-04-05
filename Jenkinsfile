@@ -95,8 +95,8 @@ pipeline {
         stage("Update image version") {
           steps {
             //sh "cat docker-compose.yml"
-            sh "sed  -i 's+{app-image}+${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}+g' docker-compose.yml"
-            //sh "cat docker-compose.yml"
+            sh "sed  -i 's+${DOCKER_IMAGE}+${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}+g' docker-compose.yml"
+            sh "cat docker-compose.yml"
           }
         }
 
@@ -104,8 +104,8 @@ pipeline {
           steps {
             //sh "docker run -d --rm -p 8082:8080 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
             //sh "docker-compose up -d"
-            sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-acceptance.yml build test"
-            sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-acceptance.yml -p acceptance up -d"
+            sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-test.yml build test"
+            sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-test.yml -p acceptance up -d"
           }
         }
 
