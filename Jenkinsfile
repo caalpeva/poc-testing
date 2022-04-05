@@ -96,8 +96,6 @@ pipeline {
 
         stage("Deploy to staging") {
           steps {
-            //sh "docker run -d --rm -p 8082:8080 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
-            //sh "docker-compose up -d"
             sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-test.yml build test"
             sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-test.yml -p acceptance up -d"
           }
@@ -112,9 +110,10 @@ pipeline {
 
     post {
       always {
-        //sh "docker stop calculator"
-        //sh "docker-compose down"
         sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-test.yml -p acceptance down"
+      }
+
+      changed {
         mail to: 'hyeepaa@gmail.com',
         subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
         body: "Your build completed, please check: ${env.BUILD_URL}"
