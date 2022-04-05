@@ -103,15 +103,15 @@ pipeline {
         stage("Deploy to staging") {
           steps {
             //sh "docker run -d --rm -p 8082:8080 --name calculator ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
-            sh "docker-compose up -d"
+            //sh "docker-compose up -d"
+            sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-acceptance.yml build test"
+            sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-acceptance.yml -p acceptance up -d"
+
           }
         }
 
         stage("Acceptance test") {
-          steps {
-            sh "sleep 10"
-            sh "chmod +x acceptance_test.sh && ./acceptance_test.sh"
-          }
+          sh 'test $(docker wait acceptance_test_1) -eq 0'
         }
     }
 
