@@ -108,13 +108,14 @@ pipeline {
           steps {
             sleep 10
             sh "chmod +x acceptance_test.sh && ./acceptance_test.sh"
+            sleep 60
           }
         }
     }
 
     post {
       always {
-        //sh "docker stop poc-calculator"
+        //sh "docker stop calculator"
         sh "docker-compose down"
         mail to: 'hyeepaa@gmail.com',
         subject: "Completed Pipeline: ${currentBuild.fullDisplayName}",
