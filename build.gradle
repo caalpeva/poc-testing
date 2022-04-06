@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 }
 
+apply plugin: 'java'
 apply plugin: "jacoco"
 apply plugin: 'checkstyle'
 
@@ -12,6 +13,8 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
+sourceSets.test.resources.srcDir 'src/test/java'
+
 repositories {
 	mavenCentral()
 }
@@ -19,7 +22,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation("io.cucumber:cucumber-junit:4.2.6")
+	testImplementation("io.cucumber:cucumber-java:6.8.1")
+	testImplementation("io.cucumber:cucumber-junit:6.8.1")
 }
 
 jacocoTestCoverageVerification {
@@ -36,9 +40,20 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.withType(Checkstyle) {
-	//ignoreFailures = true
- 	reports {
- 		html.enabled = true
- 	}
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task acceptanceTest() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+						systemProperties = System.properties
+				    main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'team.boolbee.acceptance', 'src/test/resources']
+        }
+    }
 }

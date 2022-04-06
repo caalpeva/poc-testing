@@ -126,7 +126,7 @@ pipeline {
         stage("Acceptance test") {
           steps {
             sh 'test $(docker wait acceptance_test_1) -eq 0'
-            }
+          }
         }
     }
 
@@ -139,10 +139,12 @@ pipeline {
         notifyStatusChangeViaEmail(currentBuild.currentResult)
       }
 
-      /*failure {
+      /*
+      failure {
         slackSend channel: '#dragons-team',
         color: 'danger',
         message: "The pipeline ${currentBuild.fullDisplayName} failed."
-      }*/
+      }
+      */
     }
 }
