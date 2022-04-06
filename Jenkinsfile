@@ -125,7 +125,8 @@ pipeline {
 
         stage("Acceptance test") {
           steps {
-            sh 'test $(docker wait acceptance_test_1) -eq 0'
+            sh "docker logs acceptance_test_1"
+            sh "test $(docker wait acceptance_test_1) -eq 0"
           }
         }
     }
