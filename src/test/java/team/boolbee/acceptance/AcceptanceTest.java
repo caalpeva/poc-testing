@@ -8,7 +8,8 @@ import io.cucumber.junit.CucumberOptions;
 */
 @RunWith(Cucumber.class)
 //@CucumberOptions(features = "classpath:acceptance/calculator.feature")
-@CucumberOptions(plugin ="pretty",
+@CucumberOptions(plugin={"pretty", "html:build/test-results/test-report"},
+    glue="cucumber.tags.steps",
     features= {"classpath:acceptance/calculator.feature"})
  public class AcceptanceTest {
 
