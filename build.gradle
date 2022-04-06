@@ -14,6 +14,13 @@ sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 sourceSets.test.resources.srcDir 'src/test/java'
+sourceSets {
+    acceptancetest {
+        java {
+					srcDirs("src/acceptanceTest/java")
+				}
+		}
+}
 
 repositories {
 	mavenCentral()
@@ -21,9 +28,14 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation("io.cucumber:cucumber-java:6.8.1")
 	testImplementation("io.cucumber:cucumber-junit:6.8.1")
+
+	acceptancetestImplementation 'org.springframework.boot:spring-boot-starter-web'
+	acceptancetestImplementation("io.cucumber:cucumber-java:6.8.1")
+	acceptancetestImplementation("io.cucumber:cucumber-junit:6.8.1")
 }
 
 jacocoTestCoverageVerification {
@@ -52,8 +64,8 @@ task acceptanceTest() {
         javaexec {
 						systemProperties = System.properties
 				    main = "io.cucumber.core.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'team.boolbee.acceptance', 'src/test/resources']
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.acceptancetest.output
+            args = ['--plugin', 'pretty', '--glue', 'team.boolbee.calculator', 'src/acceptanceTest/resources']
         }
     }
 }

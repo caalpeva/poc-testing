@@ -1,4 +1,4 @@
-package team.boolbee.acceptance;
+package team.boolbee.calculator;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
