@@ -125,7 +125,8 @@ pipeline {
 
         stage("Acceptance test") {
           steps {
-            sh "test acceptance/test_from_machine_jenkins.sh -eq 0"
+            sh "chmod +x /acceptance/test_from_machine_jenkins.sh"
+            sh "test ./acceptance/test_from_machine_jenkins.sh -eq 0"
             //sh "docker logs acceptance_test_1"
             //sh 'test $(docker wait acceptance_test_1) -eq 0'
           }
