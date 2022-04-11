@@ -5,4 +5,6 @@ RUN apt-get update && \
 
 COPY acceptance/test_from_machine_remote.sh test.sh
 
+RUN chmod +x test.sh
+
 CMD ["bash", "test.sh"]
