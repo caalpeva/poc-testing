@@ -1,10 +1,7 @@
 version: "3"
 services:
   test:
+    image: poc-calculator-acceptance-test
     build:
       context: .
       dockerfile: Dockerfile-test
-  alpine:
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
-    image: alpine
