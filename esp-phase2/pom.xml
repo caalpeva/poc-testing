@@ -16,7 +16,7 @@
 	<properties>
 		<project.encoding>cp1252</project.encoding>
 <!-- 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
-		<spring.version>5.3.18</spring.version>
+		<spring.version>5.3.27</spring.version>
 		<hibernate-core.version>5.4.24.Final</hibernate-core.version>
 		<hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
 		<c3p0.version>0.9.2.1</c3p0.version>
